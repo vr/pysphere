@@ -7,11 +7,12 @@
 # that are actually imported by the generated code.  also includes
 # utilities used by wsdl2python itself.
 
-# $Id$
+# $Id: utility.py 1226 2006-05-26 18:11:19Z boverhof $
 
 import re
-
-from pysphere.ZSI.generate import WsdlGeneratorError
+from pysphere.ZSI import EvaluateException
+from pysphere.ZSI.TCcompound import Struct
+from pysphere.ZSI.generate import WsdlGeneratorError, Wsdl2PythonError
 from pysphere.ZSI.wstools.Utility import SplitQName
 from pysphere.ZSI.wstools.Namespaces import SCHEMA
 
@@ -28,7 +29,7 @@ def GetModuleBaseNameFromWSDL(wsdl):
     """
     base_name = wsdl.name or wsdl.services[0].name
     base_name = SplitQName(base_name)[1]
-    if base_name is None:
+    if base_name is None: 
         return None
     return NCName_to_ModuleName(base_name)
 
@@ -45,31 +46,31 @@ class NamespaceAliasDict:
         cls.alias_dict[ns] = (Namespace2ModuleName(ns), '%s' % namespace_name(cls,ns))
         cls.alias_list.append(ns)
     add = classmethod(add)
-
+            
     def getModuleName(cls, ns):
         if ns in cls.alias_dict:
             return cls.alias_dict[ns][0]
-
+                                 
         msg = 'failed to find import for schema "%s"'%ns +\
         'possibly missing @schemaLocation attribute.'
         if ns in SCHEMA.XSD_LIST:
             msg = 'missing built-in typecode for schema "%s"' %ns
-
+            
         raise WsdlGeneratorError(msg)
-
+                                 
     getModuleName = classmethod(getModuleName)
-
+        
     def getAlias(cls, ns):
         if ns in cls.alias_dict:
             return cls.alias_dict[ns][1]
-
+                                 
         msg = 'failed to find import for schema "%s"'%ns +\
         'possibly missing @schemaLocation attribute.'
         if ns in SCHEMA.XSD_LIST:
             msg = 'missing built-in typecode for schema "%s"' %ns
-
+            
         raise WsdlGeneratorError(msg)
-
+    
     getAlias = classmethod(getAlias)
 
     def getNSList(cls):
@@ -126,7 +127,7 @@ def GetPartsSubNames(args, wsdl):
     toReturn = []
     for arg in args:
         argSubnames = []
-        for l in wsm.usedNamespaces.itervalues():
+        for l in list(wsm.usedNamespaces.values()):
             for schema in l:
                 sd = SchemaDescription(do_extended=do_extended)
                 sd.fromSchema(schema)
@@ -137,12 +138,12 @@ def GetPartsSubNames(args, wsdl):
                         argElementType = arg.element[1]
                         if str(argElementType) == str(i.content.name):
                             argSubnames = []
-                # I'm not sure when the name attribute was dropped
-                # but at some point, or in some circumstance it's not
-                # there, but instead a ref attribute is there which is
-                    # tuple of (namespace, name). This hack fixes things,
-                # but I'm not sure why this happens or has happened.
-                # IRJ - 2005-05-25
+			    # I'm not sure when the name attribute was dropped
+			    # but at some point, or in some circumstance it's not
+			    # there, but instead a ref attribute is there which is
+		     	    # tuple of (namespace, name). This hack fixes things, 
+			    # but I'm not sure why this happens or has happened.
+			    # IRJ - 2005-05-25
                             if i.content.mgContent != None:
                                 for c in i.content.mgContent:
                                     nValue = "None"

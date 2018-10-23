@@ -6,24 +6,21 @@
 #
 ##################################################
 
-from VimService_services_types import *
-import urlparse, types
+from pysphere.resources.VimService_services_types import *
 from pysphere.ZSI.TCcompound import ComplexType, Struct
 from pysphere.ZSI import client
 from pysphere.ZSI.schema import GED, GTD
 import pysphere.ZSI
 #alias
 ZSI = pysphere.ZSI
-from pysphere.ZSI.generate.pyclass import pyclass_type
 
 # Locator
 class VimServiceLocator:
-    VimPortType_address = "https://localhost/sdk/vimService"
-    def getVimPortTypeAddress(self):
-        return VimServiceLocator.VimPortType_address
-    def getVimPortType(self, url=None, **kw):
-        return VimBindingSOAP(url or VimServiceLocator.VimPortType_address, **kw)
-
+    VimPort_address = "https://localhost/sdk/vimService"
+    def getVimPortAddress(self):
+        return VimServiceLocator.VimPort_address
+    def getVimPort(self, url=None, **kw):
+        return VimBindingSOAP(url or VimServiceLocator.VimPort_address, **kw)
 
 # Methods
 class VimBindingSOAP:
@@ -34,132 +31,12 @@ class VimBindingSOAP:
         self.binding = client.Binding(url=url, **kw)
         # no ws-addressing
 
-    # op: DestroyPropertyFilter
-    def DestroyPropertyFilter(self, request, **kw):
-        if isinstance(request, DestroyPropertyFilterRequestMsg) is False:
-            raise TypeError("%s incorrect request type" % (request.__class__))
-        # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
-        # no output wsaction
-        response = self.binding.Receive(DestroyPropertyFilterResponseMsg.typecode)
-        return response
-
-    # op: CreateFilter
-    def CreateFilter(self, request, **kw):
-        if isinstance(request, CreateFilterRequestMsg) is False:
-            raise TypeError("%s incorrect request type" % (request.__class__))
-        # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
-        # no output wsaction
-        response = self.binding.Receive(CreateFilterResponseMsg.typecode)
-        return response
-
-    # op: RetrieveProperties
-    def RetrieveProperties(self, request, **kw):
-        if isinstance(request, RetrievePropertiesRequestMsg) is False:
-            raise TypeError("%s incorrect request type" % (request.__class__))
-        # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
-        # no output wsaction
-        response = self.binding.Receive(RetrievePropertiesResponseMsg.typecode)
-        return response
-
-    # op: CheckForUpdates
-    def CheckForUpdates(self, request, **kw):
-        if isinstance(request, CheckForUpdatesRequestMsg) is False:
-            raise TypeError("%s incorrect request type" % (request.__class__))
-        # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
-        # no output wsaction
-        response = self.binding.Receive(CheckForUpdatesResponseMsg.typecode)
-        return response
-
-    # op: WaitForUpdates
-    def WaitForUpdates(self, request, **kw):
-        if isinstance(request, WaitForUpdatesRequestMsg) is False:
-            raise TypeError("%s incorrect request type" % (request.__class__))
-        # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
-        # no output wsaction
-        response = self.binding.Receive(WaitForUpdatesResponseMsg.typecode)
-        return response
-
-    # op: CancelWaitForUpdates
-    def CancelWaitForUpdates(self, request, **kw):
-        if isinstance(request, CancelWaitForUpdatesRequestMsg) is False:
-            raise TypeError("%s incorrect request type" % (request.__class__))
-        # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
-        # no output wsaction
-        response = self.binding.Receive(CancelWaitForUpdatesResponseMsg.typecode)
-        return response
-
-    # op: WaitForUpdatesEx
-    def WaitForUpdatesEx(self, request, **kw):
-        if isinstance(request, WaitForUpdatesExRequestMsg) is False:
-            raise TypeError("%s incorrect request type" % (request.__class__))
-        # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
-        # no output wsaction
-        response = self.binding.Receive(WaitForUpdatesExResponseMsg.typecode)
-        return response
-
-    # op: RetrievePropertiesEx
-    def RetrievePropertiesEx(self, request, **kw):
-        if isinstance(request, RetrievePropertiesExRequestMsg) is False:
-            raise TypeError("%s incorrect request type" % (request.__class__))
-        # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
-        # no output wsaction
-        response = self.binding.Receive(RetrievePropertiesExResponseMsg.typecode)
-        return response
-
-    # op: ContinueRetrievePropertiesEx
-    def ContinueRetrievePropertiesEx(self, request, **kw):
-        if isinstance(request, ContinueRetrievePropertiesExRequestMsg) is False:
-            raise TypeError("%s incorrect request type" % (request.__class__))
-        # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
-        # no output wsaction
-        response = self.binding.Receive(ContinueRetrievePropertiesExResponseMsg.typecode)
-        return response
-
-    # op: CancelRetrievePropertiesEx
-    def CancelRetrievePropertiesEx(self, request, **kw):
-        if isinstance(request, CancelRetrievePropertiesExRequestMsg) is False:
-            raise TypeError("%s incorrect request type" % (request.__class__))
-        # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
-        # no output wsaction
-        response = self.binding.Receive(CancelRetrievePropertiesExResponseMsg.typecode)
-        return response
-
-    # op: CreatePropertyCollector
-    def CreatePropertyCollector(self, request, **kw):
-        if isinstance(request, CreatePropertyCollectorRequestMsg) is False:
-            raise TypeError("%s incorrect request type" % (request.__class__))
-        # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
-        # no output wsaction
-        response = self.binding.Receive(CreatePropertyCollectorResponseMsg.typecode)
-        return response
-
-    # op: DestroyPropertyCollector
-    def DestroyPropertyCollector(self, request, **kw):
-        if isinstance(request, DestroyPropertyCollectorRequestMsg) is False:
-            raise TypeError("%s incorrect request type" % (request.__class__))
-        # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
-        # no output wsaction
-        response = self.binding.Receive(DestroyPropertyCollectorResponseMsg.typecode)
-        return response
-
     # op: AddAuthorizationRole
     def AddAuthorizationRole(self, request, **kw):
         if isinstance(request, AddAuthorizationRoleRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AddAuthorizationRoleResponseMsg.typecode)
         return response
@@ -169,7 +46,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveAuthorizationRoleRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveAuthorizationRoleResponseMsg.typecode)
         return response
@@ -179,7 +56,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateAuthorizationRoleRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateAuthorizationRoleResponseMsg.typecode)
         return response
@@ -189,7 +66,7 @@ class VimBindingSOAP:
         if isinstance(request, MergePermissionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MergePermissionsResponseMsg.typecode)
         return response
@@ -199,7 +76,7 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveRolePermissionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveRolePermissionsResponseMsg.typecode)
         return response
@@ -209,7 +86,7 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveEntityPermissionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveEntityPermissionsResponseMsg.typecode)
         return response
@@ -219,7 +96,7 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveAllPermissionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveAllPermissionsResponseMsg.typecode)
         return response
@@ -229,7 +106,7 @@ class VimBindingSOAP:
         if isinstance(request, SetEntityPermissionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SetEntityPermissionsResponseMsg.typecode)
         return response
@@ -239,7 +116,7 @@ class VimBindingSOAP:
         if isinstance(request, ResetEntityPermissionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ResetEntityPermissionsResponseMsg.typecode)
         return response
@@ -249,7 +126,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveEntityPermissionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveEntityPermissionResponseMsg.typecode)
         return response
@@ -259,9 +136,69 @@ class VimBindingSOAP:
         if isinstance(request, HasPrivilegeOnEntityRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(HasPrivilegeOnEntityResponseMsg.typecode)
+        return response
+
+    # op: HasPrivilegeOnEntities
+    def HasPrivilegeOnEntities(self, request, **kw):
+        if isinstance(request, HasPrivilegeOnEntitiesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HasPrivilegeOnEntitiesResponseMsg.typecode)
+        return response
+
+    # op: HasUserPrivilegeOnEntities
+    def HasUserPrivilegeOnEntities(self, request, **kw):
+        if isinstance(request, HasUserPrivilegeOnEntitiesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HasUserPrivilegeOnEntitiesResponseMsg.typecode)
+        return response
+
+    # op: FetchUserPrivilegeOnEntities
+    def FetchUserPrivilegeOnEntities(self, request, **kw):
+        if isinstance(request, FetchUserPrivilegeOnEntitiesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(FetchUserPrivilegeOnEntitiesResponseMsg.typecode)
+        return response
+
+    # op: CertMgrRefreshCACertificatesAndCRLs_Task
+    def CertMgrRefreshCACertificatesAndCRLs_Task(self, request, **kw):
+        if isinstance(request, CertMgrRefreshCACertificatesAndCRLs_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CertMgrRefreshCACertificatesAndCRLs_TaskResponseMsg.typecode)
+        return response
+
+    # op: CertMgrRefreshCertificates_Task
+    def CertMgrRefreshCertificates_Task(self, request, **kw):
+        if isinstance(request, CertMgrRefreshCertificates_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CertMgrRefreshCertificates_TaskResponseMsg.typecode)
+        return response
+
+    # op: CertMgrRevokeCertificates_Task
+    def CertMgrRevokeCertificates_Task(self, request, **kw):
+        if isinstance(request, CertMgrRevokeCertificates_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CertMgrRevokeCertificates_TaskResponseMsg.typecode)
         return response
 
     # op: ReconfigureCluster_Task
@@ -269,7 +206,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconfigureCluster_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconfigureCluster_TaskResponseMsg.typecode)
         return response
@@ -279,7 +216,7 @@ class VimBindingSOAP:
         if isinstance(request, ApplyRecommendationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ApplyRecommendationResponseMsg.typecode)
         return response
@@ -289,7 +226,7 @@ class VimBindingSOAP:
         if isinstance(request, CancelRecommendationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CancelRecommendationResponseMsg.typecode)
         return response
@@ -299,7 +236,7 @@ class VimBindingSOAP:
         if isinstance(request, RecommendHostsForVmRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RecommendHostsForVmResponseMsg.typecode)
         return response
@@ -309,7 +246,7 @@ class VimBindingSOAP:
         if isinstance(request, AddHost_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AddHost_TaskResponseMsg.typecode)
         return response
@@ -319,7 +256,7 @@ class VimBindingSOAP:
         if isinstance(request, MoveInto_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MoveInto_TaskResponseMsg.typecode)
         return response
@@ -329,7 +266,7 @@ class VimBindingSOAP:
         if isinstance(request, MoveHostInto_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MoveHostInto_TaskResponseMsg.typecode)
         return response
@@ -339,9 +276,19 @@ class VimBindingSOAP:
         if isinstance(request, RefreshRecommendationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RefreshRecommendationResponseMsg.typecode)
+        return response
+
+    # op: EvcManager
+    def EvcManager(self, request, **kw):
+        if isinstance(request, EvcManagerRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(EvcManagerResponseMsg.typecode)
         return response
 
     # op: RetrieveDasAdvancedRuntimeInfo
@@ -349,7 +296,7 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveDasAdvancedRuntimeInfoRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveDasAdvancedRuntimeInfoResponseMsg.typecode)
         return response
@@ -359,9 +306,49 @@ class VimBindingSOAP:
         if isinstance(request, ClusterEnterMaintenanceModeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ClusterEnterMaintenanceModeResponseMsg.typecode)
+        return response
+
+    # op: PlaceVm
+    def PlaceVm(self, request, **kw):
+        if isinstance(request, PlaceVmRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(PlaceVmResponseMsg.typecode)
+        return response
+
+    # op: FindRulesForVm
+    def FindRulesForVm(self, request, **kw):
+        if isinstance(request, FindRulesForVmRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(FindRulesForVmResponseMsg.typecode)
+        return response
+
+    # op: StampAllRulesWithUuid_Task
+    def StampAllRulesWithUuid_Task(self, request, **kw):
+        if isinstance(request, StampAllRulesWithUuid_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(StampAllRulesWithUuid_TaskResponseMsg.typecode)
+        return response
+
+    # op: GetResourceUsage
+    def GetResourceUsage(self, request, **kw):
+        if isinstance(request, GetResourceUsageRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(GetResourceUsageResponseMsg.typecode)
         return response
 
     # op: ReconfigureComputeResource_Task
@@ -369,7 +356,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconfigureComputeResource_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconfigureComputeResource_TaskResponseMsg.typecode)
         return response
@@ -379,7 +366,7 @@ class VimBindingSOAP:
         if isinstance(request, AddCustomFieldDefRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AddCustomFieldDefResponseMsg.typecode)
         return response
@@ -389,7 +376,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveCustomFieldDefRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveCustomFieldDefResponseMsg.typecode)
         return response
@@ -399,7 +386,7 @@ class VimBindingSOAP:
         if isinstance(request, RenameCustomFieldDefRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RenameCustomFieldDefResponseMsg.typecode)
         return response
@@ -409,7 +396,7 @@ class VimBindingSOAP:
         if isinstance(request, SetFieldRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SetFieldResponseMsg.typecode)
         return response
@@ -419,7 +406,7 @@ class VimBindingSOAP:
         if isinstance(request, DoesCustomizationSpecExistRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DoesCustomizationSpecExistResponseMsg.typecode)
         return response
@@ -429,7 +416,7 @@ class VimBindingSOAP:
         if isinstance(request, GetCustomizationSpecRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(GetCustomizationSpecResponseMsg.typecode)
         return response
@@ -439,7 +426,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateCustomizationSpecRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateCustomizationSpecResponseMsg.typecode)
         return response
@@ -449,7 +436,7 @@ class VimBindingSOAP:
         if isinstance(request, OverwriteCustomizationSpecRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(OverwriteCustomizationSpecResponseMsg.typecode)
         return response
@@ -459,7 +446,7 @@ class VimBindingSOAP:
         if isinstance(request, DeleteCustomizationSpecRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DeleteCustomizationSpecResponseMsg.typecode)
         return response
@@ -469,7 +456,7 @@ class VimBindingSOAP:
         if isinstance(request, DuplicateCustomizationSpecRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DuplicateCustomizationSpecResponseMsg.typecode)
         return response
@@ -479,7 +466,7 @@ class VimBindingSOAP:
         if isinstance(request, RenameCustomizationSpecRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RenameCustomizationSpecResponseMsg.typecode)
         return response
@@ -489,7 +476,7 @@ class VimBindingSOAP:
         if isinstance(request, CustomizationSpecItemToXmlRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CustomizationSpecItemToXmlResponseMsg.typecode)
         return response
@@ -499,7 +486,7 @@ class VimBindingSOAP:
         if isinstance(request, XmlToCustomizationSpecItemRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(XmlToCustomizationSpecItemResponseMsg.typecode)
         return response
@@ -509,7 +496,7 @@ class VimBindingSOAP:
         if isinstance(request, CheckCustomizationResourcesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CheckCustomizationResourcesResponseMsg.typecode)
         return response
@@ -519,9 +506,19 @@ class VimBindingSOAP:
         if isinstance(request, QueryConnectionInfoRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryConnectionInfoResponseMsg.typecode)
+        return response
+
+    # op: QueryConnectionInfoViaSpec
+    def QueryConnectionInfoViaSpec(self, request, **kw):
+        if isinstance(request, QueryConnectionInfoViaSpecRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryConnectionInfoViaSpecResponseMsg.typecode)
         return response
 
     # op: PowerOnMultiVM_Task
@@ -529,7 +526,7 @@ class VimBindingSOAP:
         if isinstance(request, PowerOnMultiVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(PowerOnMultiVM_TaskResponseMsg.typecode)
         return response
@@ -539,7 +536,7 @@ class VimBindingSOAP:
         if isinstance(request, queryDatacenterConfigOptionDescriptorRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(queryDatacenterConfigOptionDescriptorResponseMsg.typecode)
         return response
@@ -549,7 +546,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconfigureDatacenter_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconfigureDatacenter_TaskResponseMsg.typecode)
         return response
@@ -559,7 +556,7 @@ class VimBindingSOAP:
         if isinstance(request, RefreshDatastoreRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RefreshDatastoreResponseMsg.typecode)
         return response
@@ -569,7 +566,7 @@ class VimBindingSOAP:
         if isinstance(request, RefreshDatastoreStorageInfoRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RefreshDatastoreStorageInfoResponseMsg.typecode)
         return response
@@ -579,7 +576,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateVirtualMachineFiles_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateVirtualMachineFiles_TaskResponseMsg.typecode)
         return response
@@ -589,7 +586,7 @@ class VimBindingSOAP:
         if isinstance(request, RenameDatastoreRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RenameDatastoreResponseMsg.typecode)
         return response
@@ -599,7 +596,7 @@ class VimBindingSOAP:
         if isinstance(request, DestroyDatastoreRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DestroyDatastoreResponseMsg.typecode)
         return response
@@ -609,7 +606,7 @@ class VimBindingSOAP:
         if isinstance(request, DatastoreEnterMaintenanceModeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DatastoreEnterMaintenanceModeResponseMsg.typecode)
         return response
@@ -619,9 +616,49 @@ class VimBindingSOAP:
         if isinstance(request, DatastoreExitMaintenanceMode_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DatastoreExitMaintenanceMode_TaskResponseMsg.typecode)
+        return response
+
+    # op: UpdateVVolVirtualMachineFiles_Task
+    def UpdateVVolVirtualMachineFiles_Task(self, request, **kw):
+        if isinstance(request, UpdateVVolVirtualMachineFiles_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateVVolVirtualMachineFiles_TaskResponseMsg.typecode)
+        return response
+
+    # op: CreateDirectory
+    def CreateDirectory(self, request, **kw):
+        if isinstance(request, CreateDirectoryRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CreateDirectoryResponseMsg.typecode)
+        return response
+
+    # op: DeleteDirectory
+    def DeleteDirectory(self, request, **kw):
+        if isinstance(request, DeleteDirectoryRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DeleteDirectoryResponseMsg.typecode)
+        return response
+
+    # op: ConvertNamespacePathToUuidPath
+    def ConvertNamespacePathToUuidPath(self, request, **kw):
+        if isinstance(request, ConvertNamespacePathToUuidPathRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ConvertNamespacePathToUuidPathResponseMsg.typecode)
         return response
 
     # op: QueryDescriptions
@@ -629,7 +666,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryDescriptionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryDescriptionsResponseMsg.typecode)
         return response
@@ -639,7 +676,7 @@ class VimBindingSOAP:
         if isinstance(request, BrowseDiagnosticLogRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(BrowseDiagnosticLogResponseMsg.typecode)
         return response
@@ -649,7 +686,7 @@ class VimBindingSOAP:
         if isinstance(request, GenerateLogBundles_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(GenerateLogBundles_TaskResponseMsg.typecode)
         return response
@@ -659,7 +696,7 @@ class VimBindingSOAP:
         if isinstance(request, FetchDVPortKeysRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(FetchDVPortKeysResponseMsg.typecode)
         return response
@@ -669,7 +706,7 @@ class VimBindingSOAP:
         if isinstance(request, FetchDVPortsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(FetchDVPortsResponseMsg.typecode)
         return response
@@ -679,7 +716,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryUsedVlanIdInDvsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryUsedVlanIdInDvsResponseMsg.typecode)
         return response
@@ -689,7 +726,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconfigureDvs_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconfigureDvs_TaskResponseMsg.typecode)
         return response
@@ -699,7 +736,7 @@ class VimBindingSOAP:
         if isinstance(request, PerformDvsProductSpecOperation_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(PerformDvsProductSpecOperation_TaskResponseMsg.typecode)
         return response
@@ -709,7 +746,7 @@ class VimBindingSOAP:
         if isinstance(request, MergeDvs_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MergeDvs_TaskResponseMsg.typecode)
         return response
@@ -719,7 +756,7 @@ class VimBindingSOAP:
         if isinstance(request, AddDVPortgroup_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AddDVPortgroup_TaskResponseMsg.typecode)
         return response
@@ -729,7 +766,7 @@ class VimBindingSOAP:
         if isinstance(request, MoveDVPort_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MoveDVPort_TaskResponseMsg.typecode)
         return response
@@ -739,7 +776,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateDvsCapabilityRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateDvsCapabilityResponseMsg.typecode)
         return response
@@ -749,7 +786,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconfigureDVPort_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconfigureDVPort_TaskResponseMsg.typecode)
         return response
@@ -759,7 +796,7 @@ class VimBindingSOAP:
         if isinstance(request, RefreshDVPortStateRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RefreshDVPortStateResponseMsg.typecode)
         return response
@@ -769,7 +806,7 @@ class VimBindingSOAP:
         if isinstance(request, RectifyDvsHost_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RectifyDvsHost_TaskResponseMsg.typecode)
         return response
@@ -779,7 +816,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateNetworkResourcePoolRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateNetworkResourcePoolResponseMsg.typecode)
         return response
@@ -789,7 +826,7 @@ class VimBindingSOAP:
         if isinstance(request, AddNetworkResourcePoolRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AddNetworkResourcePoolResponseMsg.typecode)
         return response
@@ -799,9 +836,19 @@ class VimBindingSOAP:
         if isinstance(request, RemoveNetworkResourcePoolRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveNetworkResourcePoolResponseMsg.typecode)
+        return response
+
+    # op: DvsReconfigureVmVnicNetworkResourcePool_Task
+    def DvsReconfigureVmVnicNetworkResourcePool_Task(self, request, **kw):
+        if isinstance(request, DvsReconfigureVmVnicNetworkResourcePool_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DvsReconfigureVmVnicNetworkResourcePool_TaskResponseMsg.typecode)
         return response
 
     # op: EnableNetworkResourceManagement
@@ -809,7 +856,7 @@ class VimBindingSOAP:
         if isinstance(request, EnableNetworkResourceManagementRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(EnableNetworkResourceManagementResponseMsg.typecode)
         return response
@@ -819,7 +866,7 @@ class VimBindingSOAP:
         if isinstance(request, DVSRollback_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DVSRollback_TaskResponseMsg.typecode)
         return response
@@ -829,7 +876,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateDVPortgroup_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateDVPortgroup_TaskResponseMsg.typecode)
         return response
@@ -839,7 +886,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateDVSHealthCheckConfig_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateDVSHealthCheckConfig_TaskResponseMsg.typecode)
         return response
@@ -849,7 +896,7 @@ class VimBindingSOAP:
         if isinstance(request, LookupDvPortGroupRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(LookupDvPortGroupResponseMsg.typecode)
         return response
@@ -859,7 +906,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryConfigOptionDescriptorRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryConfigOptionDescriptorResponseMsg.typecode)
         return response
@@ -869,9 +916,19 @@ class VimBindingSOAP:
         if isinstance(request, QueryConfigOptionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryConfigOptionResponseMsg.typecode)
+        return response
+
+    # op: QueryConfigOptionEx
+    def QueryConfigOptionEx(self, request, **kw):
+        if isinstance(request, QueryConfigOptionExRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryConfigOptionExResponseMsg.typecode)
         return response
 
     # op: QueryConfigTarget
@@ -879,7 +936,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryConfigTargetRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryConfigTargetResponseMsg.typecode)
         return response
@@ -889,7 +946,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryTargetCapabilitiesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryTargetCapabilitiesResponseMsg.typecode)
         return response
@@ -899,7 +956,7 @@ class VimBindingSOAP:
         if isinstance(request, setCustomValueRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(setCustomValueResponseMsg.typecode)
         return response
@@ -909,7 +966,7 @@ class VimBindingSOAP:
         if isinstance(request, UnregisterExtensionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UnregisterExtensionResponseMsg.typecode)
         return response
@@ -919,7 +976,7 @@ class VimBindingSOAP:
         if isinstance(request, FindExtensionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(FindExtensionResponseMsg.typecode)
         return response
@@ -929,7 +986,7 @@ class VimBindingSOAP:
         if isinstance(request, RegisterExtensionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RegisterExtensionResponseMsg.typecode)
         return response
@@ -939,7 +996,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateExtensionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateExtensionResponseMsg.typecode)
         return response
@@ -949,7 +1006,7 @@ class VimBindingSOAP:
         if isinstance(request, GetPublicKeyRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(GetPublicKeyResponseMsg.typecode)
         return response
@@ -959,7 +1016,7 @@ class VimBindingSOAP:
         if isinstance(request, SetPublicKeyRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SetPublicKeyResponseMsg.typecode)
         return response
@@ -969,7 +1026,7 @@ class VimBindingSOAP:
         if isinstance(request, SetExtensionCertificateRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SetExtensionCertificateResponseMsg.typecode)
         return response
@@ -979,7 +1036,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryManagedByRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryManagedByResponseMsg.typecode)
         return response
@@ -989,7 +1046,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryExtensionIpAllocationUsageRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryExtensionIpAllocationUsageResponseMsg.typecode)
         return response
@@ -999,7 +1056,7 @@ class VimBindingSOAP:
         if isinstance(request, MoveDatastoreFile_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MoveDatastoreFile_TaskResponseMsg.typecode)
         return response
@@ -1009,7 +1066,7 @@ class VimBindingSOAP:
         if isinstance(request, CopyDatastoreFile_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CopyDatastoreFile_TaskResponseMsg.typecode)
         return response
@@ -1019,7 +1076,7 @@ class VimBindingSOAP:
         if isinstance(request, DeleteDatastoreFile_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DeleteDatastoreFile_TaskResponseMsg.typecode)
         return response
@@ -1029,7 +1086,7 @@ class VimBindingSOAP:
         if isinstance(request, MakeDirectoryRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MakeDirectoryResponseMsg.typecode)
         return response
@@ -1039,7 +1096,7 @@ class VimBindingSOAP:
         if isinstance(request, ChangeOwnerRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ChangeOwnerResponseMsg.typecode)
         return response
@@ -1049,7 +1106,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateFolderRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateFolderResponseMsg.typecode)
         return response
@@ -1059,7 +1116,7 @@ class VimBindingSOAP:
         if isinstance(request, MoveIntoFolder_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MoveIntoFolder_TaskResponseMsg.typecode)
         return response
@@ -1069,7 +1126,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateVM_TaskResponseMsg.typecode)
         return response
@@ -1079,7 +1136,7 @@ class VimBindingSOAP:
         if isinstance(request, RegisterVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RegisterVM_TaskResponseMsg.typecode)
         return response
@@ -1089,7 +1146,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateClusterRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateClusterResponseMsg.typecode)
         return response
@@ -1099,7 +1156,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateClusterExRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateClusterExResponseMsg.typecode)
         return response
@@ -1109,7 +1166,7 @@ class VimBindingSOAP:
         if isinstance(request, AddStandaloneHost_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AddStandaloneHost_TaskResponseMsg.typecode)
         return response
@@ -1119,7 +1176,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateDatacenterRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateDatacenterResponseMsg.typecode)
         return response
@@ -1129,7 +1186,7 @@ class VimBindingSOAP:
         if isinstance(request, UnregisterAndDestroy_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UnregisterAndDestroy_TaskResponseMsg.typecode)
         return response
@@ -1139,7 +1196,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateDVS_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateDVS_TaskResponseMsg.typecode)
         return response
@@ -1149,9 +1206,219 @@ class VimBindingSOAP:
         if isinstance(request, CreateStoragePodRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateStoragePodResponseMsg.typecode)
+        return response
+
+    # op: RegisterHealthUpdateProvider
+    def RegisterHealthUpdateProvider(self, request, **kw):
+        if isinstance(request, RegisterHealthUpdateProviderRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RegisterHealthUpdateProviderResponseMsg.typecode)
+        return response
+
+    # op: UnregisterHealthUpdateProvider
+    def UnregisterHealthUpdateProvider(self, request, **kw):
+        if isinstance(request, UnregisterHealthUpdateProviderRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UnregisterHealthUpdateProviderResponseMsg.typecode)
+        return response
+
+    # op: QueryProviderList
+    def QueryProviderList(self, request, **kw):
+        if isinstance(request, QueryProviderListRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryProviderListResponseMsg.typecode)
+        return response
+
+    # op: HasProvider
+    def HasProvider(self, request, **kw):
+        if isinstance(request, HasProviderRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HasProviderResponseMsg.typecode)
+        return response
+
+    # op: QueryProviderName
+    def QueryProviderName(self, request, **kw):
+        if isinstance(request, QueryProviderNameRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryProviderNameResponseMsg.typecode)
+        return response
+
+    # op: QueryHealthUpdateInfos
+    def QueryHealthUpdateInfos(self, request, **kw):
+        if isinstance(request, QueryHealthUpdateInfosRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryHealthUpdateInfosResponseMsg.typecode)
+        return response
+
+    # op: AddMonitoredEntities
+    def AddMonitoredEntities(self, request, **kw):
+        if isinstance(request, AddMonitoredEntitiesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(AddMonitoredEntitiesResponseMsg.typecode)
+        return response
+
+    # op: RemoveMonitoredEntities
+    def RemoveMonitoredEntities(self, request, **kw):
+        if isinstance(request, RemoveMonitoredEntitiesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RemoveMonitoredEntitiesResponseMsg.typecode)
+        return response
+
+    # op: QueryMonitoredEntities
+    def QueryMonitoredEntities(self, request, **kw):
+        if isinstance(request, QueryMonitoredEntitiesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryMonitoredEntitiesResponseMsg.typecode)
+        return response
+
+    # op: HasMonitoredEntity
+    def HasMonitoredEntity(self, request, **kw):
+        if isinstance(request, HasMonitoredEntityRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HasMonitoredEntityResponseMsg.typecode)
+        return response
+
+    # op: QueryUnmonitoredHosts
+    def QueryUnmonitoredHosts(self, request, **kw):
+        if isinstance(request, QueryUnmonitoredHostsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryUnmonitoredHostsResponseMsg.typecode)
+        return response
+
+    # op: PostHealthUpdates
+    def PostHealthUpdates(self, request, **kw):
+        if isinstance(request, PostHealthUpdatesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(PostHealthUpdatesResponseMsg.typecode)
+        return response
+
+    # op: QueryHealthUpdates
+    def QueryHealthUpdates(self, request, **kw):
+        if isinstance(request, QueryHealthUpdatesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryHealthUpdatesResponseMsg.typecode)
+        return response
+
+    # op: AddFilter
+    def AddFilter(self, request, **kw):
+        if isinstance(request, AddFilterRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(AddFilterResponseMsg.typecode)
+        return response
+
+    # op: QueryFilterList
+    def QueryFilterList(self, request, **kw):
+        if isinstance(request, QueryFilterListRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryFilterListResponseMsg.typecode)
+        return response
+
+    # op: QueryFilterName
+    def QueryFilterName(self, request, **kw):
+        if isinstance(request, QueryFilterNameRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryFilterNameResponseMsg.typecode)
+        return response
+
+    # op: QueryFilterInfoIds
+    def QueryFilterInfoIds(self, request, **kw):
+        if isinstance(request, QueryFilterInfoIdsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryFilterInfoIdsResponseMsg.typecode)
+        return response
+
+    # op: QueryFilterEntities
+    def QueryFilterEntities(self, request, **kw):
+        if isinstance(request, QueryFilterEntitiesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryFilterEntitiesResponseMsg.typecode)
+        return response
+
+    # op: AddFilterEntities
+    def AddFilterEntities(self, request, **kw):
+        if isinstance(request, AddFilterEntitiesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(AddFilterEntitiesResponseMsg.typecode)
+        return response
+
+    # op: RemoveFilterEntities
+    def RemoveFilterEntities(self, request, **kw):
+        if isinstance(request, RemoveFilterEntitiesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RemoveFilterEntitiesResponseMsg.typecode)
+        return response
+
+    # op: RemoveFilter
+    def RemoveFilter(self, request, **kw):
+        if isinstance(request, RemoveFilterRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RemoveFilterResponseMsg.typecode)
         return response
 
     # op: SetCollectorPageSize
@@ -1159,7 +1426,7 @@ class VimBindingSOAP:
         if isinstance(request, SetCollectorPageSizeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SetCollectorPageSizeResponseMsg.typecode)
         return response
@@ -1169,7 +1436,7 @@ class VimBindingSOAP:
         if isinstance(request, RewindCollectorRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RewindCollectorResponseMsg.typecode)
         return response
@@ -1179,7 +1446,7 @@ class VimBindingSOAP:
         if isinstance(request, ResetCollectorRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ResetCollectorResponseMsg.typecode)
         return response
@@ -1189,7 +1456,7 @@ class VimBindingSOAP:
         if isinstance(request, DestroyCollectorRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DestroyCollectorResponseMsg.typecode)
         return response
@@ -1199,7 +1466,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryTpmAttestationReportRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryTpmAttestationReportResponseMsg.typecode)
         return response
@@ -1209,7 +1476,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryHostConnectionInfoRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryHostConnectionInfoResponseMsg.typecode)
         return response
@@ -1219,7 +1486,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateSystemResourcesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateSystemResourcesResponseMsg.typecode)
         return response
@@ -1229,7 +1496,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateSystemSwapConfigurationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateSystemSwapConfigurationResponseMsg.typecode)
         return response
@@ -1239,7 +1506,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconnectHost_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconnectHost_TaskResponseMsg.typecode)
         return response
@@ -1249,7 +1516,7 @@ class VimBindingSOAP:
         if isinstance(request, DisconnectHost_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DisconnectHost_TaskResponseMsg.typecode)
         return response
@@ -1259,7 +1526,7 @@ class VimBindingSOAP:
         if isinstance(request, EnterMaintenanceMode_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(EnterMaintenanceMode_TaskResponseMsg.typecode)
         return response
@@ -1269,7 +1536,7 @@ class VimBindingSOAP:
         if isinstance(request, ExitMaintenanceMode_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ExitMaintenanceMode_TaskResponseMsg.typecode)
         return response
@@ -1279,7 +1546,7 @@ class VimBindingSOAP:
         if isinstance(request, RebootHost_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RebootHost_TaskResponseMsg.typecode)
         return response
@@ -1289,7 +1556,7 @@ class VimBindingSOAP:
         if isinstance(request, ShutdownHost_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ShutdownHost_TaskResponseMsg.typecode)
         return response
@@ -1299,7 +1566,7 @@ class VimBindingSOAP:
         if isinstance(request, PowerDownHostToStandBy_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(PowerDownHostToStandBy_TaskResponseMsg.typecode)
         return response
@@ -1309,7 +1576,7 @@ class VimBindingSOAP:
         if isinstance(request, PowerUpHostFromStandBy_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(PowerUpHostFromStandBy_TaskResponseMsg.typecode)
         return response
@@ -1319,7 +1586,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryMemoryOverheadRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryMemoryOverheadResponseMsg.typecode)
         return response
@@ -1329,7 +1596,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryMemoryOverheadExRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryMemoryOverheadExResponseMsg.typecode)
         return response
@@ -1339,7 +1606,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconfigureHostForDAS_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconfigureHostForDAS_TaskResponseMsg.typecode)
         return response
@@ -1349,7 +1616,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateFlagsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateFlagsResponseMsg.typecode)
         return response
@@ -1359,7 +1626,7 @@ class VimBindingSOAP:
         if isinstance(request, EnterLockdownModeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(EnterLockdownModeResponseMsg.typecode)
         return response
@@ -1369,7 +1636,7 @@ class VimBindingSOAP:
         if isinstance(request, ExitLockdownModeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ExitLockdownModeResponseMsg.typecode)
         return response
@@ -1379,7 +1646,7 @@ class VimBindingSOAP:
         if isinstance(request, AcquireCimServicesTicketRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AcquireCimServicesTicketResponseMsg.typecode)
         return response
@@ -1389,7 +1656,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateIpmiRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateIpmiResponseMsg.typecode)
         return response
@@ -1399,9 +1666,39 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveHardwareUptimeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveHardwareUptimeResponseMsg.typecode)
+        return response
+
+    # op: PrepareCrypto
+    def PrepareCrypto(self, request, **kw):
+        if isinstance(request, PrepareCryptoRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(PrepareCryptoResponseMsg.typecode)
+        return response
+
+    # op: EnableCrypto
+    def EnableCrypto(self, request, **kw):
+        if isinstance(request, EnableCryptoRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(EnableCryptoResponseMsg.typecode)
+        return response
+
+    # op: ConfigureCryptoKey
+    def ConfigureCryptoKey(self, request, **kw):
+        if isinstance(request, ConfigureCryptoKeyRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ConfigureCryptoKeyResponseMsg.typecode)
         return response
 
     # op: HttpNfcLeaseGetManifest
@@ -1409,9 +1706,19 @@ class VimBindingSOAP:
         if isinstance(request, HttpNfcLeaseGetManifestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(HttpNfcLeaseGetManifestResponseMsg.typecode)
+        return response
+
+    # op: HttpNfcLeaseSetManifestChecksumType
+    def HttpNfcLeaseSetManifestChecksumType(self, request, **kw):
+        if isinstance(request, HttpNfcLeaseSetManifestChecksumTypeRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HttpNfcLeaseSetManifestChecksumTypeResponseMsg.typecode)
         return response
 
     # op: HttpNfcLeaseComplete
@@ -1419,7 +1726,7 @@ class VimBindingSOAP:
         if isinstance(request, HttpNfcLeaseCompleteRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(HttpNfcLeaseCompleteResponseMsg.typecode)
         return response
@@ -1429,7 +1736,7 @@ class VimBindingSOAP:
         if isinstance(request, HttpNfcLeaseAbortRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(HttpNfcLeaseAbortResponseMsg.typecode)
         return response
@@ -1439,9 +1746,99 @@ class VimBindingSOAP:
         if isinstance(request, HttpNfcLeaseProgressRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(HttpNfcLeaseProgressResponseMsg.typecode)
+        return response
+
+    # op: HttpNfcLeasePullFromUrls_Task
+    def HttpNfcLeasePullFromUrls_Task(self, request, **kw):
+        if isinstance(request, HttpNfcLeasePullFromUrls_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HttpNfcLeasePullFromUrls_TaskResponseMsg.typecode)
+        return response
+
+    # op: InstallIoFilter_Task
+    def InstallIoFilter_Task(self, request, **kw):
+        if isinstance(request, InstallIoFilter_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(InstallIoFilter_TaskResponseMsg.typecode)
+        return response
+
+    # op: UninstallIoFilter_Task
+    def UninstallIoFilter_Task(self, request, **kw):
+        if isinstance(request, UninstallIoFilter_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UninstallIoFilter_TaskResponseMsg.typecode)
+        return response
+
+    # op: UpgradeIoFilter_Task
+    def UpgradeIoFilter_Task(self, request, **kw):
+        if isinstance(request, UpgradeIoFilter_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpgradeIoFilter_TaskResponseMsg.typecode)
+        return response
+
+    # op: QueryIoFilterIssues
+    def QueryIoFilterIssues(self, request, **kw):
+        if isinstance(request, QueryIoFilterIssuesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryIoFilterIssuesResponseMsg.typecode)
+        return response
+
+    # op: QueryIoFilterInfo
+    def QueryIoFilterInfo(self, request, **kw):
+        if isinstance(request, QueryIoFilterInfoRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryIoFilterInfoResponseMsg.typecode)
+        return response
+
+    # op: ResolveInstallationErrorsOnHost_Task
+    def ResolveInstallationErrorsOnHost_Task(self, request, **kw):
+        if isinstance(request, ResolveInstallationErrorsOnHost_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ResolveInstallationErrorsOnHost_TaskResponseMsg.typecode)
+        return response
+
+    # op: ResolveInstallationErrorsOnCluster_Task
+    def ResolveInstallationErrorsOnCluster_Task(self, request, **kw):
+        if isinstance(request, ResolveInstallationErrorsOnCluster_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ResolveInstallationErrorsOnCluster_TaskResponseMsg.typecode)
+        return response
+
+    # op: QueryDisksUsingFilter
+    def QueryDisksUsingFilter(self, request, **kw):
+        if isinstance(request, QueryDisksUsingFilterRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryDisksUsingFilterResponseMsg.typecode)
         return response
 
     # op: QueryIpPools
@@ -1449,7 +1846,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryIpPoolsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryIpPoolsResponseMsg.typecode)
         return response
@@ -1459,7 +1856,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateIpPoolRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateIpPoolResponseMsg.typecode)
         return response
@@ -1469,7 +1866,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateIpPoolRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateIpPoolResponseMsg.typecode)
         return response
@@ -1479,7 +1876,7 @@ class VimBindingSOAP:
         if isinstance(request, DestroyIpPoolRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DestroyIpPoolResponseMsg.typecode)
         return response
@@ -1489,7 +1886,7 @@ class VimBindingSOAP:
         if isinstance(request, AllocateIpv4AddressRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AllocateIpv4AddressResponseMsg.typecode)
         return response
@@ -1499,7 +1896,7 @@ class VimBindingSOAP:
         if isinstance(request, AllocateIpv6AddressRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AllocateIpv6AddressResponseMsg.typecode)
         return response
@@ -1509,7 +1906,7 @@ class VimBindingSOAP:
         if isinstance(request, ReleaseIpAllocationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReleaseIpAllocationResponseMsg.typecode)
         return response
@@ -1519,7 +1916,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryIPAllocationsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryIPAllocationsResponseMsg.typecode)
         return response
@@ -1529,7 +1926,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateAssignedLicenseRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateAssignedLicenseResponseMsg.typecode)
         return response
@@ -1539,7 +1936,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveAssignedLicenseRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveAssignedLicenseResponseMsg.typecode)
         return response
@@ -1549,7 +1946,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryAssignedLicensesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryAssignedLicensesResponseMsg.typecode)
         return response
@@ -1559,7 +1956,7 @@ class VimBindingSOAP:
         if isinstance(request, QuerySupportedFeaturesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QuerySupportedFeaturesResponseMsg.typecode)
         return response
@@ -1569,7 +1966,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryLicenseSourceAvailabilityRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryLicenseSourceAvailabilityResponseMsg.typecode)
         return response
@@ -1579,7 +1976,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryLicenseUsageRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryLicenseUsageResponseMsg.typecode)
         return response
@@ -1589,7 +1986,7 @@ class VimBindingSOAP:
         if isinstance(request, SetLicenseEditionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SetLicenseEditionResponseMsg.typecode)
         return response
@@ -1599,7 +1996,7 @@ class VimBindingSOAP:
         if isinstance(request, CheckLicenseFeatureRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CheckLicenseFeatureResponseMsg.typecode)
         return response
@@ -1609,7 +2006,7 @@ class VimBindingSOAP:
         if isinstance(request, EnableFeatureRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(EnableFeatureResponseMsg.typecode)
         return response
@@ -1619,7 +2016,7 @@ class VimBindingSOAP:
         if isinstance(request, DisableFeatureRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DisableFeatureResponseMsg.typecode)
         return response
@@ -1629,7 +2026,7 @@ class VimBindingSOAP:
         if isinstance(request, ConfigureLicenseSourceRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ConfigureLicenseSourceResponseMsg.typecode)
         return response
@@ -1639,7 +2036,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateLicenseRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateLicenseResponseMsg.typecode)
         return response
@@ -1649,7 +2046,7 @@ class VimBindingSOAP:
         if isinstance(request, AddLicenseRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AddLicenseResponseMsg.typecode)
         return response
@@ -1659,7 +2056,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveLicenseRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveLicenseResponseMsg.typecode)
         return response
@@ -1669,7 +2066,7 @@ class VimBindingSOAP:
         if isinstance(request, DecodeLicenseRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DecodeLicenseResponseMsg.typecode)
         return response
@@ -1679,7 +2076,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateLicenseLabelRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateLicenseLabelResponseMsg.typecode)
         return response
@@ -1689,7 +2086,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveLicenseLabelRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveLicenseLabelResponseMsg.typecode)
         return response
@@ -1699,7 +2096,7 @@ class VimBindingSOAP:
         if isinstance(request, ReloadRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReloadResponseMsg.typecode)
         return response
@@ -1709,7 +2106,7 @@ class VimBindingSOAP:
         if isinstance(request, Rename_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(Rename_TaskResponseMsg.typecode)
         return response
@@ -1719,7 +2116,7 @@ class VimBindingSOAP:
         if isinstance(request, Destroy_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(Destroy_TaskResponseMsg.typecode)
         return response
@@ -1729,9 +2126,19 @@ class VimBindingSOAP:
         if isinstance(request, DestroyNetworkRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DestroyNetworkResponseMsg.typecode)
+        return response
+
+    # op: LookupVmOverheadMemory
+    def LookupVmOverheadMemory(self, request, **kw):
+        if isinstance(request, LookupVmOverheadMemoryRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(LookupVmOverheadMemoryResponseMsg.typecode)
         return response
 
     # op: ValidateHost
@@ -1739,7 +2146,7 @@ class VimBindingSOAP:
         if isinstance(request, ValidateHostRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ValidateHostResponseMsg.typecode)
         return response
@@ -1749,7 +2156,7 @@ class VimBindingSOAP:
         if isinstance(request, ParseDescriptorRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ParseDescriptorResponseMsg.typecode)
         return response
@@ -1759,7 +2166,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateImportSpecRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateImportSpecResponseMsg.typecode)
         return response
@@ -1769,7 +2176,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateDescriptorRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateDescriptorResponseMsg.typecode)
         return response
@@ -1779,7 +2186,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryPerfProviderSummaryRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryPerfProviderSummaryResponseMsg.typecode)
         return response
@@ -1789,7 +2196,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryAvailablePerfMetricRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryAvailablePerfMetricResponseMsg.typecode)
         return response
@@ -1799,7 +2206,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryPerfCounterRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryPerfCounterResponseMsg.typecode)
         return response
@@ -1809,7 +2216,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryPerfCounterByLevelRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryPerfCounterByLevelResponseMsg.typecode)
         return response
@@ -1819,7 +2226,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryPerfRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryPerfResponseMsg.typecode)
         return response
@@ -1829,7 +2236,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryPerfCompositeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryPerfCompositeResponseMsg.typecode)
         return response
@@ -1839,7 +2246,7 @@ class VimBindingSOAP:
         if isinstance(request, CreatePerfIntervalRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreatePerfIntervalResponseMsg.typecode)
         return response
@@ -1849,7 +2256,7 @@ class VimBindingSOAP:
         if isinstance(request, RemovePerfIntervalRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemovePerfIntervalResponseMsg.typecode)
         return response
@@ -1859,7 +2266,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdatePerfIntervalRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdatePerfIntervalResponseMsg.typecode)
         return response
@@ -1869,7 +2276,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateCounterLevelMappingRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateCounterLevelMappingResponseMsg.typecode)
         return response
@@ -1879,7 +2286,7 @@ class VimBindingSOAP:
         if isinstance(request, ResetCounterLevelMappingRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ResetCounterLevelMappingResponseMsg.typecode)
         return response
@@ -1889,7 +2296,7 @@ class VimBindingSOAP:
         if isinstance(request, EstimateDatabaseSizeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(EstimateDatabaseSizeResponseMsg.typecode)
         return response
@@ -1899,7 +2306,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateConfigRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateConfigResponseMsg.typecode)
         return response
@@ -1909,7 +2316,7 @@ class VimBindingSOAP:
         if isinstance(request, MoveIntoResourcePoolRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MoveIntoResourcePoolResponseMsg.typecode)
         return response
@@ -1919,7 +2326,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateChildResourceConfigurationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateChildResourceConfigurationResponseMsg.typecode)
         return response
@@ -1929,7 +2336,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateResourcePoolRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateResourcePoolResponseMsg.typecode)
         return response
@@ -1939,7 +2346,7 @@ class VimBindingSOAP:
         if isinstance(request, DestroyChildrenRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DestroyChildrenResponseMsg.typecode)
         return response
@@ -1949,7 +2356,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateVAppRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateVAppResponseMsg.typecode)
         return response
@@ -1959,7 +2366,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateChildVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateChildVM_TaskResponseMsg.typecode)
         return response
@@ -1969,7 +2376,7 @@ class VimBindingSOAP:
         if isinstance(request, RegisterChildVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RegisterChildVM_TaskResponseMsg.typecode)
         return response
@@ -1979,7 +2386,7 @@ class VimBindingSOAP:
         if isinstance(request, ImportVAppRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ImportVAppResponseMsg.typecode)
         return response
@@ -1989,7 +2396,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryResourceConfigOptionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryResourceConfigOptionResponseMsg.typecode)
         return response
@@ -1999,7 +2406,7 @@ class VimBindingSOAP:
         if isinstance(request, RefreshRuntimeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RefreshRuntimeResponseMsg.typecode)
         return response
@@ -2009,7 +2416,7 @@ class VimBindingSOAP:
         if isinstance(request, FindByUuidRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(FindByUuidResponseMsg.typecode)
         return response
@@ -2019,7 +2426,7 @@ class VimBindingSOAP:
         if isinstance(request, FindByDatastorePathRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(FindByDatastorePathResponseMsg.typecode)
         return response
@@ -2029,7 +2436,7 @@ class VimBindingSOAP:
         if isinstance(request, FindByDnsNameRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(FindByDnsNameResponseMsg.typecode)
         return response
@@ -2039,7 +2446,7 @@ class VimBindingSOAP:
         if isinstance(request, FindByIpRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(FindByIpResponseMsg.typecode)
         return response
@@ -2049,7 +2456,7 @@ class VimBindingSOAP:
         if isinstance(request, FindByInventoryPathRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(FindByInventoryPathResponseMsg.typecode)
         return response
@@ -2059,7 +2466,7 @@ class VimBindingSOAP:
         if isinstance(request, FindChildRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(FindChildResponseMsg.typecode)
         return response
@@ -2069,7 +2476,7 @@ class VimBindingSOAP:
         if isinstance(request, FindAllByUuidRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(FindAllByUuidResponseMsg.typecode)
         return response
@@ -2079,7 +2486,7 @@ class VimBindingSOAP:
         if isinstance(request, FindAllByDnsNameRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(FindAllByDnsNameResponseMsg.typecode)
         return response
@@ -2089,7 +2496,7 @@ class VimBindingSOAP:
         if isinstance(request, FindAllByIpRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(FindAllByIpResponseMsg.typecode)
         return response
@@ -2099,7 +2506,7 @@ class VimBindingSOAP:
         if isinstance(request, CurrentTimeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CurrentTimeResponseMsg.typecode)
         return response
@@ -2109,7 +2516,7 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveServiceContentRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveServiceContentResponseMsg.typecode)
         return response
@@ -2119,7 +2526,7 @@ class VimBindingSOAP:
         if isinstance(request, ValidateMigrationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ValidateMigrationResponseMsg.typecode)
         return response
@@ -2129,7 +2536,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryVMotionCompatibilityRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryVMotionCompatibilityResponseMsg.typecode)
         return response
@@ -2139,7 +2546,7 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveProductComponentsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveProductComponentsResponseMsg.typecode)
         return response
@@ -2149,7 +2556,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryServiceListRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryServiceListResponseMsg.typecode)
         return response
@@ -2159,7 +2566,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateServiceMessageRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateServiceMessageResponseMsg.typecode)
         return response
@@ -2169,7 +2576,7 @@ class VimBindingSOAP:
         if isinstance(request, LoginByTokenRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(LoginByTokenResponseMsg.typecode)
         return response
@@ -2179,7 +2586,7 @@ class VimBindingSOAP:
         if isinstance(request, LoginRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(LoginResponseMsg.typecode)
         return response
@@ -2189,7 +2596,7 @@ class VimBindingSOAP:
         if isinstance(request, LoginBySSPIRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(LoginBySSPIResponseMsg.typecode)
         return response
@@ -2199,7 +2606,7 @@ class VimBindingSOAP:
         if isinstance(request, LogoutRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(LogoutResponseMsg.typecode)
         return response
@@ -2209,7 +2616,7 @@ class VimBindingSOAP:
         if isinstance(request, AcquireLocalTicketRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AcquireLocalTicketResponseMsg.typecode)
         return response
@@ -2219,7 +2626,7 @@ class VimBindingSOAP:
         if isinstance(request, AcquireGenericServiceTicketRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AcquireGenericServiceTicketResponseMsg.typecode)
         return response
@@ -2229,7 +2636,7 @@ class VimBindingSOAP:
         if isinstance(request, TerminateSessionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(TerminateSessionResponseMsg.typecode)
         return response
@@ -2239,7 +2646,7 @@ class VimBindingSOAP:
         if isinstance(request, SetLocaleRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SetLocaleResponseMsg.typecode)
         return response
@@ -2249,7 +2656,7 @@ class VimBindingSOAP:
         if isinstance(request, LoginExtensionBySubjectNameRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(LoginExtensionBySubjectNameResponseMsg.typecode)
         return response
@@ -2259,7 +2666,7 @@ class VimBindingSOAP:
         if isinstance(request, LoginExtensionByCertificateRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(LoginExtensionByCertificateResponseMsg.typecode)
         return response
@@ -2269,7 +2676,7 @@ class VimBindingSOAP:
         if isinstance(request, ImpersonateUserRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ImpersonateUserResponseMsg.typecode)
         return response
@@ -2279,7 +2686,7 @@ class VimBindingSOAP:
         if isinstance(request, SessionIsActiveRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SessionIsActiveResponseMsg.typecode)
         return response
@@ -2289,7 +2696,7 @@ class VimBindingSOAP:
         if isinstance(request, AcquireCloneTicketRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AcquireCloneTicketResponseMsg.typecode)
         return response
@@ -2299,7 +2706,7 @@ class VimBindingSOAP:
         if isinstance(request, CloneSessionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CloneSessionResponseMsg.typecode)
         return response
@@ -2309,7 +2716,7 @@ class VimBindingSOAP:
         if isinstance(request, ExecuteSimpleCommandRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ExecuteSimpleCommandResponseMsg.typecode)
         return response
@@ -2319,7 +2726,7 @@ class VimBindingSOAP:
         if isinstance(request, ConfigureDatastoreIORM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ConfigureDatastoreIORM_TaskResponseMsg.typecode)
         return response
@@ -2329,7 +2736,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryIORMConfigOptionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryIORMConfigOptionResponseMsg.typecode)
         return response
@@ -2339,7 +2746,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryDatastorePerformanceSummaryRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryDatastorePerformanceSummaryResponseMsg.typecode)
         return response
@@ -2349,7 +2756,7 @@ class VimBindingSOAP:
         if isinstance(request, ApplyStorageDrsRecommendationToPod_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ApplyStorageDrsRecommendationToPod_TaskResponseMsg.typecode)
         return response
@@ -2359,7 +2766,7 @@ class VimBindingSOAP:
         if isinstance(request, ApplyStorageDrsRecommendation_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ApplyStorageDrsRecommendation_TaskResponseMsg.typecode)
         return response
@@ -2369,7 +2776,7 @@ class VimBindingSOAP:
         if isinstance(request, CancelStorageDrsRecommendationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CancelStorageDrsRecommendationResponseMsg.typecode)
         return response
@@ -2379,9 +2786,19 @@ class VimBindingSOAP:
         if isinstance(request, RefreshStorageDrsRecommendationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RefreshStorageDrsRecommendationResponseMsg.typecode)
+        return response
+
+    # op: RefreshStorageDrsRecommendationsForPod_Task
+    def RefreshStorageDrsRecommendationsForPod_Task(self, request, **kw):
+        if isinstance(request, RefreshStorageDrsRecommendationsForPod_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RefreshStorageDrsRecommendationsForPod_TaskResponseMsg.typecode)
         return response
 
     # op: ConfigureStorageDrsForPod_Task
@@ -2389,9 +2806,19 @@ class VimBindingSOAP:
         if isinstance(request, ConfigureStorageDrsForPod_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ConfigureStorageDrsForPod_TaskResponseMsg.typecode)
+        return response
+
+    # op: ValidateStoragePodConfig
+    def ValidateStoragePodConfig(self, request, **kw):
+        if isinstance(request, ValidateStoragePodConfigRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ValidateStoragePodConfigResponseMsg.typecode)
         return response
 
     # op: RecommendDatastores
@@ -2399,7 +2826,7 @@ class VimBindingSOAP:
         if isinstance(request, RecommendDatastoresRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RecommendDatastoresResponseMsg.typecode)
         return response
@@ -2409,7 +2836,7 @@ class VimBindingSOAP:
         if isinstance(request, CancelTaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CancelTaskResponseMsg.typecode)
         return response
@@ -2419,7 +2846,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateProgressRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateProgressResponseMsg.typecode)
         return response
@@ -2429,7 +2856,7 @@ class VimBindingSOAP:
         if isinstance(request, SetTaskStateRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SetTaskStateResponseMsg.typecode)
         return response
@@ -2439,7 +2866,7 @@ class VimBindingSOAP:
         if isinstance(request, SetTaskDescriptionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SetTaskDescriptionResponseMsg.typecode)
         return response
@@ -2449,7 +2876,7 @@ class VimBindingSOAP:
         if isinstance(request, ReadNextTasksRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReadNextTasksResponseMsg.typecode)
         return response
@@ -2459,7 +2886,7 @@ class VimBindingSOAP:
         if isinstance(request, ReadPreviousTasksRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReadPreviousTasksResponseMsg.typecode)
         return response
@@ -2469,7 +2896,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateCollectorForTasksRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateCollectorForTasksResponseMsg.typecode)
         return response
@@ -2479,7 +2906,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateTaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateTaskResponseMsg.typecode)
         return response
@@ -2489,7 +2916,7 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveUserGroupsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveUserGroupsResponseMsg.typecode)
         return response
@@ -2499,7 +2926,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateVAppConfigRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateVAppConfigResponseMsg.typecode)
         return response
@@ -2509,7 +2936,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateLinkedChildrenRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateLinkedChildrenResponseMsg.typecode)
         return response
@@ -2519,7 +2946,7 @@ class VimBindingSOAP:
         if isinstance(request, CloneVApp_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CloneVApp_TaskResponseMsg.typecode)
         return response
@@ -2529,7 +2956,7 @@ class VimBindingSOAP:
         if isinstance(request, ExportVAppRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ExportVAppResponseMsg.typecode)
         return response
@@ -2539,7 +2966,7 @@ class VimBindingSOAP:
         if isinstance(request, PowerOnVApp_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(PowerOnVApp_TaskResponseMsg.typecode)
         return response
@@ -2549,7 +2976,7 @@ class VimBindingSOAP:
         if isinstance(request, PowerOffVApp_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(PowerOffVApp_TaskResponseMsg.typecode)
         return response
@@ -2559,7 +2986,7 @@ class VimBindingSOAP:
         if isinstance(request, SuspendVApp_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SuspendVApp_TaskResponseMsg.typecode)
         return response
@@ -2569,7 +2996,7 @@ class VimBindingSOAP:
         if isinstance(request, unregisterVApp_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(unregisterVApp_TaskResponseMsg.typecode)
         return response
@@ -2579,7 +3006,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateVirtualDisk_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateVirtualDisk_TaskResponseMsg.typecode)
         return response
@@ -2589,7 +3016,7 @@ class VimBindingSOAP:
         if isinstance(request, DeleteVirtualDisk_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DeleteVirtualDisk_TaskResponseMsg.typecode)
         return response
@@ -2599,7 +3026,7 @@ class VimBindingSOAP:
         if isinstance(request, MoveVirtualDisk_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MoveVirtualDisk_TaskResponseMsg.typecode)
         return response
@@ -2609,7 +3036,7 @@ class VimBindingSOAP:
         if isinstance(request, CopyVirtualDisk_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CopyVirtualDisk_TaskResponseMsg.typecode)
         return response
@@ -2619,7 +3046,7 @@ class VimBindingSOAP:
         if isinstance(request, ExtendVirtualDisk_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ExtendVirtualDisk_TaskResponseMsg.typecode)
         return response
@@ -2629,7 +3056,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryVirtualDiskFragmentationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryVirtualDiskFragmentationResponseMsg.typecode)
         return response
@@ -2639,7 +3066,7 @@ class VimBindingSOAP:
         if isinstance(request, DefragmentVirtualDisk_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DefragmentVirtualDisk_TaskResponseMsg.typecode)
         return response
@@ -2649,7 +3076,7 @@ class VimBindingSOAP:
         if isinstance(request, ShrinkVirtualDisk_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ShrinkVirtualDisk_TaskResponseMsg.typecode)
         return response
@@ -2659,7 +3086,7 @@ class VimBindingSOAP:
         if isinstance(request, InflateVirtualDisk_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(InflateVirtualDisk_TaskResponseMsg.typecode)
         return response
@@ -2669,7 +3096,7 @@ class VimBindingSOAP:
         if isinstance(request, EagerZeroVirtualDisk_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(EagerZeroVirtualDisk_TaskResponseMsg.typecode)
         return response
@@ -2679,7 +3106,7 @@ class VimBindingSOAP:
         if isinstance(request, ZeroFillVirtualDisk_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ZeroFillVirtualDisk_TaskResponseMsg.typecode)
         return response
@@ -2689,7 +3116,7 @@ class VimBindingSOAP:
         if isinstance(request, SetVirtualDiskUuidRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SetVirtualDiskUuidResponseMsg.typecode)
         return response
@@ -2699,7 +3126,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryVirtualDiskUuidRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryVirtualDiskUuidResponseMsg.typecode)
         return response
@@ -2709,9 +3136,29 @@ class VimBindingSOAP:
         if isinstance(request, QueryVirtualDiskGeometryRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryVirtualDiskGeometryResponseMsg.typecode)
+        return response
+
+    # op: ImportUnmanagedSnapshot
+    def ImportUnmanagedSnapshot(self, request, **kw):
+        if isinstance(request, ImportUnmanagedSnapshotRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ImportUnmanagedSnapshotResponseMsg.typecode)
+        return response
+
+    # op: ReleaseManagedSnapshot
+    def ReleaseManagedSnapshot(self, request, **kw):
+        if isinstance(request, ReleaseManagedSnapshotRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ReleaseManagedSnapshotResponseMsg.typecode)
         return response
 
     # op: RefreshStorageInfo
@@ -2719,7 +3166,7 @@ class VimBindingSOAP:
         if isinstance(request, RefreshStorageInfoRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RefreshStorageInfoResponseMsg.typecode)
         return response
@@ -2729,9 +3176,19 @@ class VimBindingSOAP:
         if isinstance(request, CreateSnapshot_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateSnapshot_TaskResponseMsg.typecode)
+        return response
+
+    # op: CreateSnapshotEx_Task
+    def CreateSnapshotEx_Task(self, request, **kw):
+        if isinstance(request, CreateSnapshotEx_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CreateSnapshotEx_TaskResponseMsg.typecode)
         return response
 
     # op: RevertToCurrentSnapshot_Task
@@ -2739,7 +3196,7 @@ class VimBindingSOAP:
         if isinstance(request, RevertToCurrentSnapshot_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RevertToCurrentSnapshot_TaskResponseMsg.typecode)
         return response
@@ -2749,7 +3206,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveAllSnapshots_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveAllSnapshots_TaskResponseMsg.typecode)
         return response
@@ -2759,7 +3216,7 @@ class VimBindingSOAP:
         if isinstance(request, ConsolidateVMDisks_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ConsolidateVMDisks_TaskResponseMsg.typecode)
         return response
@@ -2769,7 +3226,7 @@ class VimBindingSOAP:
         if isinstance(request, EstimateStorageForConsolidateSnapshots_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(EstimateStorageForConsolidateSnapshots_TaskResponseMsg.typecode)
         return response
@@ -2779,7 +3236,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconfigVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconfigVM_TaskResponseMsg.typecode)
         return response
@@ -2789,7 +3246,7 @@ class VimBindingSOAP:
         if isinstance(request, UpgradeVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpgradeVM_TaskResponseMsg.typecode)
         return response
@@ -2799,7 +3256,7 @@ class VimBindingSOAP:
         if isinstance(request, ExtractOvfEnvironmentRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ExtractOvfEnvironmentResponseMsg.typecode)
         return response
@@ -2809,7 +3266,7 @@ class VimBindingSOAP:
         if isinstance(request, PowerOnVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(PowerOnVM_TaskResponseMsg.typecode)
         return response
@@ -2819,7 +3276,7 @@ class VimBindingSOAP:
         if isinstance(request, PowerOffVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(PowerOffVM_TaskResponseMsg.typecode)
         return response
@@ -2829,7 +3286,7 @@ class VimBindingSOAP:
         if isinstance(request, SuspendVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SuspendVM_TaskResponseMsg.typecode)
         return response
@@ -2839,7 +3296,7 @@ class VimBindingSOAP:
         if isinstance(request, ResetVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ResetVM_TaskResponseMsg.typecode)
         return response
@@ -2849,7 +3306,7 @@ class VimBindingSOAP:
         if isinstance(request, ShutdownGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ShutdownGuestResponseMsg.typecode)
         return response
@@ -2859,7 +3316,7 @@ class VimBindingSOAP:
         if isinstance(request, RebootGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RebootGuestResponseMsg.typecode)
         return response
@@ -2869,7 +3326,7 @@ class VimBindingSOAP:
         if isinstance(request, StandbyGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(StandbyGuestResponseMsg.typecode)
         return response
@@ -2879,7 +3336,7 @@ class VimBindingSOAP:
         if isinstance(request, AnswerVMRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AnswerVMResponseMsg.typecode)
         return response
@@ -2889,7 +3346,7 @@ class VimBindingSOAP:
         if isinstance(request, CustomizeVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CustomizeVM_TaskResponseMsg.typecode)
         return response
@@ -2899,7 +3356,7 @@ class VimBindingSOAP:
         if isinstance(request, CheckCustomizationSpecRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CheckCustomizationSpecResponseMsg.typecode)
         return response
@@ -2909,7 +3366,7 @@ class VimBindingSOAP:
         if isinstance(request, MigrateVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MigrateVM_TaskResponseMsg.typecode)
         return response
@@ -2919,7 +3376,7 @@ class VimBindingSOAP:
         if isinstance(request, RelocateVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RelocateVM_TaskResponseMsg.typecode)
         return response
@@ -2929,9 +3386,19 @@ class VimBindingSOAP:
         if isinstance(request, CloneVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CloneVM_TaskResponseMsg.typecode)
+        return response
+
+    # op: InstantClone_Task
+    def InstantClone_Task(self, request, **kw):
+        if isinstance(request, InstantClone_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(InstantClone_TaskResponseMsg.typecode)
         return response
 
     # op: ExportVm
@@ -2939,7 +3406,7 @@ class VimBindingSOAP:
         if isinstance(request, ExportVmRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ExportVmResponseMsg.typecode)
         return response
@@ -2949,7 +3416,7 @@ class VimBindingSOAP:
         if isinstance(request, MarkAsTemplateRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MarkAsTemplateResponseMsg.typecode)
         return response
@@ -2959,7 +3426,7 @@ class VimBindingSOAP:
         if isinstance(request, MarkAsVirtualMachineRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MarkAsVirtualMachineResponseMsg.typecode)
         return response
@@ -2969,7 +3436,7 @@ class VimBindingSOAP:
         if isinstance(request, UnregisterVMRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UnregisterVMResponseMsg.typecode)
         return response
@@ -2979,7 +3446,7 @@ class VimBindingSOAP:
         if isinstance(request, ResetGuestInformationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ResetGuestInformationResponseMsg.typecode)
         return response
@@ -2989,7 +3456,7 @@ class VimBindingSOAP:
         if isinstance(request, MountToolsInstallerRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MountToolsInstallerResponseMsg.typecode)
         return response
@@ -2999,7 +3466,7 @@ class VimBindingSOAP:
         if isinstance(request, UnmountToolsInstallerRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UnmountToolsInstallerResponseMsg.typecode)
         return response
@@ -3009,7 +3476,7 @@ class VimBindingSOAP:
         if isinstance(request, UpgradeTools_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpgradeTools_TaskResponseMsg.typecode)
         return response
@@ -3019,7 +3486,7 @@ class VimBindingSOAP:
         if isinstance(request, AcquireMksTicketRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AcquireMksTicketResponseMsg.typecode)
         return response
@@ -3029,7 +3496,7 @@ class VimBindingSOAP:
         if isinstance(request, AcquireTicketRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AcquireTicketResponseMsg.typecode)
         return response
@@ -3039,7 +3506,7 @@ class VimBindingSOAP:
         if isinstance(request, SetScreenResolutionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SetScreenResolutionResponseMsg.typecode)
         return response
@@ -3049,7 +3516,7 @@ class VimBindingSOAP:
         if isinstance(request, DefragmentAllDisksRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DefragmentAllDisksResponseMsg.typecode)
         return response
@@ -3059,9 +3526,19 @@ class VimBindingSOAP:
         if isinstance(request, CreateSecondaryVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateSecondaryVM_TaskResponseMsg.typecode)
+        return response
+
+    # op: CreateSecondaryVMEx_Task
+    def CreateSecondaryVMEx_Task(self, request, **kw):
+        if isinstance(request, CreateSecondaryVMEx_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CreateSecondaryVMEx_TaskResponseMsg.typecode)
         return response
 
     # op: TurnOffFaultToleranceForVM_Task
@@ -3069,7 +3546,7 @@ class VimBindingSOAP:
         if isinstance(request, TurnOffFaultToleranceForVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(TurnOffFaultToleranceForVM_TaskResponseMsg.typecode)
         return response
@@ -3079,7 +3556,7 @@ class VimBindingSOAP:
         if isinstance(request, MakePrimaryVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MakePrimaryVM_TaskResponseMsg.typecode)
         return response
@@ -3089,7 +3566,7 @@ class VimBindingSOAP:
         if isinstance(request, TerminateFaultTolerantVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(TerminateFaultTolerantVM_TaskResponseMsg.typecode)
         return response
@@ -3099,7 +3576,7 @@ class VimBindingSOAP:
         if isinstance(request, DisableSecondaryVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DisableSecondaryVM_TaskResponseMsg.typecode)
         return response
@@ -3109,7 +3586,7 @@ class VimBindingSOAP:
         if isinstance(request, EnableSecondaryVM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(EnableSecondaryVM_TaskResponseMsg.typecode)
         return response
@@ -3119,7 +3596,7 @@ class VimBindingSOAP:
         if isinstance(request, SetDisplayTopologyRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SetDisplayTopologyResponseMsg.typecode)
         return response
@@ -3129,7 +3606,7 @@ class VimBindingSOAP:
         if isinstance(request, StartRecording_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(StartRecording_TaskResponseMsg.typecode)
         return response
@@ -3139,7 +3616,7 @@ class VimBindingSOAP:
         if isinstance(request, StopRecording_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(StopRecording_TaskResponseMsg.typecode)
         return response
@@ -3149,7 +3626,7 @@ class VimBindingSOAP:
         if isinstance(request, StartReplaying_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(StartReplaying_TaskResponseMsg.typecode)
         return response
@@ -3159,7 +3636,7 @@ class VimBindingSOAP:
         if isinstance(request, StopReplaying_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(StopReplaying_TaskResponseMsg.typecode)
         return response
@@ -3169,7 +3646,7 @@ class VimBindingSOAP:
         if isinstance(request, PromoteDisks_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(PromoteDisks_TaskResponseMsg.typecode)
         return response
@@ -3179,9 +3656,19 @@ class VimBindingSOAP:
         if isinstance(request, CreateScreenshot_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateScreenshot_TaskResponseMsg.typecode)
+        return response
+
+    # op: PutUsbScanCodes
+    def PutUsbScanCodes(self, request, **kw):
+        if isinstance(request, PutUsbScanCodesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(PutUsbScanCodesResponseMsg.typecode)
         return response
 
     # op: QueryChangedDiskAreas
@@ -3189,7 +3676,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryChangedDiskAreasRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryChangedDiskAreasResponseMsg.typecode)
         return response
@@ -3199,7 +3686,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryUnownedFilesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryUnownedFilesResponseMsg.typecode)
         return response
@@ -3209,7 +3696,7 @@ class VimBindingSOAP:
         if isinstance(request, reloadVirtualMachineFromPath_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(reloadVirtualMachineFromPath_TaskResponseMsg.typecode)
         return response
@@ -3219,9 +3706,19 @@ class VimBindingSOAP:
         if isinstance(request, QueryFaultToleranceCompatibilityRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryFaultToleranceCompatibilityResponseMsg.typecode)
+        return response
+
+    # op: QueryFaultToleranceCompatibilityEx
+    def QueryFaultToleranceCompatibilityEx(self, request, **kw):
+        if isinstance(request, QueryFaultToleranceCompatibilityExRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryFaultToleranceCompatibilityExResponseMsg.typecode)
         return response
 
     # op: TerminateVM
@@ -3229,9 +3726,89 @@ class VimBindingSOAP:
         if isinstance(request, TerminateVMRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(TerminateVMResponseMsg.typecode)
+        return response
+
+    # op: SendNMI
+    def SendNMI(self, request, **kw):
+        if isinstance(request, SendNMIRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(SendNMIResponseMsg.typecode)
+        return response
+
+    # op: AttachDisk_Task
+    def AttachDisk_Task(self, request, **kw):
+        if isinstance(request, AttachDisk_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(AttachDisk_TaskResponseMsg.typecode)
+        return response
+
+    # op: DetachDisk_Task
+    def DetachDisk_Task(self, request, **kw):
+        if isinstance(request, DetachDisk_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DetachDisk_TaskResponseMsg.typecode)
+        return response
+
+    # op: ApplyEvcModeVM_Task
+    def ApplyEvcModeVM_Task(self, request, **kw):
+        if isinstance(request, ApplyEvcModeVM_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ApplyEvcModeVM_TaskResponseMsg.typecode)
+        return response
+
+    # op: CryptoUnlock_Task
+    def CryptoUnlock_Task(self, request, **kw):
+        if isinstance(request, CryptoUnlock_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CryptoUnlock_TaskResponseMsg.typecode)
+        return response
+
+    # op: PerformVsanUpgradePreflightCheck
+    def PerformVsanUpgradePreflightCheck(self, request, **kw):
+        if isinstance(request, PerformVsanUpgradePreflightCheckRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(PerformVsanUpgradePreflightCheckResponseMsg.typecode)
+        return response
+
+    # op: QueryVsanUpgradeStatus
+    def QueryVsanUpgradeStatus(self, request, **kw):
+        if isinstance(request, QueryVsanUpgradeStatusRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryVsanUpgradeStatusResponseMsg.typecode)
+        return response
+
+    # op: PerformVsanUpgrade_Task
+    def PerformVsanUpgrade_Task(self, request, **kw):
+        if isinstance(request, PerformVsanUpgrade_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(PerformVsanUpgrade_TaskResponseMsg.typecode)
         return response
 
     # op: RemoveAlarm
@@ -3239,7 +3816,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveAlarmRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveAlarmResponseMsg.typecode)
         return response
@@ -3249,7 +3826,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconfigureAlarmRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconfigureAlarmResponseMsg.typecode)
         return response
@@ -3259,7 +3836,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateAlarmRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateAlarmResponseMsg.typecode)
         return response
@@ -3269,7 +3846,7 @@ class VimBindingSOAP:
         if isinstance(request, GetAlarmRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(GetAlarmResponseMsg.typecode)
         return response
@@ -3279,7 +3856,7 @@ class VimBindingSOAP:
         if isinstance(request, AreAlarmActionsEnabledRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AreAlarmActionsEnabledResponseMsg.typecode)
         return response
@@ -3289,7 +3866,7 @@ class VimBindingSOAP:
         if isinstance(request, EnableAlarmActionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(EnableAlarmActionsResponseMsg.typecode)
         return response
@@ -3299,7 +3876,7 @@ class VimBindingSOAP:
         if isinstance(request, GetAlarmStateRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(GetAlarmStateResponseMsg.typecode)
         return response
@@ -3309,9 +3886,59 @@ class VimBindingSOAP:
         if isinstance(request, AcknowledgeAlarmRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AcknowledgeAlarmResponseMsg.typecode)
+        return response
+
+    # op: ClearTriggeredAlarms
+    def ClearTriggeredAlarms(self, request, **kw):
+        if isinstance(request, ClearTriggeredAlarmsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ClearTriggeredAlarmsResponseMsg.typecode)
+        return response
+
+    # op: ConfigureEvcMode_Task
+    def ConfigureEvcMode_Task(self, request, **kw):
+        if isinstance(request, ConfigureEvcMode_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ConfigureEvcMode_TaskResponseMsg.typecode)
+        return response
+
+    # op: DisableEvcMode_Task
+    def DisableEvcMode_Task(self, request, **kw):
+        if isinstance(request, DisableEvcMode_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DisableEvcMode_TaskResponseMsg.typecode)
+        return response
+
+    # op: CheckConfigureEvcMode_Task
+    def CheckConfigureEvcMode_Task(self, request, **kw):
+        if isinstance(request, CheckConfigureEvcMode_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CheckConfigureEvcMode_TaskResponseMsg.typecode)
+        return response
+
+    # op: CheckAddHostEvc_Task
+    def CheckAddHostEvc_Task(self, request, **kw):
+        if isinstance(request, CheckAddHostEvc_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CheckAddHostEvc_TaskResponseMsg.typecode)
         return response
 
     # op: ReconfigureDVPortgroup_Task
@@ -3319,7 +3946,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconfigureDVPortgroup_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconfigureDVPortgroup_TaskResponseMsg.typecode)
         return response
@@ -3329,7 +3956,7 @@ class VimBindingSOAP:
         if isinstance(request, DVPortgroupRollback_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DVPortgroupRollback_TaskResponseMsg.typecode)
         return response
@@ -3339,7 +3966,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryAvailableDvsSpecRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryAvailableDvsSpecResponseMsg.typecode)
         return response
@@ -3349,7 +3976,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryCompatibleHostForNewDvsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryCompatibleHostForNewDvsResponseMsg.typecode)
         return response
@@ -3359,7 +3986,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryCompatibleHostForExistingDvsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryCompatibleHostForExistingDvsResponseMsg.typecode)
         return response
@@ -3369,7 +3996,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryDvsCompatibleHostSpecRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryDvsCompatibleHostSpecResponseMsg.typecode)
         return response
@@ -3379,7 +4006,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryDvsFeatureCapabilityRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryDvsFeatureCapabilityResponseMsg.typecode)
         return response
@@ -3389,7 +4016,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryDvsByUuidRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryDvsByUuidResponseMsg.typecode)
         return response
@@ -3399,7 +4026,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryDvsConfigTargetRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryDvsConfigTargetResponseMsg.typecode)
         return response
@@ -3409,7 +4036,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryDvsCheckCompatibilityRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryDvsCheckCompatibilityResponseMsg.typecode)
         return response
@@ -3419,7 +4046,7 @@ class VimBindingSOAP:
         if isinstance(request, RectifyDvsOnHost_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RectifyDvsOnHost_TaskResponseMsg.typecode)
         return response
@@ -3429,7 +4056,7 @@ class VimBindingSOAP:
         if isinstance(request, DVSManagerExportEntity_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DVSManagerExportEntity_TaskResponseMsg.typecode)
         return response
@@ -3439,7 +4066,7 @@ class VimBindingSOAP:
         if isinstance(request, DVSManagerImportEntity_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DVSManagerImportEntity_TaskResponseMsg.typecode)
         return response
@@ -3449,9 +4076,269 @@ class VimBindingSOAP:
         if isinstance(request, DVSManagerLookupDvPortGroupRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DVSManagerLookupDvPortGroupResponseMsg.typecode)
+        return response
+
+    # op: UpdateDVSLacpGroupConfig_Task
+    def UpdateDVSLacpGroupConfig_Task(self, request, **kw):
+        if isinstance(request, UpdateDVSLacpGroupConfig_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateDVSLacpGroupConfig_TaskResponseMsg.typecode)
+        return response
+
+    # op: AddKey
+    def AddKey(self, request, **kw):
+        if isinstance(request, AddKeyRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(AddKeyResponseMsg.typecode)
+        return response
+
+    # op: AddKeys
+    def AddKeys(self, request, **kw):
+        if isinstance(request, AddKeysRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(AddKeysResponseMsg.typecode)
+        return response
+
+    # op: RemoveKey
+    def RemoveKey(self, request, **kw):
+        if isinstance(request, RemoveKeyRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RemoveKeyResponseMsg.typecode)
+        return response
+
+    # op: RemoveKeys
+    def RemoveKeys(self, request, **kw):
+        if isinstance(request, RemoveKeysRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RemoveKeysResponseMsg.typecode)
+        return response
+
+    # op: ListKeys
+    def ListKeys(self, request, **kw):
+        if isinstance(request, ListKeysRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ListKeysResponseMsg.typecode)
+        return response
+
+    # op: CryptoManagerHostPrepare
+    def CryptoManagerHostPrepare(self, request, **kw):
+        if isinstance(request, CryptoManagerHostPrepareRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CryptoManagerHostPrepareResponseMsg.typecode)
+        return response
+
+    # op: CryptoManagerHostEnable
+    def CryptoManagerHostEnable(self, request, **kw):
+        if isinstance(request, CryptoManagerHostEnableRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CryptoManagerHostEnableResponseMsg.typecode)
+        return response
+
+    # op: ChangeKey_Task
+    def ChangeKey_Task(self, request, **kw):
+        if isinstance(request, ChangeKey_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ChangeKey_TaskResponseMsg.typecode)
+        return response
+
+    # op: RegisterKmipServer
+    def RegisterKmipServer(self, request, **kw):
+        if isinstance(request, RegisterKmipServerRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RegisterKmipServerResponseMsg.typecode)
+        return response
+
+    # op: MarkDefault
+    def MarkDefault(self, request, **kw):
+        if isinstance(request, MarkDefaultRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(MarkDefaultResponseMsg.typecode)
+        return response
+
+    # op: UpdateKmipServer
+    def UpdateKmipServer(self, request, **kw):
+        if isinstance(request, UpdateKmipServerRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateKmipServerResponseMsg.typecode)
+        return response
+
+    # op: RemoveKmipServer
+    def RemoveKmipServer(self, request, **kw):
+        if isinstance(request, RemoveKmipServerRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RemoveKmipServerResponseMsg.typecode)
+        return response
+
+    # op: ListKmipServers
+    def ListKmipServers(self, request, **kw):
+        if isinstance(request, ListKmipServersRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ListKmipServersResponseMsg.typecode)
+        return response
+
+    # op: RetrieveKmipServersStatus_Task
+    def RetrieveKmipServersStatus_Task(self, request, **kw):
+        if isinstance(request, RetrieveKmipServersStatus_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrieveKmipServersStatus_TaskResponseMsg.typecode)
+        return response
+
+    # op: GenerateKey
+    def GenerateKey(self, request, **kw):
+        if isinstance(request, GenerateKeyRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(GenerateKeyResponseMsg.typecode)
+        return response
+
+    # op: RetrieveKmipServerCert
+    def RetrieveKmipServerCert(self, request, **kw):
+        if isinstance(request, RetrieveKmipServerCertRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrieveKmipServerCertResponseMsg.typecode)
+        return response
+
+    # op: UploadKmipServerCert
+    def UploadKmipServerCert(self, request, **kw):
+        if isinstance(request, UploadKmipServerCertRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UploadKmipServerCertResponseMsg.typecode)
+        return response
+
+    # op: GenerateSelfSignedClientCert
+    def GenerateSelfSignedClientCert(self, request, **kw):
+        if isinstance(request, GenerateSelfSignedClientCertRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(GenerateSelfSignedClientCertResponseMsg.typecode)
+        return response
+
+    # op: GenerateClientCsr
+    def GenerateClientCsr(self, request, **kw):
+        if isinstance(request, GenerateClientCsrRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(GenerateClientCsrResponseMsg.typecode)
+        return response
+
+    # op: RetrieveSelfSignedClientCert
+    def RetrieveSelfSignedClientCert(self, request, **kw):
+        if isinstance(request, RetrieveSelfSignedClientCertRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrieveSelfSignedClientCertResponseMsg.typecode)
+        return response
+
+    # op: RetrieveClientCsr
+    def RetrieveClientCsr(self, request, **kw):
+        if isinstance(request, RetrieveClientCsrRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrieveClientCsrResponseMsg.typecode)
+        return response
+
+    # op: RetrieveClientCert
+    def RetrieveClientCert(self, request, **kw):
+        if isinstance(request, RetrieveClientCertRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrieveClientCertResponseMsg.typecode)
+        return response
+
+    # op: UpdateSelfSignedClientCert
+    def UpdateSelfSignedClientCert(self, request, **kw):
+        if isinstance(request, UpdateSelfSignedClientCertRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateSelfSignedClientCertResponseMsg.typecode)
+        return response
+
+    # op: UpdateKmsSignedCsrClientCert
+    def UpdateKmsSignedCsrClientCert(self, request, **kw):
+        if isinstance(request, UpdateKmsSignedCsrClientCertRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateKmsSignedCsrClientCertResponseMsg.typecode)
+        return response
+
+    # op: UploadClientCert
+    def UploadClientCert(self, request, **kw):
+        if isinstance(request, UploadClientCertRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UploadClientCertResponseMsg.typecode)
         return response
 
     # op: ReadNextEvents
@@ -3459,7 +4346,7 @@ class VimBindingSOAP:
         if isinstance(request, ReadNextEventsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReadNextEventsResponseMsg.typecode)
         return response
@@ -3469,7 +4356,7 @@ class VimBindingSOAP:
         if isinstance(request, ReadPreviousEventsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReadPreviousEventsResponseMsg.typecode)
         return response
@@ -3479,7 +4366,7 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveArgumentDescriptionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveArgumentDescriptionResponseMsg.typecode)
         return response
@@ -3489,7 +4376,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateCollectorForEventsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateCollectorForEventsResponseMsg.typecode)
         return response
@@ -3499,7 +4386,7 @@ class VimBindingSOAP:
         if isinstance(request, LogUserEventRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(LogUserEventResponseMsg.typecode)
         return response
@@ -3509,7 +4396,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryEventsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryEventsResponseMsg.typecode)
         return response
@@ -3519,7 +4406,7 @@ class VimBindingSOAP:
         if isinstance(request, PostEventRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(PostEventResponseMsg.typecode)
         return response
@@ -3529,7 +4416,7 @@ class VimBindingSOAP:
         if isinstance(request, JoinDomain_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(JoinDomain_TaskResponseMsg.typecode)
         return response
@@ -3539,7 +4426,7 @@ class VimBindingSOAP:
         if isinstance(request, JoinDomainWithCAM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(JoinDomainWithCAM_TaskResponseMsg.typecode)
         return response
@@ -3549,7 +4436,7 @@ class VimBindingSOAP:
         if isinstance(request, ImportCertificateForCAM_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ImportCertificateForCAM_TaskResponseMsg.typecode)
         return response
@@ -3559,9 +4446,79 @@ class VimBindingSOAP:
         if isinstance(request, LeaveCurrentDomain_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(LeaveCurrentDomain_TaskResponseMsg.typecode)
+        return response
+
+    # op: EnableSmartCardAuthentication
+    def EnableSmartCardAuthentication(self, request, **kw):
+        if isinstance(request, EnableSmartCardAuthenticationRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(EnableSmartCardAuthenticationResponseMsg.typecode)
+        return response
+
+    # op: InstallSmartCardTrustAnchor
+    def InstallSmartCardTrustAnchor(self, request, **kw):
+        if isinstance(request, InstallSmartCardTrustAnchorRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(InstallSmartCardTrustAnchorResponseMsg.typecode)
+        return response
+
+    # op: ReplaceSmartCardTrustAnchors
+    def ReplaceSmartCardTrustAnchors(self, request, **kw):
+        if isinstance(request, ReplaceSmartCardTrustAnchorsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ReplaceSmartCardTrustAnchorsResponseMsg.typecode)
+        return response
+
+    # op: RemoveSmartCardTrustAnchor
+    def RemoveSmartCardTrustAnchor(self, request, **kw):
+        if isinstance(request, RemoveSmartCardTrustAnchorRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RemoveSmartCardTrustAnchorResponseMsg.typecode)
+        return response
+
+    # op: RemoveSmartCardTrustAnchorByFingerprint
+    def RemoveSmartCardTrustAnchorByFingerprint(self, request, **kw):
+        if isinstance(request, RemoveSmartCardTrustAnchorByFingerprintRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RemoveSmartCardTrustAnchorByFingerprintResponseMsg.typecode)
+        return response
+
+    # op: ListSmartCardTrustAnchors
+    def ListSmartCardTrustAnchors(self, request, **kw):
+        if isinstance(request, ListSmartCardTrustAnchorsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ListSmartCardTrustAnchorsResponseMsg.typecode)
+        return response
+
+    # op: DisableSmartCardAuthentication
+    def DisableSmartCardAuthentication(self, request, **kw):
+        if isinstance(request, DisableSmartCardAuthenticationRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DisableSmartCardAuthenticationResponseMsg.typecode)
         return response
 
     # op: ReconfigureAutostart
@@ -3569,7 +4526,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconfigureAutostartRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconfigureAutostartResponseMsg.typecode)
         return response
@@ -3579,7 +4536,7 @@ class VimBindingSOAP:
         if isinstance(request, AutoStartPowerOnRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AutoStartPowerOnResponseMsg.typecode)
         return response
@@ -3589,7 +4546,7 @@ class VimBindingSOAP:
         if isinstance(request, AutoStartPowerOffRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AutoStartPowerOffResponseMsg.typecode)
         return response
@@ -3599,7 +4556,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryBootDevicesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryBootDevicesResponseMsg.typecode)
         return response
@@ -3609,7 +4566,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateBootDeviceRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateBootDeviceResponseMsg.typecode)
         return response
@@ -3619,9 +4576,69 @@ class VimBindingSOAP:
         if isinstance(request, ConfigureHostCache_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ConfigureHostCache_TaskResponseMsg.typecode)
+        return response
+
+    # op: GenerateCertificateSigningRequest
+    def GenerateCertificateSigningRequest(self, request, **kw):
+        if isinstance(request, GenerateCertificateSigningRequestRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(GenerateCertificateSigningRequestResponseMsg.typecode)
+        return response
+
+    # op: GenerateCertificateSigningRequestByDn
+    def GenerateCertificateSigningRequestByDn(self, request, **kw):
+        if isinstance(request, GenerateCertificateSigningRequestByDnRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(GenerateCertificateSigningRequestByDnResponseMsg.typecode)
+        return response
+
+    # op: InstallServerCertificate
+    def InstallServerCertificate(self, request, **kw):
+        if isinstance(request, InstallServerCertificateRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(InstallServerCertificateResponseMsg.typecode)
+        return response
+
+    # op: ReplaceCACertificatesAndCRLs
+    def ReplaceCACertificatesAndCRLs(self, request, **kw):
+        if isinstance(request, ReplaceCACertificatesAndCRLsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ReplaceCACertificatesAndCRLsResponseMsg.typecode)
+        return response
+
+    # op: ListCACertificates
+    def ListCACertificates(self, request, **kw):
+        if isinstance(request, ListCACertificatesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ListCACertificatesResponseMsg.typecode)
+        return response
+
+    # op: ListCACertificateRevocationLists
+    def ListCACertificateRevocationLists(self, request, **kw):
+        if isinstance(request, ListCACertificateRevocationListsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ListCACertificateRevocationListsResponseMsg.typecode)
         return response
 
     # op: EnableHyperThreading
@@ -3629,7 +4646,7 @@ class VimBindingSOAP:
         if isinstance(request, EnableHyperThreadingRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(EnableHyperThreadingResponseMsg.typecode)
         return response
@@ -3639,7 +4656,7 @@ class VimBindingSOAP:
         if isinstance(request, DisableHyperThreadingRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DisableHyperThreadingResponseMsg.typecode)
         return response
@@ -3649,7 +4666,7 @@ class VimBindingSOAP:
         if isinstance(request, SearchDatastore_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SearchDatastore_TaskResponseMsg.typecode)
         return response
@@ -3659,7 +4676,7 @@ class VimBindingSOAP:
         if isinstance(request, SearchDatastoreSubFolders_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SearchDatastoreSubFolders_TaskResponseMsg.typecode)
         return response
@@ -3669,7 +4686,7 @@ class VimBindingSOAP:
         if isinstance(request, DeleteFileRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DeleteFileResponseMsg.typecode)
         return response
@@ -3679,7 +4696,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateLocalSwapDatastoreRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateLocalSwapDatastoreResponseMsg.typecode)
         return response
@@ -3689,7 +4706,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryAvailableDisksForVmfsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryAvailableDisksForVmfsResponseMsg.typecode)
         return response
@@ -3699,7 +4716,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryVmfsDatastoreCreateOptionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryVmfsDatastoreCreateOptionsResponseMsg.typecode)
         return response
@@ -3709,7 +4726,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateVmfsDatastoreRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateVmfsDatastoreResponseMsg.typecode)
         return response
@@ -3719,7 +4736,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryVmfsDatastoreExtendOptionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryVmfsDatastoreExtendOptionsResponseMsg.typecode)
         return response
@@ -3729,7 +4746,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryVmfsDatastoreExpandOptionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryVmfsDatastoreExpandOptionsResponseMsg.typecode)
         return response
@@ -3739,7 +4756,7 @@ class VimBindingSOAP:
         if isinstance(request, ExtendVmfsDatastoreRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ExtendVmfsDatastoreResponseMsg.typecode)
         return response
@@ -3749,7 +4766,7 @@ class VimBindingSOAP:
         if isinstance(request, ExpandVmfsDatastoreRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ExpandVmfsDatastoreResponseMsg.typecode)
         return response
@@ -3759,7 +4776,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateNasDatastoreRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateNasDatastoreResponseMsg.typecode)
         return response
@@ -3769,9 +4786,19 @@ class VimBindingSOAP:
         if isinstance(request, CreateLocalDatastoreRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateLocalDatastoreResponseMsg.typecode)
+        return response
+
+    # op: CreateVvolDatastore
+    def CreateVvolDatastore(self, request, **kw):
+        if isinstance(request, CreateVvolDatastoreRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CreateVvolDatastoreResponseMsg.typecode)
         return response
 
     # op: RemoveDatastore
@@ -3779,9 +4806,19 @@ class VimBindingSOAP:
         if isinstance(request, RemoveDatastoreRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveDatastoreResponseMsg.typecode)
+        return response
+
+    # op: RemoveDatastoreEx_Task
+    def RemoveDatastoreEx_Task(self, request, **kw):
+        if isinstance(request, RemoveDatastoreEx_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RemoveDatastoreEx_TaskResponseMsg.typecode)
         return response
 
     # op: ConfigureDatastorePrincipal
@@ -3789,7 +4826,7 @@ class VimBindingSOAP:
         if isinstance(request, ConfigureDatastorePrincipalRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ConfigureDatastorePrincipalResponseMsg.typecode)
         return response
@@ -3799,7 +4836,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryUnresolvedVmfsVolumesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryUnresolvedVmfsVolumesResponseMsg.typecode)
         return response
@@ -3809,7 +4846,7 @@ class VimBindingSOAP:
         if isinstance(request, ResignatureUnresolvedVmfsVolume_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ResignatureUnresolvedVmfsVolume_TaskResponseMsg.typecode)
         return response
@@ -3819,7 +4856,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateDateTimeConfigRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateDateTimeConfigResponseMsg.typecode)
         return response
@@ -3829,7 +4866,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryAvailableTimeZonesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryAvailableTimeZonesResponseMsg.typecode)
         return response
@@ -3839,7 +4876,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryDateTimeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryDateTimeResponseMsg.typecode)
         return response
@@ -3849,7 +4886,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateDateTimeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateDateTimeResponseMsg.typecode)
         return response
@@ -3859,7 +4896,7 @@ class VimBindingSOAP:
         if isinstance(request, RefreshDateTimeSystemRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RefreshDateTimeSystemResponseMsg.typecode)
         return response
@@ -3869,7 +4906,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryAvailablePartitionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryAvailablePartitionResponseMsg.typecode)
         return response
@@ -3879,7 +4916,7 @@ class VimBindingSOAP:
         if isinstance(request, SelectActivePartitionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SelectActivePartitionResponseMsg.typecode)
         return response
@@ -3889,7 +4926,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryPartitionCreateOptionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryPartitionCreateOptionsResponseMsg.typecode)
         return response
@@ -3899,7 +4936,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryPartitionCreateDescRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryPartitionCreateDescResponseMsg.typecode)
         return response
@@ -3909,7 +4946,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateDiagnosticPartitionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateDiagnosticPartitionResponseMsg.typecode)
         return response
@@ -3919,7 +4956,7 @@ class VimBindingSOAP:
         if isinstance(request, EsxAgentHostManagerUpdateConfigRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(EsxAgentHostManagerUpdateConfigResponseMsg.typecode)
         return response
@@ -3929,7 +4966,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateDefaultPolicyRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateDefaultPolicyResponseMsg.typecode)
         return response
@@ -3939,7 +4976,7 @@ class VimBindingSOAP:
         if isinstance(request, EnableRulesetRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(EnableRulesetResponseMsg.typecode)
         return response
@@ -3949,7 +4986,7 @@ class VimBindingSOAP:
         if isinstance(request, DisableRulesetRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DisableRulesetResponseMsg.typecode)
         return response
@@ -3959,7 +4996,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateRulesetRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateRulesetResponseMsg.typecode)
         return response
@@ -3969,7 +5006,7 @@ class VimBindingSOAP:
         if isinstance(request, RefreshFirewallRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RefreshFirewallResponseMsg.typecode)
         return response
@@ -3979,7 +5016,7 @@ class VimBindingSOAP:
         if isinstance(request, ResetFirmwareToFactoryDefaultsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ResetFirmwareToFactoryDefaultsResponseMsg.typecode)
         return response
@@ -3989,7 +5026,7 @@ class VimBindingSOAP:
         if isinstance(request, BackupFirmwareConfigurationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(BackupFirmwareConfigurationResponseMsg.typecode)
         return response
@@ -3999,7 +5036,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryFirmwareConfigUploadURLRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryFirmwareConfigUploadURLResponseMsg.typecode)
         return response
@@ -4009,9 +5046,39 @@ class VimBindingSOAP:
         if isinstance(request, RestoreFirmwareConfigurationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RestoreFirmwareConfigurationResponseMsg.typecode)
+        return response
+
+    # op: RefreshGraphicsManager
+    def RefreshGraphicsManager(self, request, **kw):
+        if isinstance(request, RefreshGraphicsManagerRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RefreshGraphicsManagerResponseMsg.typecode)
+        return response
+
+    # op: IsSharedGraphicsActive
+    def IsSharedGraphicsActive(self, request, **kw):
+        if isinstance(request, IsSharedGraphicsActiveRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(IsSharedGraphicsActiveResponseMsg.typecode)
+        return response
+
+    # op: UpdateGraphicsConfig
+    def UpdateGraphicsConfig(self, request, **kw):
+        if isinstance(request, UpdateGraphicsConfigRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateGraphicsConfigResponseMsg.typecode)
         return response
 
     # op: RefreshHealthStatusSystem
@@ -4019,7 +5086,7 @@ class VimBindingSOAP:
         if isinstance(request, RefreshHealthStatusSystemRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RefreshHealthStatusSystemResponseMsg.typecode)
         return response
@@ -4029,9 +5096,99 @@ class VimBindingSOAP:
         if isinstance(request, ResetSystemHealthInfoRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ResetSystemHealthInfoResponseMsg.typecode)
+        return response
+
+    # op: ClearSystemEventLog
+    def ClearSystemEventLog(self, request, **kw):
+        if isinstance(request, ClearSystemEventLogRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ClearSystemEventLogResponseMsg.typecode)
+        return response
+
+    # op: FetchSystemEventLog
+    def FetchSystemEventLog(self, request, **kw):
+        if isinstance(request, FetchSystemEventLogRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(FetchSystemEventLogResponseMsg.typecode)
+        return response
+
+    # op: RetrieveHostAccessControlEntries
+    def RetrieveHostAccessControlEntries(self, request, **kw):
+        if isinstance(request, RetrieveHostAccessControlEntriesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrieveHostAccessControlEntriesResponseMsg.typecode)
+        return response
+
+    # op: ChangeAccessMode
+    def ChangeAccessMode(self, request, **kw):
+        if isinstance(request, ChangeAccessModeRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ChangeAccessModeResponseMsg.typecode)
+        return response
+
+    # op: QuerySystemUsers
+    def QuerySystemUsers(self, request, **kw):
+        if isinstance(request, QuerySystemUsersRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QuerySystemUsersResponseMsg.typecode)
+        return response
+
+    # op: UpdateSystemUsers
+    def UpdateSystemUsers(self, request, **kw):
+        if isinstance(request, UpdateSystemUsersRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateSystemUsersResponseMsg.typecode)
+        return response
+
+    # op: QueryLockdownExceptions
+    def QueryLockdownExceptions(self, request, **kw):
+        if isinstance(request, QueryLockdownExceptionsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryLockdownExceptionsResponseMsg.typecode)
+        return response
+
+    # op: UpdateLockdownExceptions
+    def UpdateLockdownExceptions(self, request, **kw):
+        if isinstance(request, UpdateLockdownExceptionsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateLockdownExceptionsResponseMsg.typecode)
+        return response
+
+    # op: ChangeLockdownMode
+    def ChangeLockdownMode(self, request, **kw):
+        if isinstance(request, ChangeLockdownModeRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ChangeLockdownModeResponseMsg.typecode)
         return response
 
     # op: HostImageConfigGetAcceptance
@@ -4039,7 +5196,7 @@ class VimBindingSOAP:
         if isinstance(request, HostImageConfigGetAcceptanceRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(HostImageConfigGetAcceptanceResponseMsg.typecode)
         return response
@@ -4049,7 +5206,7 @@ class VimBindingSOAP:
         if isinstance(request, HostImageConfigGetProfileRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(HostImageConfigGetProfileResponseMsg.typecode)
         return response
@@ -4059,9 +5216,29 @@ class VimBindingSOAP:
         if isinstance(request, UpdateHostImageAcceptanceLevelRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateHostImageAcceptanceLevelResponseMsg.typecode)
+        return response
+
+    # op: fetchSoftwarePackages
+    def fetchSoftwarePackages(self, request, **kw):
+        if isinstance(request, fetchSoftwarePackagesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(fetchSoftwarePackagesResponseMsg.typecode)
+        return response
+
+    # op: installDate
+    def installDate(self, request, **kw):
+        if isinstance(request, installDateRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(installDateResponseMsg.typecode)
         return response
 
     # op: QueryVnicStatus
@@ -4069,7 +5246,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryVnicStatusRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryVnicStatusResponseMsg.typecode)
         return response
@@ -4079,7 +5256,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryPnicStatusRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryPnicStatusResponseMsg.typecode)
         return response
@@ -4089,7 +5266,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryBoundVnicsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryBoundVnicsResponseMsg.typecode)
         return response
@@ -4099,7 +5276,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryCandidateNicsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryCandidateNicsResponseMsg.typecode)
         return response
@@ -4109,7 +5286,7 @@ class VimBindingSOAP:
         if isinstance(request, BindVnicRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(BindVnicResponseMsg.typecode)
         return response
@@ -4119,7 +5296,7 @@ class VimBindingSOAP:
         if isinstance(request, UnbindVnicRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UnbindVnicResponseMsg.typecode)
         return response
@@ -4129,7 +5306,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryMigrationDependenciesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryMigrationDependenciesResponseMsg.typecode)
         return response
@@ -4139,7 +5316,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryModulesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryModulesResponseMsg.typecode)
         return response
@@ -4149,7 +5326,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateModuleOptionStringRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateModuleOptionStringResponseMsg.typecode)
         return response
@@ -4159,7 +5336,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryConfiguredModuleOptionStringRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryConfiguredModuleOptionStringResponseMsg.typecode)
         return response
@@ -4169,7 +5346,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateUserRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateUserResponseMsg.typecode)
         return response
@@ -4179,7 +5356,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateUserRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateUserResponseMsg.typecode)
         return response
@@ -4189,7 +5366,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateGroupRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateGroupResponseMsg.typecode)
         return response
@@ -4199,7 +5376,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveUserRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveUserResponseMsg.typecode)
         return response
@@ -4209,7 +5386,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveGroupRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveGroupResponseMsg.typecode)
         return response
@@ -4219,7 +5396,7 @@ class VimBindingSOAP:
         if isinstance(request, AssignUserToGroupRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AssignUserToGroupResponseMsg.typecode)
         return response
@@ -4229,7 +5406,7 @@ class VimBindingSOAP:
         if isinstance(request, UnassignUserFromGroupRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UnassignUserFromGroupResponseMsg.typecode)
         return response
@@ -4239,7 +5416,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconfigureServiceConsoleReservationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconfigureServiceConsoleReservationResponseMsg.typecode)
         return response
@@ -4249,7 +5426,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconfigureVirtualMachineReservationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconfigureVirtualMachineReservationResponseMsg.typecode)
         return response
@@ -4259,7 +5436,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateNetworkConfigRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateNetworkConfigResponseMsg.typecode)
         return response
@@ -4269,7 +5446,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateDnsConfigRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateDnsConfigResponseMsg.typecode)
         return response
@@ -4279,7 +5456,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateIpRouteConfigRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateIpRouteConfigResponseMsg.typecode)
         return response
@@ -4289,7 +5466,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateConsoleIpRouteConfigRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateConsoleIpRouteConfigResponseMsg.typecode)
         return response
@@ -4299,7 +5476,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateIpRouteTableConfigRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateIpRouteTableConfigResponseMsg.typecode)
         return response
@@ -4309,7 +5486,7 @@ class VimBindingSOAP:
         if isinstance(request, AddVirtualSwitchRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AddVirtualSwitchResponseMsg.typecode)
         return response
@@ -4319,7 +5496,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveVirtualSwitchRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveVirtualSwitchResponseMsg.typecode)
         return response
@@ -4329,7 +5506,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateVirtualSwitchRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateVirtualSwitchResponseMsg.typecode)
         return response
@@ -4339,7 +5516,7 @@ class VimBindingSOAP:
         if isinstance(request, AddPortGroupRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AddPortGroupResponseMsg.typecode)
         return response
@@ -4349,7 +5526,7 @@ class VimBindingSOAP:
         if isinstance(request, RemovePortGroupRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemovePortGroupResponseMsg.typecode)
         return response
@@ -4359,7 +5536,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdatePortGroupRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdatePortGroupResponseMsg.typecode)
         return response
@@ -4369,7 +5546,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdatePhysicalNicLinkSpeedRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdatePhysicalNicLinkSpeedResponseMsg.typecode)
         return response
@@ -4379,7 +5556,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryNetworkHintRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryNetworkHintResponseMsg.typecode)
         return response
@@ -4389,7 +5566,7 @@ class VimBindingSOAP:
         if isinstance(request, AddVirtualNicRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AddVirtualNicResponseMsg.typecode)
         return response
@@ -4399,7 +5576,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveVirtualNicRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveVirtualNicResponseMsg.typecode)
         return response
@@ -4409,7 +5586,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateVirtualNicRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateVirtualNicResponseMsg.typecode)
         return response
@@ -4419,7 +5596,7 @@ class VimBindingSOAP:
         if isinstance(request, AddServiceConsoleVirtualNicRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AddServiceConsoleVirtualNicResponseMsg.typecode)
         return response
@@ -4429,7 +5606,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveServiceConsoleVirtualNicRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveServiceConsoleVirtualNicResponseMsg.typecode)
         return response
@@ -4439,7 +5616,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateServiceConsoleVirtualNicRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateServiceConsoleVirtualNicResponseMsg.typecode)
         return response
@@ -4449,7 +5626,7 @@ class VimBindingSOAP:
         if isinstance(request, RestartServiceConsoleVirtualNicRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RestartServiceConsoleVirtualNicResponseMsg.typecode)
         return response
@@ -4459,9 +5636,39 @@ class VimBindingSOAP:
         if isinstance(request, RefreshNetworkSystemRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RefreshNetworkSystemResponseMsg.typecode)
+        return response
+
+    # op: CreateNvdimmNamespace_Task
+    def CreateNvdimmNamespace_Task(self, request, **kw):
+        if isinstance(request, CreateNvdimmNamespace_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CreateNvdimmNamespace_TaskResponseMsg.typecode)
+        return response
+
+    # op: DeleteNvdimmNamespace_Task
+    def DeleteNvdimmNamespace_Task(self, request, **kw):
+        if isinstance(request, DeleteNvdimmNamespace_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DeleteNvdimmNamespace_TaskResponseMsg.typecode)
+        return response
+
+    # op: DeleteNvdimmBlockNamespaces_Task
+    def DeleteNvdimmBlockNamespaces_Task(self, request, **kw):
+        if isinstance(request, DeleteNvdimmBlockNamespaces_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DeleteNvdimmBlockNamespaces_TaskResponseMsg.typecode)
         return response
 
     # op: CheckHostPatch_Task
@@ -4469,7 +5676,7 @@ class VimBindingSOAP:
         if isinstance(request, CheckHostPatch_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CheckHostPatch_TaskResponseMsg.typecode)
         return response
@@ -4479,7 +5686,7 @@ class VimBindingSOAP:
         if isinstance(request, ScanHostPatch_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ScanHostPatch_TaskResponseMsg.typecode)
         return response
@@ -4489,7 +5696,7 @@ class VimBindingSOAP:
         if isinstance(request, ScanHostPatchV2_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ScanHostPatchV2_TaskResponseMsg.typecode)
         return response
@@ -4499,7 +5706,7 @@ class VimBindingSOAP:
         if isinstance(request, StageHostPatch_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(StageHostPatch_TaskResponseMsg.typecode)
         return response
@@ -4509,7 +5716,7 @@ class VimBindingSOAP:
         if isinstance(request, InstallHostPatch_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(InstallHostPatch_TaskResponseMsg.typecode)
         return response
@@ -4519,7 +5726,7 @@ class VimBindingSOAP:
         if isinstance(request, InstallHostPatchV2_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(InstallHostPatchV2_TaskResponseMsg.typecode)
         return response
@@ -4529,7 +5736,7 @@ class VimBindingSOAP:
         if isinstance(request, UninstallHostPatch_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UninstallHostPatch_TaskResponseMsg.typecode)
         return response
@@ -4539,7 +5746,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryHostPatch_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryHostPatch_TaskResponseMsg.typecode)
         return response
@@ -4549,7 +5756,7 @@ class VimBindingSOAP:
         if isinstance(request, RefreshRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RefreshResponseMsg.typecode)
         return response
@@ -4559,7 +5766,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdatePassthruConfigRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdatePassthruConfigResponseMsg.typecode)
         return response
@@ -4569,7 +5776,7 @@ class VimBindingSOAP:
         if isinstance(request, ConfigurePowerPolicyRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ConfigurePowerPolicyResponseMsg.typecode)
         return response
@@ -4579,7 +5786,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateServicePolicyRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateServicePolicyResponseMsg.typecode)
         return response
@@ -4589,7 +5796,7 @@ class VimBindingSOAP:
         if isinstance(request, StartServiceRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(StartServiceResponseMsg.typecode)
         return response
@@ -4599,7 +5806,7 @@ class VimBindingSOAP:
         if isinstance(request, StopServiceRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(StopServiceResponseMsg.typecode)
         return response
@@ -4609,7 +5816,7 @@ class VimBindingSOAP:
         if isinstance(request, RestartServiceRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RestartServiceResponseMsg.typecode)
         return response
@@ -4619,7 +5826,7 @@ class VimBindingSOAP:
         if isinstance(request, UninstallServiceRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UninstallServiceResponseMsg.typecode)
         return response
@@ -4629,7 +5836,7 @@ class VimBindingSOAP:
         if isinstance(request, RefreshServicesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RefreshServicesResponseMsg.typecode)
         return response
@@ -4639,7 +5846,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconfigureSnmpAgentRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconfigureSnmpAgentResponseMsg.typecode)
         return response
@@ -4649,7 +5856,7 @@ class VimBindingSOAP:
         if isinstance(request, SendTestNotificationRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SendTestNotificationResponseMsg.typecode)
         return response
@@ -4659,7 +5866,7 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveDiskPartitionInfoRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveDiskPartitionInfoResponseMsg.typecode)
         return response
@@ -4669,7 +5876,7 @@ class VimBindingSOAP:
         if isinstance(request, ComputeDiskPartitionInfoRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ComputeDiskPartitionInfoResponseMsg.typecode)
         return response
@@ -4679,7 +5886,7 @@ class VimBindingSOAP:
         if isinstance(request, ComputeDiskPartitionInfoForResizeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ComputeDiskPartitionInfoForResizeResponseMsg.typecode)
         return response
@@ -4689,7 +5896,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateDiskPartitionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateDiskPartitionsResponseMsg.typecode)
         return response
@@ -4699,7 +5906,7 @@ class VimBindingSOAP:
         if isinstance(request, FormatVmfsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(FormatVmfsResponseMsg.typecode)
         return response
@@ -4709,7 +5916,7 @@ class VimBindingSOAP:
         if isinstance(request, MountVmfsVolumeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MountVmfsVolumeResponseMsg.typecode)
         return response
@@ -4719,9 +5926,39 @@ class VimBindingSOAP:
         if isinstance(request, UnmountVmfsVolumeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UnmountVmfsVolumeResponseMsg.typecode)
+        return response
+
+    # op: UnmountVmfsVolumeEx_Task
+    def UnmountVmfsVolumeEx_Task(self, request, **kw):
+        if isinstance(request, UnmountVmfsVolumeEx_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UnmountVmfsVolumeEx_TaskResponseMsg.typecode)
+        return response
+
+    # op: MountVmfsVolumeEx_Task
+    def MountVmfsVolumeEx_Task(self, request, **kw):
+        if isinstance(request, MountVmfsVolumeEx_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(MountVmfsVolumeEx_TaskResponseMsg.typecode)
+        return response
+
+    # op: UnmapVmfsVolumeEx_Task
+    def UnmapVmfsVolumeEx_Task(self, request, **kw):
+        if isinstance(request, UnmapVmfsVolumeEx_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UnmapVmfsVolumeEx_TaskResponseMsg.typecode)
         return response
 
     # op: DeleteVmfsVolumeState
@@ -4729,7 +5966,7 @@ class VimBindingSOAP:
         if isinstance(request, DeleteVmfsVolumeStateRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DeleteVmfsVolumeStateResponseMsg.typecode)
         return response
@@ -4739,7 +5976,7 @@ class VimBindingSOAP:
         if isinstance(request, RescanVmfsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RescanVmfsResponseMsg.typecode)
         return response
@@ -4749,7 +5986,7 @@ class VimBindingSOAP:
         if isinstance(request, AttachVmfsExtentRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AttachVmfsExtentResponseMsg.typecode)
         return response
@@ -4759,7 +5996,7 @@ class VimBindingSOAP:
         if isinstance(request, ExpandVmfsExtentRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ExpandVmfsExtentResponseMsg.typecode)
         return response
@@ -4769,7 +6006,7 @@ class VimBindingSOAP:
         if isinstance(request, UpgradeVmfsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpgradeVmfsResponseMsg.typecode)
         return response
@@ -4779,7 +6016,7 @@ class VimBindingSOAP:
         if isinstance(request, UpgradeVmLayoutRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpgradeVmLayoutResponseMsg.typecode)
         return response
@@ -4789,7 +6026,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryUnresolvedVmfsVolumeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryUnresolvedVmfsVolumeResponseMsg.typecode)
         return response
@@ -4799,9 +6036,19 @@ class VimBindingSOAP:
         if isinstance(request, ResolveMultipleUnresolvedVmfsVolumesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ResolveMultipleUnresolvedVmfsVolumesResponseMsg.typecode)
+        return response
+
+    # op: ResolveMultipleUnresolvedVmfsVolumesEx_Task
+    def ResolveMultipleUnresolvedVmfsVolumesEx_Task(self, request, **kw):
+        if isinstance(request, ResolveMultipleUnresolvedVmfsVolumesEx_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ResolveMultipleUnresolvedVmfsVolumesEx_TaskResponseMsg.typecode)
         return response
 
     # op: UnmountForceMountedVmfsVolume
@@ -4809,7 +6056,7 @@ class VimBindingSOAP:
         if isinstance(request, UnmountForceMountedVmfsVolumeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UnmountForceMountedVmfsVolumeResponseMsg.typecode)
         return response
@@ -4819,7 +6066,7 @@ class VimBindingSOAP:
         if isinstance(request, RescanHbaRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RescanHbaResponseMsg.typecode)
         return response
@@ -4829,7 +6076,7 @@ class VimBindingSOAP:
         if isinstance(request, RescanAllHbaRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RescanAllHbaResponseMsg.typecode)
         return response
@@ -4839,7 +6086,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateSoftwareInternetScsiEnabledRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateSoftwareInternetScsiEnabledResponseMsg.typecode)
         return response
@@ -4849,7 +6096,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateInternetScsiDiscoveryPropertiesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateInternetScsiDiscoveryPropertiesResponseMsg.typecode)
         return response
@@ -4859,7 +6106,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateInternetScsiAuthenticationPropertiesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateInternetScsiAuthenticationPropertiesResponseMsg.typecode)
         return response
@@ -4869,7 +6116,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateInternetScsiDigestPropertiesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateInternetScsiDigestPropertiesResponseMsg.typecode)
         return response
@@ -4879,7 +6126,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateInternetScsiAdvancedOptionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateInternetScsiAdvancedOptionsResponseMsg.typecode)
         return response
@@ -4889,7 +6136,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateInternetScsiIPPropertiesRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateInternetScsiIPPropertiesResponseMsg.typecode)
         return response
@@ -4899,7 +6146,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateInternetScsiNameRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateInternetScsiNameResponseMsg.typecode)
         return response
@@ -4909,7 +6156,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateInternetScsiAliasRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateInternetScsiAliasResponseMsg.typecode)
         return response
@@ -4919,7 +6166,7 @@ class VimBindingSOAP:
         if isinstance(request, AddInternetScsiSendTargetsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AddInternetScsiSendTargetsResponseMsg.typecode)
         return response
@@ -4929,7 +6176,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveInternetScsiSendTargetsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveInternetScsiSendTargetsResponseMsg.typecode)
         return response
@@ -4939,7 +6186,7 @@ class VimBindingSOAP:
         if isinstance(request, AddInternetScsiStaticTargetsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AddInternetScsiStaticTargetsResponseMsg.typecode)
         return response
@@ -4949,7 +6196,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveInternetScsiStaticTargetsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveInternetScsiStaticTargetsResponseMsg.typecode)
         return response
@@ -4959,7 +6206,7 @@ class VimBindingSOAP:
         if isinstance(request, EnableMultipathPathRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(EnableMultipathPathResponseMsg.typecode)
         return response
@@ -4969,7 +6216,7 @@ class VimBindingSOAP:
         if isinstance(request, DisableMultipathPathRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DisableMultipathPathResponseMsg.typecode)
         return response
@@ -4979,7 +6226,7 @@ class VimBindingSOAP:
         if isinstance(request, SetMultipathLunPolicyRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SetMultipathLunPolicyResponseMsg.typecode)
         return response
@@ -4989,7 +6236,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryPathSelectionPolicyOptionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryPathSelectionPolicyOptionsResponseMsg.typecode)
         return response
@@ -4999,7 +6246,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryStorageArrayTypePolicyOptionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryStorageArrayTypePolicyOptionsResponseMsg.typecode)
         return response
@@ -5009,7 +6256,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateScsiLunDisplayNameRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateScsiLunDisplayNameResponseMsg.typecode)
         return response
@@ -5019,9 +6266,19 @@ class VimBindingSOAP:
         if isinstance(request, DetachScsiLunRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DetachScsiLunResponseMsg.typecode)
+        return response
+
+    # op: DetachScsiLunEx_Task
+    def DetachScsiLunEx_Task(self, request, **kw):
+        if isinstance(request, DetachScsiLunEx_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DetachScsiLunEx_TaskResponseMsg.typecode)
         return response
 
     # op: DeleteScsiLunState
@@ -5029,7 +6286,7 @@ class VimBindingSOAP:
         if isinstance(request, DeleteScsiLunStateRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DeleteScsiLunStateResponseMsg.typecode)
         return response
@@ -5039,9 +6296,19 @@ class VimBindingSOAP:
         if isinstance(request, AttachScsiLunRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AttachScsiLunResponseMsg.typecode)
+        return response
+
+    # op: AttachScsiLunEx_Task
+    def AttachScsiLunEx_Task(self, request, **kw):
+        if isinstance(request, AttachScsiLunEx_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(AttachScsiLunEx_TaskResponseMsg.typecode)
         return response
 
     # op: RefreshStorageSystem
@@ -5049,7 +6316,7 @@ class VimBindingSOAP:
         if isinstance(request, RefreshStorageSystemRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RefreshStorageSystemResponseMsg.typecode)
         return response
@@ -5059,7 +6326,7 @@ class VimBindingSOAP:
         if isinstance(request, DiscoverFcoeHbasRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DiscoverFcoeHbasResponseMsg.typecode)
         return response
@@ -5069,9 +6336,269 @@ class VimBindingSOAP:
         if isinstance(request, MarkForRemovalRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MarkForRemovalResponseMsg.typecode)
+        return response
+
+    # op: FormatVffs
+    def FormatVffs(self, request, **kw):
+        if isinstance(request, FormatVffsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(FormatVffsResponseMsg.typecode)
+        return response
+
+    # op: ExtendVffs
+    def ExtendVffs(self, request, **kw):
+        if isinstance(request, ExtendVffsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ExtendVffsResponseMsg.typecode)
+        return response
+
+    # op: DestroyVffs
+    def DestroyVffs(self, request, **kw):
+        if isinstance(request, DestroyVffsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DestroyVffsResponseMsg.typecode)
+        return response
+
+    # op: MountVffsVolume
+    def MountVffsVolume(self, request, **kw):
+        if isinstance(request, MountVffsVolumeRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(MountVffsVolumeResponseMsg.typecode)
+        return response
+
+    # op: UnmountVffsVolume
+    def UnmountVffsVolume(self, request, **kw):
+        if isinstance(request, UnmountVffsVolumeRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UnmountVffsVolumeResponseMsg.typecode)
+        return response
+
+    # op: DeleteVffsVolumeState
+    def DeleteVffsVolumeState(self, request, **kw):
+        if isinstance(request, DeleteVffsVolumeStateRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DeleteVffsVolumeStateResponseMsg.typecode)
+        return response
+
+    # op: RescanVffs
+    def RescanVffs(self, request, **kw):
+        if isinstance(request, RescanVffsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RescanVffsResponseMsg.typecode)
+        return response
+
+    # op: QueryAvailableSsds
+    def QueryAvailableSsds(self, request, **kw):
+        if isinstance(request, QueryAvailableSsdsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryAvailableSsdsResponseMsg.typecode)
+        return response
+
+    # op: SetNFSUser
+    def SetNFSUser(self, request, **kw):
+        if isinstance(request, SetNFSUserRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(SetNFSUserResponseMsg.typecode)
+        return response
+
+    # op: ChangeNFSUserPassword
+    def ChangeNFSUserPassword(self, request, **kw):
+        if isinstance(request, ChangeNFSUserPasswordRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ChangeNFSUserPasswordResponseMsg.typecode)
+        return response
+
+    # op: QueryNFSUser
+    def QueryNFSUser(self, request, **kw):
+        if isinstance(request, QueryNFSUserRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryNFSUserResponseMsg.typecode)
+        return response
+
+    # op: ClearNFSUser
+    def ClearNFSUser(self, request, **kw):
+        if isinstance(request, ClearNFSUserRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ClearNFSUserResponseMsg.typecode)
+        return response
+
+    # op: TurnDiskLocatorLedOn_Task
+    def TurnDiskLocatorLedOn_Task(self, request, **kw):
+        if isinstance(request, TurnDiskLocatorLedOn_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(TurnDiskLocatorLedOn_TaskResponseMsg.typecode)
+        return response
+
+    # op: TurnDiskLocatorLedOff_Task
+    def TurnDiskLocatorLedOff_Task(self, request, **kw):
+        if isinstance(request, TurnDiskLocatorLedOff_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(TurnDiskLocatorLedOff_TaskResponseMsg.typecode)
+        return response
+
+    # op: MarkAsSsd_Task
+    def MarkAsSsd_Task(self, request, **kw):
+        if isinstance(request, MarkAsSsd_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(MarkAsSsd_TaskResponseMsg.typecode)
+        return response
+
+    # op: MarkAsNonSsd_Task
+    def MarkAsNonSsd_Task(self, request, **kw):
+        if isinstance(request, MarkAsNonSsd_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(MarkAsNonSsd_TaskResponseMsg.typecode)
+        return response
+
+    # op: MarkAsLocal_Task
+    def MarkAsLocal_Task(self, request, **kw):
+        if isinstance(request, MarkAsLocal_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(MarkAsLocal_TaskResponseMsg.typecode)
+        return response
+
+    # op: MarkAsNonLocal_Task
+    def MarkAsNonLocal_Task(self, request, **kw):
+        if isinstance(request, MarkAsNonLocal_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(MarkAsNonLocal_TaskResponseMsg.typecode)
+        return response
+
+    # op: UpdateVmfsUnmapPriority
+    def UpdateVmfsUnmapPriority(self, request, **kw):
+        if isinstance(request, UpdateVmfsUnmapPriorityRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateVmfsUnmapPriorityResponseMsg.typecode)
+        return response
+
+    # op: UpdateVmfsUnmapBandwidth
+    def UpdateVmfsUnmapBandwidth(self, request, **kw):
+        if isinstance(request, UpdateVmfsUnmapBandwidthRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateVmfsUnmapBandwidthResponseMsg.typecode)
+        return response
+
+    # op: QueryVmfsConfigOption
+    def QueryVmfsConfigOption(self, request, **kw):
+        if isinstance(request, QueryVmfsConfigOptionRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryVmfsConfigOptionResponseMsg.typecode)
+        return response
+
+    # op: ConfigureVFlashResourceEx_Task
+    def ConfigureVFlashResourceEx_Task(self, request, **kw):
+        if isinstance(request, ConfigureVFlashResourceEx_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ConfigureVFlashResourceEx_TaskResponseMsg.typecode)
+        return response
+
+    # op: HostConfigureVFlashResource
+    def HostConfigureVFlashResource(self, request, **kw):
+        if isinstance(request, HostConfigureVFlashResourceRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostConfigureVFlashResourceResponseMsg.typecode)
+        return response
+
+    # op: HostRemoveVFlashResource
+    def HostRemoveVFlashResource(self, request, **kw):
+        if isinstance(request, HostRemoveVFlashResourceRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostRemoveVFlashResourceResponseMsg.typecode)
+        return response
+
+    # op: HostConfigVFlashCache
+    def HostConfigVFlashCache(self, request, **kw):
+        if isinstance(request, HostConfigVFlashCacheRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostConfigVFlashCacheResponseMsg.typecode)
+        return response
+
+    # op: HostGetVFlashModuleDefaultConfig
+    def HostGetVFlashModuleDefaultConfig(self, request, **kw):
+        if isinstance(request, HostGetVFlashModuleDefaultConfigRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostGetVFlashModuleDefaultConfigResponseMsg.typecode)
         return response
 
     # op: UpdateIpConfig
@@ -5079,7 +6606,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateIpConfigRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateIpConfigResponseMsg.typecode)
         return response
@@ -5089,7 +6616,7 @@ class VimBindingSOAP:
         if isinstance(request, SelectVnicRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SelectVnicResponseMsg.typecode)
         return response
@@ -5099,7 +6626,7 @@ class VimBindingSOAP:
         if isinstance(request, DeselectVnicRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DeselectVnicResponseMsg.typecode)
         return response
@@ -5109,7 +6636,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryNetConfigRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryNetConfigResponseMsg.typecode)
         return response
@@ -5119,7 +6646,7 @@ class VimBindingSOAP:
         if isinstance(request, SelectVnicForNicTypeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(SelectVnicForNicTypeResponseMsg.typecode)
         return response
@@ -5129,9 +6656,259 @@ class VimBindingSOAP:
         if isinstance(request, DeselectVnicForNicTypeRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DeselectVnicForNicTypeResponseMsg.typecode)
+        return response
+
+    # op: QueryCmmds
+    def QueryCmmds(self, request, **kw):
+        if isinstance(request, QueryCmmdsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryCmmdsResponseMsg.typecode)
+        return response
+
+    # op: QueryPhysicalVsanDisks
+    def QueryPhysicalVsanDisks(self, request, **kw):
+        if isinstance(request, QueryPhysicalVsanDisksRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryPhysicalVsanDisksResponseMsg.typecode)
+        return response
+
+    # op: QueryVsanObjects
+    def QueryVsanObjects(self, request, **kw):
+        if isinstance(request, QueryVsanObjectsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryVsanObjectsResponseMsg.typecode)
+        return response
+
+    # op: QueryObjectsOnPhysicalVsanDisk
+    def QueryObjectsOnPhysicalVsanDisk(self, request, **kw):
+        if isinstance(request, QueryObjectsOnPhysicalVsanDiskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryObjectsOnPhysicalVsanDiskResponseMsg.typecode)
+        return response
+
+    # op: AbdicateDomOwnership
+    def AbdicateDomOwnership(self, request, **kw):
+        if isinstance(request, AbdicateDomOwnershipRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(AbdicateDomOwnershipResponseMsg.typecode)
+        return response
+
+    # op: QueryVsanStatistics
+    def QueryVsanStatistics(self, request, **kw):
+        if isinstance(request, QueryVsanStatisticsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryVsanStatisticsResponseMsg.typecode)
+        return response
+
+    # op: ReconfigureDomObject
+    def ReconfigureDomObject(self, request, **kw):
+        if isinstance(request, ReconfigureDomObjectRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ReconfigureDomObjectResponseMsg.typecode)
+        return response
+
+    # op: QuerySyncingVsanObjects
+    def QuerySyncingVsanObjects(self, request, **kw):
+        if isinstance(request, QuerySyncingVsanObjectsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QuerySyncingVsanObjectsResponseMsg.typecode)
+        return response
+
+    # op: RunVsanPhysicalDiskDiagnostics
+    def RunVsanPhysicalDiskDiagnostics(self, request, **kw):
+        if isinstance(request, RunVsanPhysicalDiskDiagnosticsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RunVsanPhysicalDiskDiagnosticsResponseMsg.typecode)
+        return response
+
+    # op: GetVsanObjExtAttrs
+    def GetVsanObjExtAttrs(self, request, **kw):
+        if isinstance(request, GetVsanObjExtAttrsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(GetVsanObjExtAttrsResponseMsg.typecode)
+        return response
+
+    # op: ReconfigurationSatisfiable
+    def ReconfigurationSatisfiable(self, request, **kw):
+        if isinstance(request, ReconfigurationSatisfiableRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ReconfigurationSatisfiableResponseMsg.typecode)
+        return response
+
+    # op: CanProvisionObjects
+    def CanProvisionObjects(self, request, **kw):
+        if isinstance(request, CanProvisionObjectsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CanProvisionObjectsResponseMsg.typecode)
+        return response
+
+    # op: DeleteVsanObjects
+    def DeleteVsanObjects(self, request, **kw):
+        if isinstance(request, DeleteVsanObjectsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DeleteVsanObjectsResponseMsg.typecode)
+        return response
+
+    # op: UpgradeVsanObjects
+    def UpgradeVsanObjects(self, request, **kw):
+        if isinstance(request, UpgradeVsanObjectsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpgradeVsanObjectsResponseMsg.typecode)
+        return response
+
+    # op: QueryVsanObjectUuidsByFilter
+    def QueryVsanObjectUuidsByFilter(self, request, **kw):
+        if isinstance(request, QueryVsanObjectUuidsByFilterRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryVsanObjectUuidsByFilterResponseMsg.typecode)
+        return response
+
+    # op: QueryDisksForVsan
+    def QueryDisksForVsan(self, request, **kw):
+        if isinstance(request, QueryDisksForVsanRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryDisksForVsanResponseMsg.typecode)
+        return response
+
+    # op: AddDisks_Task
+    def AddDisks_Task(self, request, **kw):
+        if isinstance(request, AddDisks_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(AddDisks_TaskResponseMsg.typecode)
+        return response
+
+    # op: InitializeDisks_Task
+    def InitializeDisks_Task(self, request, **kw):
+        if isinstance(request, InitializeDisks_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(InitializeDisks_TaskResponseMsg.typecode)
+        return response
+
+    # op: RemoveDisk_Task
+    def RemoveDisk_Task(self, request, **kw):
+        if isinstance(request, RemoveDisk_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RemoveDisk_TaskResponseMsg.typecode)
+        return response
+
+    # op: RemoveDiskMapping_Task
+    def RemoveDiskMapping_Task(self, request, **kw):
+        if isinstance(request, RemoveDiskMapping_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RemoveDiskMapping_TaskResponseMsg.typecode)
+        return response
+
+    # op: UnmountDiskMapping_Task
+    def UnmountDiskMapping_Task(self, request, **kw):
+        if isinstance(request, UnmountDiskMapping_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UnmountDiskMapping_TaskResponseMsg.typecode)
+        return response
+
+    # op: UpdateVsan_Task
+    def UpdateVsan_Task(self, request, **kw):
+        if isinstance(request, UpdateVsan_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateVsan_TaskResponseMsg.typecode)
+        return response
+
+    # op: QueryHostStatus
+    def QueryHostStatus(self, request, **kw):
+        if isinstance(request, QueryHostStatusRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(QueryHostStatusResponseMsg.typecode)
+        return response
+
+    # op: EvacuateVsanNode_Task
+    def EvacuateVsanNode_Task(self, request, **kw):
+        if isinstance(request, EvacuateVsanNode_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(EvacuateVsanNode_TaskResponseMsg.typecode)
+        return response
+
+    # op: RecommissionVsanNode_Task
+    def RecommissionVsanNode_Task(self, request, **kw):
+        if isinstance(request, RecommissionVsanNode_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RecommissionVsanNode_TaskResponseMsg.typecode)
         return response
 
     # op: QueryOptions
@@ -5139,7 +6916,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryOptionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryOptionsResponseMsg.typecode)
         return response
@@ -5149,7 +6926,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateOptionsRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateOptionsResponseMsg.typecode)
         return response
@@ -5159,7 +6936,7 @@ class VimBindingSOAP:
         if isinstance(request, CheckCompliance_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CheckCompliance_TaskResponseMsg.typecode)
         return response
@@ -5169,7 +6946,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryComplianceStatusRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryComplianceStatusResponseMsg.typecode)
         return response
@@ -5179,7 +6956,7 @@ class VimBindingSOAP:
         if isinstance(request, ClearComplianceStatusRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ClearComplianceStatusResponseMsg.typecode)
         return response
@@ -5189,7 +6966,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryExpressionMetadataRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryExpressionMetadataResponseMsg.typecode)
         return response
@@ -5199,7 +6976,7 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveDescriptionRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveDescriptionResponseMsg.typecode)
         return response
@@ -5209,7 +6986,7 @@ class VimBindingSOAP:
         if isinstance(request, DestroyProfileRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DestroyProfileResponseMsg.typecode)
         return response
@@ -5219,7 +6996,7 @@ class VimBindingSOAP:
         if isinstance(request, AssociateProfileRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AssociateProfileResponseMsg.typecode)
         return response
@@ -5229,7 +7006,7 @@ class VimBindingSOAP:
         if isinstance(request, DissociateProfileRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DissociateProfileResponseMsg.typecode)
         return response
@@ -5239,7 +7016,7 @@ class VimBindingSOAP:
         if isinstance(request, CheckProfileCompliance_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CheckProfileCompliance_TaskResponseMsg.typecode)
         return response
@@ -5249,7 +7026,7 @@ class VimBindingSOAP:
         if isinstance(request, ExportProfileRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ExportProfileResponseMsg.typecode)
         return response
@@ -5259,7 +7036,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateProfileRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateProfileResponseMsg.typecode)
         return response
@@ -5269,7 +7046,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryPolicyMetadataRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryPolicyMetadataResponseMsg.typecode)
         return response
@@ -5279,7 +7056,7 @@ class VimBindingSOAP:
         if isinstance(request, FindAssociatedProfileRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(FindAssociatedProfileResponseMsg.typecode)
         return response
@@ -5289,9 +7066,19 @@ class VimBindingSOAP:
         if isinstance(request, UpdateClusterProfileRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateClusterProfileResponseMsg.typecode)
+        return response
+
+    # op: HostProfileResetValidationState
+    def HostProfileResetValidationState(self, request, **kw):
+        if isinstance(request, HostProfileResetValidationStateRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostProfileResetValidationStateResponseMsg.typecode)
         return response
 
     # op: UpdateReferenceHost
@@ -5299,7 +7086,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateReferenceHostRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateReferenceHostResponseMsg.typecode)
         return response
@@ -5309,7 +7096,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateHostProfileRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateHostProfileResponseMsg.typecode)
         return response
@@ -5319,9 +7106,69 @@ class VimBindingSOAP:
         if isinstance(request, ExecuteHostProfileRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ExecuteHostProfileResponseMsg.typecode)
+        return response
+
+    # op: UpdateHostSpecification
+    def UpdateHostSpecification(self, request, **kw):
+        if isinstance(request, UpdateHostSpecificationRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateHostSpecificationResponseMsg.typecode)
+        return response
+
+    # op: UpdateHostSubSpecification
+    def UpdateHostSubSpecification(self, request, **kw):
+        if isinstance(request, UpdateHostSubSpecificationRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateHostSubSpecificationResponseMsg.typecode)
+        return response
+
+    # op: RetrieveHostSpecification
+    def RetrieveHostSpecification(self, request, **kw):
+        if isinstance(request, RetrieveHostSpecificationRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrieveHostSpecificationResponseMsg.typecode)
+        return response
+
+    # op: DeleteHostSubSpecification
+    def DeleteHostSubSpecification(self, request, **kw):
+        if isinstance(request, DeleteHostSubSpecificationRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DeleteHostSubSpecificationResponseMsg.typecode)
+        return response
+
+    # op: DeleteHostSpecification
+    def DeleteHostSpecification(self, request, **kw):
+        if isinstance(request, DeleteHostSpecificationRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DeleteHostSpecificationResponseMsg.typecode)
+        return response
+
+    # op: HostSpecGetUpdatedHosts
+    def HostSpecGetUpdatedHosts(self, request, **kw):
+        if isinstance(request, HostSpecGetUpdatedHostsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostSpecGetUpdatedHostsResponseMsg.typecode)
         return response
 
     # op: ApplyHostConfig_Task
@@ -5329,7 +7176,7 @@ class VimBindingSOAP:
         if isinstance(request, ApplyHostConfig_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ApplyHostConfig_TaskResponseMsg.typecode)
         return response
@@ -5339,9 +7186,19 @@ class VimBindingSOAP:
         if isinstance(request, GenerateConfigTaskListRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(GenerateConfigTaskListResponseMsg.typecode)
+        return response
+
+    # op: GenerateHostProfileTaskList_Task
+    def GenerateHostProfileTaskList_Task(self, request, **kw):
+        if isinstance(request, GenerateHostProfileTaskList_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(GenerateHostProfileTaskList_TaskResponseMsg.typecode)
         return response
 
     # op: QueryHostProfileMetadata
@@ -5349,7 +7206,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryHostProfileMetadataRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryHostProfileMetadataResponseMsg.typecode)
         return response
@@ -5359,7 +7216,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryProfileStructureRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryProfileStructureResponseMsg.typecode)
         return response
@@ -5369,7 +7226,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateDefaultProfileRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateDefaultProfileResponseMsg.typecode)
         return response
@@ -5379,7 +7236,7 @@ class VimBindingSOAP:
         if isinstance(request, UpdateAnswerFile_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(UpdateAnswerFile_TaskResponseMsg.typecode)
         return response
@@ -5389,7 +7246,7 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveAnswerFileRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveAnswerFileResponseMsg.typecode)
         return response
@@ -5399,7 +7256,7 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveAnswerFileForProfileRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveAnswerFileForProfileResponseMsg.typecode)
         return response
@@ -5409,7 +7266,7 @@ class VimBindingSOAP:
         if isinstance(request, ExportAnswerFile_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ExportAnswerFile_TaskResponseMsg.typecode)
         return response
@@ -5419,7 +7276,7 @@ class VimBindingSOAP:
         if isinstance(request, CheckAnswerFileStatus_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CheckAnswerFileStatus_TaskResponseMsg.typecode)
         return response
@@ -5429,9 +7286,79 @@ class VimBindingSOAP:
         if isinstance(request, QueryAnswerFileStatusRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryAnswerFileStatusResponseMsg.typecode)
+        return response
+
+    # op: UpdateHostCustomizations_Task
+    def UpdateHostCustomizations_Task(self, request, **kw):
+        if isinstance(request, UpdateHostCustomizations_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateHostCustomizations_TaskResponseMsg.typecode)
+        return response
+
+    # op: RetrieveHostCustomizations
+    def RetrieveHostCustomizations(self, request, **kw):
+        if isinstance(request, RetrieveHostCustomizationsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrieveHostCustomizationsResponseMsg.typecode)
+        return response
+
+    # op: RetrieveHostCustomizationsForProfile
+    def RetrieveHostCustomizationsForProfile(self, request, **kw):
+        if isinstance(request, RetrieveHostCustomizationsForProfileRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrieveHostCustomizationsForProfileResponseMsg.typecode)
+        return response
+
+    # op: GenerateHostConfigTaskSpec_Task
+    def GenerateHostConfigTaskSpec_Task(self, request, **kw):
+        if isinstance(request, GenerateHostConfigTaskSpec_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(GenerateHostConfigTaskSpec_TaskResponseMsg.typecode)
+        return response
+
+    # op: ApplyEntitiesConfig_Task
+    def ApplyEntitiesConfig_Task(self, request, **kw):
+        if isinstance(request, ApplyEntitiesConfig_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ApplyEntitiesConfig_TaskResponseMsg.typecode)
+        return response
+
+    # op: ValidateHostProfileComposition_Task
+    def ValidateHostProfileComposition_Task(self, request, **kw):
+        if isinstance(request, ValidateHostProfileComposition_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ValidateHostProfileComposition_TaskResponseMsg.typecode)
+        return response
+
+    # op: CompositeHostProfile_Task
+    def CompositeHostProfile_Task(self, request, **kw):
+        if isinstance(request, CompositeHostProfile_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CompositeHostProfile_TaskResponseMsg.typecode)
         return response
 
     # op: RemoveScheduledTask
@@ -5439,7 +7366,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveScheduledTaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveScheduledTaskResponseMsg.typecode)
         return response
@@ -5449,7 +7376,7 @@ class VimBindingSOAP:
         if isinstance(request, ReconfigureScheduledTaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReconfigureScheduledTaskResponseMsg.typecode)
         return response
@@ -5459,7 +7386,7 @@ class VimBindingSOAP:
         if isinstance(request, RunScheduledTaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RunScheduledTaskResponseMsg.typecode)
         return response
@@ -5469,7 +7396,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateScheduledTaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateScheduledTaskResponseMsg.typecode)
         return response
@@ -5479,7 +7406,7 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveEntityScheduledTaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveEntityScheduledTaskResponseMsg.typecode)
         return response
@@ -5489,7 +7416,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateObjectScheduledTaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateObjectScheduledTaskResponseMsg.typecode)
         return response
@@ -5499,9 +7426,119 @@ class VimBindingSOAP:
         if isinstance(request, RetrieveObjectScheduledTaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RetrieveObjectScheduledTaskResponseMsg.typecode)
+        return response
+
+    # op: prepareVcha_Task
+    def prepareVcha_Task(self, request, **kw):
+        if isinstance(request, prepareVcha_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(prepareVcha_TaskResponseMsg.typecode)
+        return response
+
+    # op: deployVcha_Task
+    def deployVcha_Task(self, request, **kw):
+        if isinstance(request, deployVcha_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(deployVcha_TaskResponseMsg.typecode)
+        return response
+
+    # op: configureVcha_Task
+    def configureVcha_Task(self, request, **kw):
+        if isinstance(request, configureVcha_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(configureVcha_TaskResponseMsg.typecode)
+        return response
+
+    # op: createPassiveNode_Task
+    def createPassiveNode_Task(self, request, **kw):
+        if isinstance(request, createPassiveNode_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(createPassiveNode_TaskResponseMsg.typecode)
+        return response
+
+    # op: createWitnessNode_Task
+    def createWitnessNode_Task(self, request, **kw):
+        if isinstance(request, createWitnessNode_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(createWitnessNode_TaskResponseMsg.typecode)
+        return response
+
+    # op: getVchaConfig
+    def getVchaConfig(self, request, **kw):
+        if isinstance(request, getVchaConfigRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(getVchaConfigResponseMsg.typecode)
+        return response
+
+    # op: destroyVcha_Task
+    def destroyVcha_Task(self, request, **kw):
+        if isinstance(request, destroyVcha_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(destroyVcha_TaskResponseMsg.typecode)
+        return response
+
+    # op: setClusterMode_Task
+    def setClusterMode_Task(self, request, **kw):
+        if isinstance(request, setClusterMode_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(setClusterMode_TaskResponseMsg.typecode)
+        return response
+
+    # op: getClusterMode
+    def getClusterMode(self, request, **kw):
+        if isinstance(request, getClusterModeRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(getClusterModeResponseMsg.typecode)
+        return response
+
+    # op: GetVchaClusterHealth
+    def GetVchaClusterHealth(self, request, **kw):
+        if isinstance(request, GetVchaClusterHealthRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(GetVchaClusterHealthResponseMsg.typecode)
+        return response
+
+    # op: initiateFailover_Task
+    def initiateFailover_Task(self, request, **kw):
+        if isinstance(request, initiateFailover_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(initiateFailover_TaskResponseMsg.typecode)
         return response
 
     # op: OpenInventoryViewFolder
@@ -5509,7 +7546,7 @@ class VimBindingSOAP:
         if isinstance(request, OpenInventoryViewFolderRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(OpenInventoryViewFolderResponseMsg.typecode)
         return response
@@ -5519,7 +7556,7 @@ class VimBindingSOAP:
         if isinstance(request, CloseInventoryViewFolderRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CloseInventoryViewFolderResponseMsg.typecode)
         return response
@@ -5529,7 +7566,7 @@ class VimBindingSOAP:
         if isinstance(request, ModifyListViewRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ModifyListViewResponseMsg.typecode)
         return response
@@ -5539,7 +7576,7 @@ class VimBindingSOAP:
         if isinstance(request, ResetListViewRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ResetListViewResponseMsg.typecode)
         return response
@@ -5549,7 +7586,7 @@ class VimBindingSOAP:
         if isinstance(request, ResetListViewFromViewRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ResetListViewFromViewResponseMsg.typecode)
         return response
@@ -5559,7 +7596,7 @@ class VimBindingSOAP:
         if isinstance(request, DestroyViewRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DestroyViewResponseMsg.typecode)
         return response
@@ -5569,7 +7606,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateInventoryViewRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateInventoryViewResponseMsg.typecode)
         return response
@@ -5579,7 +7616,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateContainerViewRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateContainerViewResponseMsg.typecode)
         return response
@@ -5589,7 +7626,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateListViewRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateListViewResponseMsg.typecode)
         return response
@@ -5599,7 +7636,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateListViewFromViewRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateListViewFromViewResponseMsg.typecode)
         return response
@@ -5609,7 +7646,7 @@ class VimBindingSOAP:
         if isinstance(request, RevertToSnapshot_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RevertToSnapshot_TaskResponseMsg.typecode)
         return response
@@ -5619,7 +7656,7 @@ class VimBindingSOAP:
         if isinstance(request, RemoveSnapshot_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RemoveSnapshot_TaskResponseMsg.typecode)
         return response
@@ -5629,9 +7666,19 @@ class VimBindingSOAP:
         if isinstance(request, RenameSnapshotRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(RenameSnapshotResponseMsg.typecode)
+        return response
+
+    # op: ExportSnapshot
+    def ExportSnapshot(self, request, **kw):
+        if isinstance(request, ExportSnapshotRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ExportSnapshotResponseMsg.typecode)
         return response
 
     # op: CheckCompatibility_Task
@@ -5639,9 +7686,29 @@ class VimBindingSOAP:
         if isinstance(request, CheckCompatibility_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CheckCompatibility_TaskResponseMsg.typecode)
+        return response
+
+    # op: CheckVmConfig_Task
+    def CheckVmConfig_Task(self, request, **kw):
+        if isinstance(request, CheckVmConfig_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CheckVmConfig_TaskResponseMsg.typecode)
+        return response
+
+    # op: CheckPowerOn_Task
+    def CheckPowerOn_Task(self, request, **kw):
+        if isinstance(request, CheckPowerOn_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CheckPowerOn_TaskResponseMsg.typecode)
         return response
 
     # op: QueryVMotionCompatibilityEx_Task
@@ -5649,7 +7716,7 @@ class VimBindingSOAP:
         if isinstance(request, QueryVMotionCompatibilityEx_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(QueryVMotionCompatibilityEx_TaskResponseMsg.typecode)
         return response
@@ -5659,7 +7726,7 @@ class VimBindingSOAP:
         if isinstance(request, CheckMigrate_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CheckMigrate_TaskResponseMsg.typecode)
         return response
@@ -5669,9 +7736,79 @@ class VimBindingSOAP:
         if isinstance(request, CheckRelocate_TaskRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CheckRelocate_TaskResponseMsg.typecode)
+        return response
+
+    # op: CheckClone_Task
+    def CheckClone_Task(self, request, **kw):
+        if isinstance(request, CheckClone_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CheckClone_TaskResponseMsg.typecode)
+        return response
+
+    # op: CheckInstantClone_Task
+    def CheckInstantClone_Task(self, request, **kw):
+        if isinstance(request, CheckInstantClone_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CheckInstantClone_TaskResponseMsg.typecode)
+        return response
+
+    # op: AddGuestAlias
+    def AddGuestAlias(self, request, **kw):
+        if isinstance(request, AddGuestAliasRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(AddGuestAliasResponseMsg.typecode)
+        return response
+
+    # op: RemoveGuestAlias
+    def RemoveGuestAlias(self, request, **kw):
+        if isinstance(request, RemoveGuestAliasRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RemoveGuestAliasResponseMsg.typecode)
+        return response
+
+    # op: RemoveGuestAliasByCert
+    def RemoveGuestAliasByCert(self, request, **kw):
+        if isinstance(request, RemoveGuestAliasByCertRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RemoveGuestAliasByCertResponseMsg.typecode)
+        return response
+
+    # op: ListGuestAliases
+    def ListGuestAliases(self, request, **kw):
+        if isinstance(request, ListGuestAliasesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ListGuestAliasesResponseMsg.typecode)
+        return response
+
+    # op: ListGuestMappedAliases
+    def ListGuestMappedAliases(self, request, **kw):
+        if isinstance(request, ListGuestMappedAliasesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ListGuestMappedAliasesResponseMsg.typecode)
         return response
 
     # op: ValidateCredentialsInGuest
@@ -5679,7 +7816,7 @@ class VimBindingSOAP:
         if isinstance(request, ValidateCredentialsInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ValidateCredentialsInGuestResponseMsg.typecode)
         return response
@@ -5689,7 +7826,7 @@ class VimBindingSOAP:
         if isinstance(request, AcquireCredentialsInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(AcquireCredentialsInGuestResponseMsg.typecode)
         return response
@@ -5699,7 +7836,7 @@ class VimBindingSOAP:
         if isinstance(request, ReleaseCredentialsInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReleaseCredentialsInGuestResponseMsg.typecode)
         return response
@@ -5709,7 +7846,7 @@ class VimBindingSOAP:
         if isinstance(request, MakeDirectoryInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MakeDirectoryInGuestResponseMsg.typecode)
         return response
@@ -5719,7 +7856,7 @@ class VimBindingSOAP:
         if isinstance(request, DeleteFileInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DeleteFileInGuestResponseMsg.typecode)
         return response
@@ -5729,7 +7866,7 @@ class VimBindingSOAP:
         if isinstance(request, DeleteDirectoryInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(DeleteDirectoryInGuestResponseMsg.typecode)
         return response
@@ -5739,7 +7876,7 @@ class VimBindingSOAP:
         if isinstance(request, MoveDirectoryInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MoveDirectoryInGuestResponseMsg.typecode)
         return response
@@ -5749,7 +7886,7 @@ class VimBindingSOAP:
         if isinstance(request, MoveFileInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(MoveFileInGuestResponseMsg.typecode)
         return response
@@ -5759,7 +7896,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateTemporaryFileInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateTemporaryFileInGuestResponseMsg.typecode)
         return response
@@ -5769,7 +7906,7 @@ class VimBindingSOAP:
         if isinstance(request, CreateTemporaryDirectoryInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(CreateTemporaryDirectoryInGuestResponseMsg.typecode)
         return response
@@ -5779,7 +7916,7 @@ class VimBindingSOAP:
         if isinstance(request, ListFilesInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ListFilesInGuestResponseMsg.typecode)
         return response
@@ -5789,7 +7926,7 @@ class VimBindingSOAP:
         if isinstance(request, ChangeFileAttributesInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ChangeFileAttributesInGuestResponseMsg.typecode)
         return response
@@ -5799,7 +7936,7 @@ class VimBindingSOAP:
         if isinstance(request, InitiateFileTransferFromGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(InitiateFileTransferFromGuestResponseMsg.typecode)
         return response
@@ -5809,7 +7946,7 @@ class VimBindingSOAP:
         if isinstance(request, InitiateFileTransferToGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(InitiateFileTransferToGuestResponseMsg.typecode)
         return response
@@ -5819,7 +7956,7 @@ class VimBindingSOAP:
         if isinstance(request, StartProgramInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(StartProgramInGuestResponseMsg.typecode)
         return response
@@ -5829,7 +7966,7 @@ class VimBindingSOAP:
         if isinstance(request, ListProcessesInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ListProcessesInGuestResponseMsg.typecode)
         return response
@@ -5839,7 +7976,7 @@ class VimBindingSOAP:
         if isinstance(request, TerminateProcessInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(TerminateProcessInGuestResponseMsg.typecode)
         return response
@@ -5849,58 +7986,680 @@ class VimBindingSOAP:
         if isinstance(request, ReadEnvironmentVariableInGuestRequestMsg) is False:
             raise TypeError("%s incorrect request type" % (request.__class__))
         # no input wsaction
-        self.binding.Send(None, None, request, soapaction="urn:vim25/5.1", **kw)
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
         # no output wsaction
         response = self.binding.Receive(ReadEnvironmentVariableInGuestResponseMsg.typecode)
         return response
 
-DestroyPropertyFilterRequestMsg = GED("urn:vim25", "DestroyPropertyFilter").pyclass
+    # op: CreateRegistryKeyInGuest
+    def CreateRegistryKeyInGuest(self, request, **kw):
+        if isinstance(request, CreateRegistryKeyInGuestRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CreateRegistryKeyInGuestResponseMsg.typecode)
+        return response
 
-DestroyPropertyFilterResponseMsg = GED("urn:vim25", "DestroyPropertyFilterResponse").pyclass
+    # op: ListRegistryKeysInGuest
+    def ListRegistryKeysInGuest(self, request, **kw):
+        if isinstance(request, ListRegistryKeysInGuestRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ListRegistryKeysInGuestResponseMsg.typecode)
+        return response
 
-CreateFilterRequestMsg = GED("urn:vim25", "CreateFilter").pyclass
+    # op: DeleteRegistryKeyInGuest
+    def DeleteRegistryKeyInGuest(self, request, **kw):
+        if isinstance(request, DeleteRegistryKeyInGuestRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DeleteRegistryKeyInGuestResponseMsg.typecode)
+        return response
 
-CreateFilterResponseMsg = GED("urn:vim25", "CreateFilterResponse").pyclass
+    # op: SetRegistryValueInGuest
+    def SetRegistryValueInGuest(self, request, **kw):
+        if isinstance(request, SetRegistryValueInGuestRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(SetRegistryValueInGuestResponseMsg.typecode)
+        return response
 
-RetrievePropertiesRequestMsg = GED("urn:vim25", "RetrieveProperties").pyclass
+    # op: ListRegistryValuesInGuest
+    def ListRegistryValuesInGuest(self, request, **kw):
+        if isinstance(request, ListRegistryValuesInGuestRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ListRegistryValuesInGuestResponseMsg.typecode)
+        return response
 
-RetrievePropertiesResponseMsg = GED("urn:vim25", "RetrievePropertiesResponse").pyclass
+    # op: DeleteRegistryValueInGuest
+    def DeleteRegistryValueInGuest(self, request, **kw):
+        if isinstance(request, DeleteRegistryValueInGuestRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DeleteRegistryValueInGuestResponseMsg.typecode)
+        return response
 
-CheckForUpdatesRequestMsg = GED("urn:vim25", "CheckForUpdates").pyclass
+    # op: HostCreateDisk_Task
+    def HostCreateDisk_Task(self, request, **kw):
+        if isinstance(request, HostCreateDisk_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostCreateDisk_TaskResponseMsg.typecode)
+        return response
 
-CheckForUpdatesResponseMsg = GED("urn:vim25", "CheckForUpdatesResponse").pyclass
+    # op: HostRegisterDisk
+    def HostRegisterDisk(self, request, **kw):
+        if isinstance(request, HostRegisterDiskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostRegisterDiskResponseMsg.typecode)
+        return response
 
-WaitForUpdatesRequestMsg = GED("urn:vim25", "WaitForUpdates").pyclass
+    # op: HostExtendDisk_Task
+    def HostExtendDisk_Task(self, request, **kw):
+        if isinstance(request, HostExtendDisk_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostExtendDisk_TaskResponseMsg.typecode)
+        return response
 
-WaitForUpdatesResponseMsg = GED("urn:vim25", "WaitForUpdatesResponse").pyclass
+    # op: HostInflateDisk_Task
+    def HostInflateDisk_Task(self, request, **kw):
+        if isinstance(request, HostInflateDisk_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostInflateDisk_TaskResponseMsg.typecode)
+        return response
 
-CancelWaitForUpdatesRequestMsg = GED("urn:vim25", "CancelWaitForUpdates").pyclass
+    # op: HostRenameVStorageObject
+    def HostRenameVStorageObject(self, request, **kw):
+        if isinstance(request, HostRenameVStorageObjectRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostRenameVStorageObjectResponseMsg.typecode)
+        return response
 
-CancelWaitForUpdatesResponseMsg = GED("urn:vim25", "CancelWaitForUpdatesResponse").pyclass
+    # op: HostRetrieveVStorageInfrastructureObjectPolicy
+    def HostRetrieveVStorageInfrastructureObjectPolicy(self, request, **kw):
+        if isinstance(request, HostRetrieveVStorageInfrastructureObjectPolicyRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostRetrieveVStorageInfrastructureObjectPolicyResponseMsg.typecode)
+        return response
 
-WaitForUpdatesExRequestMsg = GED("urn:vim25", "WaitForUpdatesEx").pyclass
+    # op: HostDeleteVStorageObject_Task
+    def HostDeleteVStorageObject_Task(self, request, **kw):
+        if isinstance(request, HostDeleteVStorageObject_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostDeleteVStorageObject_TaskResponseMsg.typecode)
+        return response
 
-WaitForUpdatesExResponseMsg = GED("urn:vim25", "WaitForUpdatesExResponse").pyclass
+    # op: HostRetrieveVStorageObject
+    def HostRetrieveVStorageObject(self, request, **kw):
+        if isinstance(request, HostRetrieveVStorageObjectRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostRetrieveVStorageObjectResponseMsg.typecode)
+        return response
 
-RetrievePropertiesExRequestMsg = GED("urn:vim25", "RetrievePropertiesEx").pyclass
+    # op: HostRetrieveVStorageObjectState
+    def HostRetrieveVStorageObjectState(self, request, **kw):
+        if isinstance(request, HostRetrieveVStorageObjectStateRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostRetrieveVStorageObjectStateResponseMsg.typecode)
+        return response
 
-RetrievePropertiesExResponseMsg = GED("urn:vim25", "RetrievePropertiesExResponse").pyclass
+    # op: HostListVStorageObject
+    def HostListVStorageObject(self, request, **kw):
+        if isinstance(request, HostListVStorageObjectRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostListVStorageObjectResponseMsg.typecode)
+        return response
 
-ContinueRetrievePropertiesExRequestMsg = GED("urn:vim25", "ContinueRetrievePropertiesEx").pyclass
+    # op: HostCloneVStorageObject_Task
+    def HostCloneVStorageObject_Task(self, request, **kw):
+        if isinstance(request, HostCloneVStorageObject_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostCloneVStorageObject_TaskResponseMsg.typecode)
+        return response
 
-ContinueRetrievePropertiesExResponseMsg = GED("urn:vim25", "ContinueRetrievePropertiesExResponse").pyclass
+    # op: HostRelocateVStorageObject_Task
+    def HostRelocateVStorageObject_Task(self, request, **kw):
+        if isinstance(request, HostRelocateVStorageObject_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostRelocateVStorageObject_TaskResponseMsg.typecode)
+        return response
 
-CancelRetrievePropertiesExRequestMsg = GED("urn:vim25", "CancelRetrievePropertiesEx").pyclass
+    # op: HostSetVStorageObjectControlFlags
+    def HostSetVStorageObjectControlFlags(self, request, **kw):
+        if isinstance(request, HostSetVStorageObjectControlFlagsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostSetVStorageObjectControlFlagsResponseMsg.typecode)
+        return response
 
-CancelRetrievePropertiesExResponseMsg = GED("urn:vim25", "CancelRetrievePropertiesExResponse").pyclass
+    # op: HostClearVStorageObjectControlFlags
+    def HostClearVStorageObjectControlFlags(self, request, **kw):
+        if isinstance(request, HostClearVStorageObjectControlFlagsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostClearVStorageObjectControlFlagsResponseMsg.typecode)
+        return response
 
-CreatePropertyCollectorRequestMsg = GED("urn:vim25", "CreatePropertyCollector").pyclass
+    # op: HostReconcileDatastoreInventory_Task
+    def HostReconcileDatastoreInventory_Task(self, request, **kw):
+        if isinstance(request, HostReconcileDatastoreInventory_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostReconcileDatastoreInventory_TaskResponseMsg.typecode)
+        return response
 
-CreatePropertyCollectorResponseMsg = GED("urn:vim25", "CreatePropertyCollectorResponse").pyclass
+    # op: HostScheduleReconcileDatastoreInventory
+    def HostScheduleReconcileDatastoreInventory(self, request, **kw):
+        if isinstance(request, HostScheduleReconcileDatastoreInventoryRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostScheduleReconcileDatastoreInventoryResponseMsg.typecode)
+        return response
 
-DestroyPropertyCollectorRequestMsg = GED("urn:vim25", "DestroyPropertyCollector").pyclass
+    # op: HostVStorageObjectCreateSnapshot_Task
+    def HostVStorageObjectCreateSnapshot_Task(self, request, **kw):
+        if isinstance(request, HostVStorageObjectCreateSnapshot_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostVStorageObjectCreateSnapshot_TaskResponseMsg.typecode)
+        return response
 
-DestroyPropertyCollectorResponseMsg = GED("urn:vim25", "DestroyPropertyCollectorResponse").pyclass
+    # op: HostVStorageObjectDeleteSnapshot_Task
+    def HostVStorageObjectDeleteSnapshot_Task(self, request, **kw):
+        if isinstance(request, HostVStorageObjectDeleteSnapshot_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostVStorageObjectDeleteSnapshot_TaskResponseMsg.typecode)
+        return response
+
+    # op: HostVStorageObjectRetrieveSnapshotInfo
+    def HostVStorageObjectRetrieveSnapshotInfo(self, request, **kw):
+        if isinstance(request, HostVStorageObjectRetrieveSnapshotInfoRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostVStorageObjectRetrieveSnapshotInfoResponseMsg.typecode)
+        return response
+
+    # op: HostVStorageObjectCreateDiskFromSnapshot_Task
+    def HostVStorageObjectCreateDiskFromSnapshot_Task(self, request, **kw):
+        if isinstance(request, HostVStorageObjectCreateDiskFromSnapshot_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostVStorageObjectCreateDiskFromSnapshot_TaskResponseMsg.typecode)
+        return response
+
+    # op: HostVStorageObjectRevert_Task
+    def HostVStorageObjectRevert_Task(self, request, **kw):
+        if isinstance(request, HostVStorageObjectRevert_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(HostVStorageObjectRevert_TaskResponseMsg.typecode)
+        return response
+
+    # op: CreateDisk_Task
+    def CreateDisk_Task(self, request, **kw):
+        if isinstance(request, CreateDisk_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CreateDisk_TaskResponseMsg.typecode)
+        return response
+
+    # op: RegisterDisk
+    def RegisterDisk(self, request, **kw):
+        if isinstance(request, RegisterDiskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RegisterDiskResponseMsg.typecode)
+        return response
+
+    # op: ExtendDisk_Task
+    def ExtendDisk_Task(self, request, **kw):
+        if isinstance(request, ExtendDisk_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ExtendDisk_TaskResponseMsg.typecode)
+        return response
+
+    # op: InflateDisk_Task
+    def InflateDisk_Task(self, request, **kw):
+        if isinstance(request, InflateDisk_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(InflateDisk_TaskResponseMsg.typecode)
+        return response
+
+    # op: RenameVStorageObject
+    def RenameVStorageObject(self, request, **kw):
+        if isinstance(request, RenameVStorageObjectRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RenameVStorageObjectResponseMsg.typecode)
+        return response
+
+    # op: UpdateVStorageObjectPolicy_Task
+    def UpdateVStorageObjectPolicy_Task(self, request, **kw):
+        if isinstance(request, UpdateVStorageObjectPolicy_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateVStorageObjectPolicy_TaskResponseMsg.typecode)
+        return response
+
+    # op: UpdateVStorageInfrastructureObjectPolicy_Task
+    def UpdateVStorageInfrastructureObjectPolicy_Task(self, request, **kw):
+        if isinstance(request, UpdateVStorageInfrastructureObjectPolicy_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(UpdateVStorageInfrastructureObjectPolicy_TaskResponseMsg.typecode)
+        return response
+
+    # op: RetrieveVStorageInfrastructureObjectPolicy
+    def RetrieveVStorageInfrastructureObjectPolicy(self, request, **kw):
+        if isinstance(request, RetrieveVStorageInfrastructureObjectPolicyRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrieveVStorageInfrastructureObjectPolicyResponseMsg.typecode)
+        return response
+
+    # op: DeleteVStorageObject_Task
+    def DeleteVStorageObject_Task(self, request, **kw):
+        if isinstance(request, DeleteVStorageObject_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DeleteVStorageObject_TaskResponseMsg.typecode)
+        return response
+
+    # op: RetrieveVStorageObject
+    def RetrieveVStorageObject(self, request, **kw):
+        if isinstance(request, RetrieveVStorageObjectRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrieveVStorageObjectResponseMsg.typecode)
+        return response
+
+    # op: RetrieveVStorageObjectState
+    def RetrieveVStorageObjectState(self, request, **kw):
+        if isinstance(request, RetrieveVStorageObjectStateRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrieveVStorageObjectStateResponseMsg.typecode)
+        return response
+
+    # op: RetrieveVStorageObjectAssociations
+    def RetrieveVStorageObjectAssociations(self, request, **kw):
+        if isinstance(request, RetrieveVStorageObjectAssociationsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrieveVStorageObjectAssociationsResponseMsg.typecode)
+        return response
+
+    # op: ListVStorageObject
+    def ListVStorageObject(self, request, **kw):
+        if isinstance(request, ListVStorageObjectRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ListVStorageObjectResponseMsg.typecode)
+        return response
+
+    # op: CloneVStorageObject_Task
+    def CloneVStorageObject_Task(self, request, **kw):
+        if isinstance(request, CloneVStorageObject_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CloneVStorageObject_TaskResponseMsg.typecode)
+        return response
+
+    # op: RelocateVStorageObject_Task
+    def RelocateVStorageObject_Task(self, request, **kw):
+        if isinstance(request, RelocateVStorageObject_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RelocateVStorageObject_TaskResponseMsg.typecode)
+        return response
+
+    # op: SetVStorageObjectControlFlags
+    def SetVStorageObjectControlFlags(self, request, **kw):
+        if isinstance(request, SetVStorageObjectControlFlagsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(SetVStorageObjectControlFlagsResponseMsg.typecode)
+        return response
+
+    # op: ClearVStorageObjectControlFlags
+    def ClearVStorageObjectControlFlags(self, request, **kw):
+        if isinstance(request, ClearVStorageObjectControlFlagsRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ClearVStorageObjectControlFlagsResponseMsg.typecode)
+        return response
+
+    # op: AttachTagToVStorageObject
+    def AttachTagToVStorageObject(self, request, **kw):
+        if isinstance(request, AttachTagToVStorageObjectRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(AttachTagToVStorageObjectResponseMsg.typecode)
+        return response
+
+    # op: DetachTagFromVStorageObject
+    def DetachTagFromVStorageObject(self, request, **kw):
+        if isinstance(request, DetachTagFromVStorageObjectRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DetachTagFromVStorageObjectResponseMsg.typecode)
+        return response
+
+    # op: ListVStorageObjectsAttachedToTag
+    def ListVStorageObjectsAttachedToTag(self, request, **kw):
+        if isinstance(request, ListVStorageObjectsAttachedToTagRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ListVStorageObjectsAttachedToTagResponseMsg.typecode)
+        return response
+
+    # op: ListTagsAttachedToVStorageObject
+    def ListTagsAttachedToVStorageObject(self, request, **kw):
+        if isinstance(request, ListTagsAttachedToVStorageObjectRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ListTagsAttachedToVStorageObjectResponseMsg.typecode)
+        return response
+
+    # op: ReconcileDatastoreInventory_Task
+    def ReconcileDatastoreInventory_Task(self, request, **kw):
+        if isinstance(request, ReconcileDatastoreInventory_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ReconcileDatastoreInventory_TaskResponseMsg.typecode)
+        return response
+
+    # op: ScheduleReconcileDatastoreInventory
+    def ScheduleReconcileDatastoreInventory(self, request, **kw):
+        if isinstance(request, ScheduleReconcileDatastoreInventoryRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ScheduleReconcileDatastoreInventoryResponseMsg.typecode)
+        return response
+
+    # op: VStorageObjectCreateSnapshot_Task
+    def VStorageObjectCreateSnapshot_Task(self, request, **kw):
+        if isinstance(request, VStorageObjectCreateSnapshot_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(VStorageObjectCreateSnapshot_TaskResponseMsg.typecode)
+        return response
+
+    # op: DeleteSnapshot_Task
+    def DeleteSnapshot_Task(self, request, **kw):
+        if isinstance(request, DeleteSnapshot_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DeleteSnapshot_TaskResponseMsg.typecode)
+        return response
+
+    # op: RetrieveSnapshotInfo
+    def RetrieveSnapshotInfo(self, request, **kw):
+        if isinstance(request, RetrieveSnapshotInfoRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrieveSnapshotInfoResponseMsg.typecode)
+        return response
+
+    # op: CreateDiskFromSnapshot_Task
+    def CreateDiskFromSnapshot_Task(self, request, **kw):
+        if isinstance(request, CreateDiskFromSnapshot_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CreateDiskFromSnapshot_TaskResponseMsg.typecode)
+        return response
+
+    # op: RevertVStorageObject_Task
+    def RevertVStorageObject_Task(self, request, **kw):
+        if isinstance(request, RevertVStorageObject_TaskRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RevertVStorageObject_TaskResponseMsg.typecode)
+        return response
+
+    # op: DestroyPropertyFilter
+    def DestroyPropertyFilter(self, request, **kw):
+        if isinstance(request, DestroyPropertyFilterRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DestroyPropertyFilterResponseMsg.typecode)
+        return response
+
+    # op: CreateFilter
+    def CreateFilter(self, request, **kw):
+        if isinstance(request, CreateFilterRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CreateFilterResponseMsg.typecode)
+        return response
+
+    # op: RetrieveProperties
+    def RetrieveProperties(self, request, **kw):
+        if isinstance(request, RetrievePropertiesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrievePropertiesResponseMsg.typecode)
+        return response
+
+    # op: CheckForUpdates
+    def CheckForUpdates(self, request, **kw):
+        if isinstance(request, CheckForUpdatesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CheckForUpdatesResponseMsg.typecode)
+        return response
+
+    # op: WaitForUpdates
+    def WaitForUpdates(self, request, **kw):
+        if isinstance(request, WaitForUpdatesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(WaitForUpdatesResponseMsg.typecode)
+        return response
+
+    # op: CancelWaitForUpdates
+    def CancelWaitForUpdates(self, request, **kw):
+        if isinstance(request, CancelWaitForUpdatesRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CancelWaitForUpdatesResponseMsg.typecode)
+        return response
+
+    # op: WaitForUpdatesEx
+    def WaitForUpdatesEx(self, request, **kw):
+        if isinstance(request, WaitForUpdatesExRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(WaitForUpdatesExResponseMsg.typecode)
+        return response
+
+    # op: RetrievePropertiesEx
+    def RetrievePropertiesEx(self, request, **kw):
+        if isinstance(request, RetrievePropertiesExRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(RetrievePropertiesExResponseMsg.typecode)
+        return response
+
+    # op: ContinueRetrievePropertiesEx
+    def ContinueRetrievePropertiesEx(self, request, **kw):
+        if isinstance(request, ContinueRetrievePropertiesExRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(ContinueRetrievePropertiesExResponseMsg.typecode)
+        return response
+
+    # op: CancelRetrievePropertiesEx
+    def CancelRetrievePropertiesEx(self, request, **kw):
+        if isinstance(request, CancelRetrievePropertiesExRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CancelRetrievePropertiesExResponseMsg.typecode)
+        return response
+
+    # op: CreatePropertyCollector
+    def CreatePropertyCollector(self, request, **kw):
+        if isinstance(request, CreatePropertyCollectorRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(CreatePropertyCollectorResponseMsg.typecode)
+        return response
+
+    # op: DestroyPropertyCollector
+    def DestroyPropertyCollector(self, request, **kw):
+        if isinstance(request, DestroyPropertyCollectorRequestMsg) is False:
+            raise TypeError("%s incorrect request type" % (request.__class__))
+        # no input wsaction
+        self.binding.Send(None, None, request, soapaction="urn:vim25/6.7", **kw)
+        # no output wsaction
+        response = self.binding.Receive(DestroyPropertyCollectorResponseMsg.typecode)
+        return response
 
 AddAuthorizationRoleRequestMsg = GED("urn:vim25", "AddAuthorizationRole").pyclass
 
@@ -5946,6 +8705,30 @@ HasPrivilegeOnEntityRequestMsg = GED("urn:vim25", "HasPrivilegeOnEntity").pyclas
 
 HasPrivilegeOnEntityResponseMsg = GED("urn:vim25", "HasPrivilegeOnEntityResponse").pyclass
 
+HasPrivilegeOnEntitiesRequestMsg = GED("urn:vim25", "HasPrivilegeOnEntities").pyclass
+
+HasPrivilegeOnEntitiesResponseMsg = GED("urn:vim25", "HasPrivilegeOnEntitiesResponse").pyclass
+
+HasUserPrivilegeOnEntitiesRequestMsg = GED("urn:vim25", "HasUserPrivilegeOnEntities").pyclass
+
+HasUserPrivilegeOnEntitiesResponseMsg = GED("urn:vim25", "HasUserPrivilegeOnEntitiesResponse").pyclass
+
+FetchUserPrivilegeOnEntitiesRequestMsg = GED("urn:vim25", "FetchUserPrivilegeOnEntities").pyclass
+
+FetchUserPrivilegeOnEntitiesResponseMsg = GED("urn:vim25", "FetchUserPrivilegeOnEntitiesResponse").pyclass
+
+CertMgrRefreshCACertificatesAndCRLs_TaskRequestMsg = GED("urn:vim25", "CertMgrRefreshCACertificatesAndCRLs_Task").pyclass
+
+CertMgrRefreshCACertificatesAndCRLs_TaskResponseMsg = GED("urn:vim25", "CertMgrRefreshCACertificatesAndCRLs_TaskResponse").pyclass
+
+CertMgrRefreshCertificates_TaskRequestMsg = GED("urn:vim25", "CertMgrRefreshCertificates_Task").pyclass
+
+CertMgrRefreshCertificates_TaskResponseMsg = GED("urn:vim25", "CertMgrRefreshCertificates_TaskResponse").pyclass
+
+CertMgrRevokeCertificates_TaskRequestMsg = GED("urn:vim25", "CertMgrRevokeCertificates_Task").pyclass
+
+CertMgrRevokeCertificates_TaskResponseMsg = GED("urn:vim25", "CertMgrRevokeCertificates_TaskResponse").pyclass
+
 ReconfigureCluster_TaskRequestMsg = GED("urn:vim25", "ReconfigureCluster_Task").pyclass
 
 ReconfigureCluster_TaskResponseMsg = GED("urn:vim25", "ReconfigureCluster_TaskResponse").pyclass
@@ -5978,6 +8761,10 @@ RefreshRecommendationRequestMsg = GED("urn:vim25", "RefreshRecommendation").pycl
 
 RefreshRecommendationResponseMsg = GED("urn:vim25", "RefreshRecommendationResponse").pyclass
 
+EvcManagerRequestMsg = GED("urn:vim25", "EvcManager").pyclass
+
+EvcManagerResponseMsg = GED("urn:vim25", "EvcManagerResponse").pyclass
+
 RetrieveDasAdvancedRuntimeInfoRequestMsg = GED("urn:vim25", "RetrieveDasAdvancedRuntimeInfo").pyclass
 
 RetrieveDasAdvancedRuntimeInfoResponseMsg = GED("urn:vim25", "RetrieveDasAdvancedRuntimeInfoResponse").pyclass
@@ -5985,6 +8772,22 @@ RetrieveDasAdvancedRuntimeInfoResponseMsg = GED("urn:vim25", "RetrieveDasAdvance
 ClusterEnterMaintenanceModeRequestMsg = GED("urn:vim25", "ClusterEnterMaintenanceMode").pyclass
 
 ClusterEnterMaintenanceModeResponseMsg = GED("urn:vim25", "ClusterEnterMaintenanceModeResponse").pyclass
+
+PlaceVmRequestMsg = GED("urn:vim25", "PlaceVm").pyclass
+
+PlaceVmResponseMsg = GED("urn:vim25", "PlaceVmResponse").pyclass
+
+FindRulesForVmRequestMsg = GED("urn:vim25", "FindRulesForVm").pyclass
+
+FindRulesForVmResponseMsg = GED("urn:vim25", "FindRulesForVmResponse").pyclass
+
+StampAllRulesWithUuid_TaskRequestMsg = GED("urn:vim25", "StampAllRulesWithUuid_Task").pyclass
+
+StampAllRulesWithUuid_TaskResponseMsg = GED("urn:vim25", "StampAllRulesWithUuid_TaskResponse").pyclass
+
+GetResourceUsageRequestMsg = GED("urn:vim25", "GetResourceUsage").pyclass
+
+GetResourceUsageResponseMsg = GED("urn:vim25", "GetResourceUsageResponse").pyclass
 
 ReconfigureComputeResource_TaskRequestMsg = GED("urn:vim25", "ReconfigureComputeResource_Task").pyclass
 
@@ -6050,6 +8853,10 @@ QueryConnectionInfoRequestMsg = GED("urn:vim25", "QueryConnectionInfo").pyclass
 
 QueryConnectionInfoResponseMsg = GED("urn:vim25", "QueryConnectionInfoResponse").pyclass
 
+QueryConnectionInfoViaSpecRequestMsg = GED("urn:vim25", "QueryConnectionInfoViaSpec").pyclass
+
+QueryConnectionInfoViaSpecResponseMsg = GED("urn:vim25", "QueryConnectionInfoViaSpecResponse").pyclass
+
 PowerOnMultiVM_TaskRequestMsg = GED("urn:vim25", "PowerOnMultiVM_Task").pyclass
 
 PowerOnMultiVM_TaskResponseMsg = GED("urn:vim25", "PowerOnMultiVM_TaskResponse").pyclass
@@ -6089,6 +8896,22 @@ DatastoreEnterMaintenanceModeResponseMsg = GED("urn:vim25", "DatastoreEnterMaint
 DatastoreExitMaintenanceMode_TaskRequestMsg = GED("urn:vim25", "DatastoreExitMaintenanceMode_Task").pyclass
 
 DatastoreExitMaintenanceMode_TaskResponseMsg = GED("urn:vim25", "DatastoreExitMaintenanceMode_TaskResponse").pyclass
+
+UpdateVVolVirtualMachineFiles_TaskRequestMsg = GED("urn:vim25", "UpdateVVolVirtualMachineFiles_Task").pyclass
+
+UpdateVVolVirtualMachineFiles_TaskResponseMsg = GED("urn:vim25", "UpdateVVolVirtualMachineFiles_TaskResponse").pyclass
+
+CreateDirectoryRequestMsg = GED("urn:vim25", "CreateDirectory").pyclass
+
+CreateDirectoryResponseMsg = GED("urn:vim25", "CreateDirectoryResponse").pyclass
+
+DeleteDirectoryRequestMsg = GED("urn:vim25", "DeleteDirectory").pyclass
+
+DeleteDirectoryResponseMsg = GED("urn:vim25", "DeleteDirectoryResponse").pyclass
+
+ConvertNamespacePathToUuidPathRequestMsg = GED("urn:vim25", "ConvertNamespacePathToUuidPath").pyclass
+
+ConvertNamespacePathToUuidPathResponseMsg = GED("urn:vim25", "ConvertNamespacePathToUuidPathResponse").pyclass
 
 QueryDescriptionsRequestMsg = GED("urn:vim25", "QueryDescriptions").pyclass
 
@@ -6162,6 +8985,10 @@ RemoveNetworkResourcePoolRequestMsg = GED("urn:vim25", "RemoveNetworkResourcePoo
 
 RemoveNetworkResourcePoolResponseMsg = GED("urn:vim25", "RemoveNetworkResourcePoolResponse").pyclass
 
+DvsReconfigureVmVnicNetworkResourcePool_TaskRequestMsg = GED("urn:vim25", "DvsReconfigureVmVnicNetworkResourcePool_Task").pyclass
+
+DvsReconfigureVmVnicNetworkResourcePool_TaskResponseMsg = GED("urn:vim25", "DvsReconfigureVmVnicNetworkResourcePool_TaskResponse").pyclass
+
 EnableNetworkResourceManagementRequestMsg = GED("urn:vim25", "EnableNetworkResourceManagement").pyclass
 
 EnableNetworkResourceManagementResponseMsg = GED("urn:vim25", "EnableNetworkResourceManagementResponse").pyclass
@@ -6189,6 +9016,10 @@ QueryConfigOptionDescriptorResponseMsg = GED("urn:vim25", "QueryConfigOptionDesc
 QueryConfigOptionRequestMsg = GED("urn:vim25", "QueryConfigOption").pyclass
 
 QueryConfigOptionResponseMsg = GED("urn:vim25", "QueryConfigOptionResponse").pyclass
+
+QueryConfigOptionExRequestMsg = GED("urn:vim25", "QueryConfigOptionEx").pyclass
+
+QueryConfigOptionExResponseMsg = GED("urn:vim25", "QueryConfigOptionExResponse").pyclass
 
 QueryConfigTargetRequestMsg = GED("urn:vim25", "QueryConfigTarget").pyclass
 
@@ -6302,6 +9133,90 @@ CreateStoragePodRequestMsg = GED("urn:vim25", "CreateStoragePod").pyclass
 
 CreateStoragePodResponseMsg = GED("urn:vim25", "CreateStoragePodResponse").pyclass
 
+RegisterHealthUpdateProviderRequestMsg = GED("urn:vim25", "RegisterHealthUpdateProvider").pyclass
+
+RegisterHealthUpdateProviderResponseMsg = GED("urn:vim25", "RegisterHealthUpdateProviderResponse").pyclass
+
+UnregisterHealthUpdateProviderRequestMsg = GED("urn:vim25", "UnregisterHealthUpdateProvider").pyclass
+
+UnregisterHealthUpdateProviderResponseMsg = GED("urn:vim25", "UnregisterHealthUpdateProviderResponse").pyclass
+
+QueryProviderListRequestMsg = GED("urn:vim25", "QueryProviderList").pyclass
+
+QueryProviderListResponseMsg = GED("urn:vim25", "QueryProviderListResponse").pyclass
+
+HasProviderRequestMsg = GED("urn:vim25", "HasProvider").pyclass
+
+HasProviderResponseMsg = GED("urn:vim25", "HasProviderResponse").pyclass
+
+QueryProviderNameRequestMsg = GED("urn:vim25", "QueryProviderName").pyclass
+
+QueryProviderNameResponseMsg = GED("urn:vim25", "QueryProviderNameResponse").pyclass
+
+QueryHealthUpdateInfosRequestMsg = GED("urn:vim25", "QueryHealthUpdateInfos").pyclass
+
+QueryHealthUpdateInfosResponseMsg = GED("urn:vim25", "QueryHealthUpdateInfosResponse").pyclass
+
+AddMonitoredEntitiesRequestMsg = GED("urn:vim25", "AddMonitoredEntities").pyclass
+
+AddMonitoredEntitiesResponseMsg = GED("urn:vim25", "AddMonitoredEntitiesResponse").pyclass
+
+RemoveMonitoredEntitiesRequestMsg = GED("urn:vim25", "RemoveMonitoredEntities").pyclass
+
+RemoveMonitoredEntitiesResponseMsg = GED("urn:vim25", "RemoveMonitoredEntitiesResponse").pyclass
+
+QueryMonitoredEntitiesRequestMsg = GED("urn:vim25", "QueryMonitoredEntities").pyclass
+
+QueryMonitoredEntitiesResponseMsg = GED("urn:vim25", "QueryMonitoredEntitiesResponse").pyclass
+
+HasMonitoredEntityRequestMsg = GED("urn:vim25", "HasMonitoredEntity").pyclass
+
+HasMonitoredEntityResponseMsg = GED("urn:vim25", "HasMonitoredEntityResponse").pyclass
+
+QueryUnmonitoredHostsRequestMsg = GED("urn:vim25", "QueryUnmonitoredHosts").pyclass
+
+QueryUnmonitoredHostsResponseMsg = GED("urn:vim25", "QueryUnmonitoredHostsResponse").pyclass
+
+PostHealthUpdatesRequestMsg = GED("urn:vim25", "PostHealthUpdates").pyclass
+
+PostHealthUpdatesResponseMsg = GED("urn:vim25", "PostHealthUpdatesResponse").pyclass
+
+QueryHealthUpdatesRequestMsg = GED("urn:vim25", "QueryHealthUpdates").pyclass
+
+QueryHealthUpdatesResponseMsg = GED("urn:vim25", "QueryHealthUpdatesResponse").pyclass
+
+AddFilterRequestMsg = GED("urn:vim25", "AddFilter").pyclass
+
+AddFilterResponseMsg = GED("urn:vim25", "AddFilterResponse").pyclass
+
+QueryFilterListRequestMsg = GED("urn:vim25", "QueryFilterList").pyclass
+
+QueryFilterListResponseMsg = GED("urn:vim25", "QueryFilterListResponse").pyclass
+
+QueryFilterNameRequestMsg = GED("urn:vim25", "QueryFilterName").pyclass
+
+QueryFilterNameResponseMsg = GED("urn:vim25", "QueryFilterNameResponse").pyclass
+
+QueryFilterInfoIdsRequestMsg = GED("urn:vim25", "QueryFilterInfoIds").pyclass
+
+QueryFilterInfoIdsResponseMsg = GED("urn:vim25", "QueryFilterInfoIdsResponse").pyclass
+
+QueryFilterEntitiesRequestMsg = GED("urn:vim25", "QueryFilterEntities").pyclass
+
+QueryFilterEntitiesResponseMsg = GED("urn:vim25", "QueryFilterEntitiesResponse").pyclass
+
+AddFilterEntitiesRequestMsg = GED("urn:vim25", "AddFilterEntities").pyclass
+
+AddFilterEntitiesResponseMsg = GED("urn:vim25", "AddFilterEntitiesResponse").pyclass
+
+RemoveFilterEntitiesRequestMsg = GED("urn:vim25", "RemoveFilterEntities").pyclass
+
+RemoveFilterEntitiesResponseMsg = GED("urn:vim25", "RemoveFilterEntitiesResponse").pyclass
+
+RemoveFilterRequestMsg = GED("urn:vim25", "RemoveFilter").pyclass
+
+RemoveFilterResponseMsg = GED("urn:vim25", "RemoveFilterResponse").pyclass
+
 SetCollectorPageSizeRequestMsg = GED("urn:vim25", "SetCollectorPageSize").pyclass
 
 SetCollectorPageSizeResponseMsg = GED("urn:vim25", "SetCollectorPageSizeResponse").pyclass
@@ -6402,9 +9317,25 @@ RetrieveHardwareUptimeRequestMsg = GED("urn:vim25", "RetrieveHardwareUptime").py
 
 RetrieveHardwareUptimeResponseMsg = GED("urn:vim25", "RetrieveHardwareUptimeResponse").pyclass
 
+PrepareCryptoRequestMsg = GED("urn:vim25", "PrepareCrypto").pyclass
+
+PrepareCryptoResponseMsg = GED("urn:vim25", "PrepareCryptoResponse").pyclass
+
+EnableCryptoRequestMsg = GED("urn:vim25", "EnableCrypto").pyclass
+
+EnableCryptoResponseMsg = GED("urn:vim25", "EnableCryptoResponse").pyclass
+
+ConfigureCryptoKeyRequestMsg = GED("urn:vim25", "ConfigureCryptoKey").pyclass
+
+ConfigureCryptoKeyResponseMsg = GED("urn:vim25", "ConfigureCryptoKeyResponse").pyclass
+
 HttpNfcLeaseGetManifestRequestMsg = GED("urn:vim25", "HttpNfcLeaseGetManifest").pyclass
 
 HttpNfcLeaseGetManifestResponseMsg = GED("urn:vim25", "HttpNfcLeaseGetManifestResponse").pyclass
+
+HttpNfcLeaseSetManifestChecksumTypeRequestMsg = GED("urn:vim25", "HttpNfcLeaseSetManifestChecksumType").pyclass
+
+HttpNfcLeaseSetManifestChecksumTypeResponseMsg = GED("urn:vim25", "HttpNfcLeaseSetManifestChecksumTypeResponse").pyclass
 
 HttpNfcLeaseCompleteRequestMsg = GED("urn:vim25", "HttpNfcLeaseComplete").pyclass
 
@@ -6417,6 +9348,42 @@ HttpNfcLeaseAbortResponseMsg = GED("urn:vim25", "HttpNfcLeaseAbortResponse").pyc
 HttpNfcLeaseProgressRequestMsg = GED("urn:vim25", "HttpNfcLeaseProgress").pyclass
 
 HttpNfcLeaseProgressResponseMsg = GED("urn:vim25", "HttpNfcLeaseProgressResponse").pyclass
+
+HttpNfcLeasePullFromUrls_TaskRequestMsg = GED("urn:vim25", "HttpNfcLeasePullFromUrls_Task").pyclass
+
+HttpNfcLeasePullFromUrls_TaskResponseMsg = GED("urn:vim25", "HttpNfcLeasePullFromUrls_TaskResponse").pyclass
+
+InstallIoFilter_TaskRequestMsg = GED("urn:vim25", "InstallIoFilter_Task").pyclass
+
+InstallIoFilter_TaskResponseMsg = GED("urn:vim25", "InstallIoFilter_TaskResponse").pyclass
+
+UninstallIoFilter_TaskRequestMsg = GED("urn:vim25", "UninstallIoFilter_Task").pyclass
+
+UninstallIoFilter_TaskResponseMsg = GED("urn:vim25", "UninstallIoFilter_TaskResponse").pyclass
+
+UpgradeIoFilter_TaskRequestMsg = GED("urn:vim25", "UpgradeIoFilter_Task").pyclass
+
+UpgradeIoFilter_TaskResponseMsg = GED("urn:vim25", "UpgradeIoFilter_TaskResponse").pyclass
+
+QueryIoFilterIssuesRequestMsg = GED("urn:vim25", "QueryIoFilterIssues").pyclass
+
+QueryIoFilterIssuesResponseMsg = GED("urn:vim25", "QueryIoFilterIssuesResponse").pyclass
+
+QueryIoFilterInfoRequestMsg = GED("urn:vim25", "QueryIoFilterInfo").pyclass
+
+QueryIoFilterInfoResponseMsg = GED("urn:vim25", "QueryIoFilterInfoResponse").pyclass
+
+ResolveInstallationErrorsOnHost_TaskRequestMsg = GED("urn:vim25", "ResolveInstallationErrorsOnHost_Task").pyclass
+
+ResolveInstallationErrorsOnHost_TaskResponseMsg = GED("urn:vim25", "ResolveInstallationErrorsOnHost_TaskResponse").pyclass
+
+ResolveInstallationErrorsOnCluster_TaskRequestMsg = GED("urn:vim25", "ResolveInstallationErrorsOnCluster_Task").pyclass
+
+ResolveInstallationErrorsOnCluster_TaskResponseMsg = GED("urn:vim25", "ResolveInstallationErrorsOnCluster_TaskResponse").pyclass
+
+QueryDisksUsingFilterRequestMsg = GED("urn:vim25", "QueryDisksUsingFilter").pyclass
+
+QueryDisksUsingFilterResponseMsg = GED("urn:vim25", "QueryDisksUsingFilterResponse").pyclass
 
 QueryIpPoolsRequestMsg = GED("urn:vim25", "QueryIpPools").pyclass
 
@@ -6533,6 +9500,10 @@ Destroy_TaskResponseMsg = GED("urn:vim25", "Destroy_TaskResponse").pyclass
 DestroyNetworkRequestMsg = GED("urn:vim25", "DestroyNetwork").pyclass
 
 DestroyNetworkResponseMsg = GED("urn:vim25", "DestroyNetworkResponse").pyclass
+
+LookupVmOverheadMemoryRequestMsg = GED("urn:vim25", "LookupVmOverheadMemory").pyclass
+
+LookupVmOverheadMemoryResponseMsg = GED("urn:vim25", "LookupVmOverheadMemoryResponse").pyclass
 
 ValidateHostRequestMsg = GED("urn:vim25", "ValidateHost").pyclass
 
@@ -6794,9 +9765,17 @@ RefreshStorageDrsRecommendationRequestMsg = GED("urn:vim25", "RefreshStorageDrsR
 
 RefreshStorageDrsRecommendationResponseMsg = GED("urn:vim25", "RefreshStorageDrsRecommendationResponse").pyclass
 
+RefreshStorageDrsRecommendationsForPod_TaskRequestMsg = GED("urn:vim25", "RefreshStorageDrsRecommendationsForPod_Task").pyclass
+
+RefreshStorageDrsRecommendationsForPod_TaskResponseMsg = GED("urn:vim25", "RefreshStorageDrsRecommendationsForPod_TaskResponse").pyclass
+
 ConfigureStorageDrsForPod_TaskRequestMsg = GED("urn:vim25", "ConfigureStorageDrsForPod_Task").pyclass
 
 ConfigureStorageDrsForPod_TaskResponseMsg = GED("urn:vim25", "ConfigureStorageDrsForPod_TaskResponse").pyclass
+
+ValidateStoragePodConfigRequestMsg = GED("urn:vim25", "ValidateStoragePodConfig").pyclass
+
+ValidateStoragePodConfigResponseMsg = GED("urn:vim25", "ValidateStoragePodConfigResponse").pyclass
 
 RecommendDatastoresRequestMsg = GED("urn:vim25", "RecommendDatastores").pyclass
 
@@ -6926,6 +9905,14 @@ QueryVirtualDiskGeometryRequestMsg = GED("urn:vim25", "QueryVirtualDiskGeometry"
 
 QueryVirtualDiskGeometryResponseMsg = GED("urn:vim25", "QueryVirtualDiskGeometryResponse").pyclass
 
+ImportUnmanagedSnapshotRequestMsg = GED("urn:vim25", "ImportUnmanagedSnapshot").pyclass
+
+ImportUnmanagedSnapshotResponseMsg = GED("urn:vim25", "ImportUnmanagedSnapshotResponse").pyclass
+
+ReleaseManagedSnapshotRequestMsg = GED("urn:vim25", "ReleaseManagedSnapshot").pyclass
+
+ReleaseManagedSnapshotResponseMsg = GED("urn:vim25", "ReleaseManagedSnapshotResponse").pyclass
+
 RefreshStorageInfoRequestMsg = GED("urn:vim25", "RefreshStorageInfo").pyclass
 
 RefreshStorageInfoResponseMsg = GED("urn:vim25", "RefreshStorageInfoResponse").pyclass
@@ -6933,6 +9920,10 @@ RefreshStorageInfoResponseMsg = GED("urn:vim25", "RefreshStorageInfoResponse").p
 CreateSnapshot_TaskRequestMsg = GED("urn:vim25", "CreateSnapshot_Task").pyclass
 
 CreateSnapshot_TaskResponseMsg = GED("urn:vim25", "CreateSnapshot_TaskResponse").pyclass
+
+CreateSnapshotEx_TaskRequestMsg = GED("urn:vim25", "CreateSnapshotEx_Task").pyclass
+
+CreateSnapshotEx_TaskResponseMsg = GED("urn:vim25", "CreateSnapshotEx_TaskResponse").pyclass
 
 RevertToCurrentSnapshot_TaskRequestMsg = GED("urn:vim25", "RevertToCurrentSnapshot_Task").pyclass
 
@@ -7014,6 +10005,10 @@ CloneVM_TaskRequestMsg = GED("urn:vim25", "CloneVM_Task").pyclass
 
 CloneVM_TaskResponseMsg = GED("urn:vim25", "CloneVM_TaskResponse").pyclass
 
+InstantClone_TaskRequestMsg = GED("urn:vim25", "InstantClone_Task").pyclass
+
+InstantClone_TaskResponseMsg = GED("urn:vim25", "InstantClone_TaskResponse").pyclass
+
 ExportVmRequestMsg = GED("urn:vim25", "ExportVm").pyclass
 
 ExportVmResponseMsg = GED("urn:vim25", "ExportVmResponse").pyclass
@@ -7066,6 +10061,10 @@ CreateSecondaryVM_TaskRequestMsg = GED("urn:vim25", "CreateSecondaryVM_Task").py
 
 CreateSecondaryVM_TaskResponseMsg = GED("urn:vim25", "CreateSecondaryVM_TaskResponse").pyclass
 
+CreateSecondaryVMEx_TaskRequestMsg = GED("urn:vim25", "CreateSecondaryVMEx_Task").pyclass
+
+CreateSecondaryVMEx_TaskResponseMsg = GED("urn:vim25", "CreateSecondaryVMEx_TaskResponse").pyclass
+
 TurnOffFaultToleranceForVM_TaskRequestMsg = GED("urn:vim25", "TurnOffFaultToleranceForVM_Task").pyclass
 
 TurnOffFaultToleranceForVM_TaskResponseMsg = GED("urn:vim25", "TurnOffFaultToleranceForVM_TaskResponse").pyclass
@@ -7114,6 +10113,10 @@ CreateScreenshot_TaskRequestMsg = GED("urn:vim25", "CreateScreenshot_Task").pycl
 
 CreateScreenshot_TaskResponseMsg = GED("urn:vim25", "CreateScreenshot_TaskResponse").pyclass
 
+PutUsbScanCodesRequestMsg = GED("urn:vim25", "PutUsbScanCodes").pyclass
+
+PutUsbScanCodesResponseMsg = GED("urn:vim25", "PutUsbScanCodesResponse").pyclass
+
 QueryChangedDiskAreasRequestMsg = GED("urn:vim25", "QueryChangedDiskAreas").pyclass
 
 QueryChangedDiskAreasResponseMsg = GED("urn:vim25", "QueryChangedDiskAreasResponse").pyclass
@@ -7130,9 +10133,45 @@ QueryFaultToleranceCompatibilityRequestMsg = GED("urn:vim25", "QueryFaultToleran
 
 QueryFaultToleranceCompatibilityResponseMsg = GED("urn:vim25", "QueryFaultToleranceCompatibilityResponse").pyclass
 
+QueryFaultToleranceCompatibilityExRequestMsg = GED("urn:vim25", "QueryFaultToleranceCompatibilityEx").pyclass
+
+QueryFaultToleranceCompatibilityExResponseMsg = GED("urn:vim25", "QueryFaultToleranceCompatibilityExResponse").pyclass
+
 TerminateVMRequestMsg = GED("urn:vim25", "TerminateVM").pyclass
 
 TerminateVMResponseMsg = GED("urn:vim25", "TerminateVMResponse").pyclass
+
+SendNMIRequestMsg = GED("urn:vim25", "SendNMI").pyclass
+
+SendNMIResponseMsg = GED("urn:vim25", "SendNMIResponse").pyclass
+
+AttachDisk_TaskRequestMsg = GED("urn:vim25", "AttachDisk_Task").pyclass
+
+AttachDisk_TaskResponseMsg = GED("urn:vim25", "AttachDisk_TaskResponse").pyclass
+
+DetachDisk_TaskRequestMsg = GED("urn:vim25", "DetachDisk_Task").pyclass
+
+DetachDisk_TaskResponseMsg = GED("urn:vim25", "DetachDisk_TaskResponse").pyclass
+
+ApplyEvcModeVM_TaskRequestMsg = GED("urn:vim25", "ApplyEvcModeVM_Task").pyclass
+
+ApplyEvcModeVM_TaskResponseMsg = GED("urn:vim25", "ApplyEvcModeVM_TaskResponse").pyclass
+
+CryptoUnlock_TaskRequestMsg = GED("urn:vim25", "CryptoUnlock_Task").pyclass
+
+CryptoUnlock_TaskResponseMsg = GED("urn:vim25", "CryptoUnlock_TaskResponse").pyclass
+
+PerformVsanUpgradePreflightCheckRequestMsg = GED("urn:vim25", "PerformVsanUpgradePreflightCheck").pyclass
+
+PerformVsanUpgradePreflightCheckResponseMsg = GED("urn:vim25", "PerformVsanUpgradePreflightCheckResponse").pyclass
+
+QueryVsanUpgradeStatusRequestMsg = GED("urn:vim25", "QueryVsanUpgradeStatus").pyclass
+
+QueryVsanUpgradeStatusResponseMsg = GED("urn:vim25", "QueryVsanUpgradeStatusResponse").pyclass
+
+PerformVsanUpgrade_TaskRequestMsg = GED("urn:vim25", "PerformVsanUpgrade_Task").pyclass
+
+PerformVsanUpgrade_TaskResponseMsg = GED("urn:vim25", "PerformVsanUpgrade_TaskResponse").pyclass
 
 RemoveAlarmRequestMsg = GED("urn:vim25", "RemoveAlarm").pyclass
 
@@ -7165,6 +10204,26 @@ GetAlarmStateResponseMsg = GED("urn:vim25", "GetAlarmStateResponse").pyclass
 AcknowledgeAlarmRequestMsg = GED("urn:vim25", "AcknowledgeAlarm").pyclass
 
 AcknowledgeAlarmResponseMsg = GED("urn:vim25", "AcknowledgeAlarmResponse").pyclass
+
+ClearTriggeredAlarmsRequestMsg = GED("urn:vim25", "ClearTriggeredAlarms").pyclass
+
+ClearTriggeredAlarmsResponseMsg = GED("urn:vim25", "ClearTriggeredAlarmsResponse").pyclass
+
+ConfigureEvcMode_TaskRequestMsg = GED("urn:vim25", "ConfigureEvcMode_Task").pyclass
+
+ConfigureEvcMode_TaskResponseMsg = GED("urn:vim25", "ConfigureEvcMode_TaskResponse").pyclass
+
+DisableEvcMode_TaskRequestMsg = GED("urn:vim25", "DisableEvcMode_Task").pyclass
+
+DisableEvcMode_TaskResponseMsg = GED("urn:vim25", "DisableEvcMode_TaskResponse").pyclass
+
+CheckConfigureEvcMode_TaskRequestMsg = GED("urn:vim25", "CheckConfigureEvcMode_Task").pyclass
+
+CheckConfigureEvcMode_TaskResponseMsg = GED("urn:vim25", "CheckConfigureEvcMode_TaskResponse").pyclass
+
+CheckAddHostEvc_TaskRequestMsg = GED("urn:vim25", "CheckAddHostEvc_Task").pyclass
+
+CheckAddHostEvc_TaskResponseMsg = GED("urn:vim25", "CheckAddHostEvc_TaskResponse").pyclass
 
 ReconfigureDVPortgroup_TaskRequestMsg = GED("urn:vim25", "ReconfigureDVPortgroup_Task").pyclass
 
@@ -7222,6 +10281,110 @@ DVSManagerLookupDvPortGroupRequestMsg = GED("urn:vim25", "DVSManagerLookupDvPort
 
 DVSManagerLookupDvPortGroupResponseMsg = GED("urn:vim25", "DVSManagerLookupDvPortGroupResponse").pyclass
 
+UpdateDVSLacpGroupConfig_TaskRequestMsg = GED("urn:vim25", "UpdateDVSLacpGroupConfig_Task").pyclass
+
+UpdateDVSLacpGroupConfig_TaskResponseMsg = GED("urn:vim25", "UpdateDVSLacpGroupConfig_TaskResponse").pyclass
+
+AddKeyRequestMsg = GED("urn:vim25", "AddKey").pyclass
+
+AddKeyResponseMsg = GED("urn:vim25", "AddKeyResponse").pyclass
+
+AddKeysRequestMsg = GED("urn:vim25", "AddKeys").pyclass
+
+AddKeysResponseMsg = GED("urn:vim25", "AddKeysResponse").pyclass
+
+RemoveKeyRequestMsg = GED("urn:vim25", "RemoveKey").pyclass
+
+RemoveKeyResponseMsg = GED("urn:vim25", "RemoveKeyResponse").pyclass
+
+RemoveKeysRequestMsg = GED("urn:vim25", "RemoveKeys").pyclass
+
+RemoveKeysResponseMsg = GED("urn:vim25", "RemoveKeysResponse").pyclass
+
+ListKeysRequestMsg = GED("urn:vim25", "ListKeys").pyclass
+
+ListKeysResponseMsg = GED("urn:vim25", "ListKeysResponse").pyclass
+
+CryptoManagerHostPrepareRequestMsg = GED("urn:vim25", "CryptoManagerHostPrepare").pyclass
+
+CryptoManagerHostPrepareResponseMsg = GED("urn:vim25", "CryptoManagerHostPrepareResponse").pyclass
+
+CryptoManagerHostEnableRequestMsg = GED("urn:vim25", "CryptoManagerHostEnable").pyclass
+
+CryptoManagerHostEnableResponseMsg = GED("urn:vim25", "CryptoManagerHostEnableResponse").pyclass
+
+ChangeKey_TaskRequestMsg = GED("urn:vim25", "ChangeKey_Task").pyclass
+
+ChangeKey_TaskResponseMsg = GED("urn:vim25", "ChangeKey_TaskResponse").pyclass
+
+RegisterKmipServerRequestMsg = GED("urn:vim25", "RegisterKmipServer").pyclass
+
+RegisterKmipServerResponseMsg = GED("urn:vim25", "RegisterKmipServerResponse").pyclass
+
+MarkDefaultRequestMsg = GED("urn:vim25", "MarkDefault").pyclass
+
+MarkDefaultResponseMsg = GED("urn:vim25", "MarkDefaultResponse").pyclass
+
+UpdateKmipServerRequestMsg = GED("urn:vim25", "UpdateKmipServer").pyclass
+
+UpdateKmipServerResponseMsg = GED("urn:vim25", "UpdateKmipServerResponse").pyclass
+
+RemoveKmipServerRequestMsg = GED("urn:vim25", "RemoveKmipServer").pyclass
+
+RemoveKmipServerResponseMsg = GED("urn:vim25", "RemoveKmipServerResponse").pyclass
+
+ListKmipServersRequestMsg = GED("urn:vim25", "ListKmipServers").pyclass
+
+ListKmipServersResponseMsg = GED("urn:vim25", "ListKmipServersResponse").pyclass
+
+RetrieveKmipServersStatus_TaskRequestMsg = GED("urn:vim25", "RetrieveKmipServersStatus_Task").pyclass
+
+RetrieveKmipServersStatus_TaskResponseMsg = GED("urn:vim25", "RetrieveKmipServersStatus_TaskResponse").pyclass
+
+GenerateKeyRequestMsg = GED("urn:vim25", "GenerateKey").pyclass
+
+GenerateKeyResponseMsg = GED("urn:vim25", "GenerateKeyResponse").pyclass
+
+RetrieveKmipServerCertRequestMsg = GED("urn:vim25", "RetrieveKmipServerCert").pyclass
+
+RetrieveKmipServerCertResponseMsg = GED("urn:vim25", "RetrieveKmipServerCertResponse").pyclass
+
+UploadKmipServerCertRequestMsg = GED("urn:vim25", "UploadKmipServerCert").pyclass
+
+UploadKmipServerCertResponseMsg = GED("urn:vim25", "UploadKmipServerCertResponse").pyclass
+
+GenerateSelfSignedClientCertRequestMsg = GED("urn:vim25", "GenerateSelfSignedClientCert").pyclass
+
+GenerateSelfSignedClientCertResponseMsg = GED("urn:vim25", "GenerateSelfSignedClientCertResponse").pyclass
+
+GenerateClientCsrRequestMsg = GED("urn:vim25", "GenerateClientCsr").pyclass
+
+GenerateClientCsrResponseMsg = GED("urn:vim25", "GenerateClientCsrResponse").pyclass
+
+RetrieveSelfSignedClientCertRequestMsg = GED("urn:vim25", "RetrieveSelfSignedClientCert").pyclass
+
+RetrieveSelfSignedClientCertResponseMsg = GED("urn:vim25", "RetrieveSelfSignedClientCertResponse").pyclass
+
+RetrieveClientCsrRequestMsg = GED("urn:vim25", "RetrieveClientCsr").pyclass
+
+RetrieveClientCsrResponseMsg = GED("urn:vim25", "RetrieveClientCsrResponse").pyclass
+
+RetrieveClientCertRequestMsg = GED("urn:vim25", "RetrieveClientCert").pyclass
+
+RetrieveClientCertResponseMsg = GED("urn:vim25", "RetrieveClientCertResponse").pyclass
+
+UpdateSelfSignedClientCertRequestMsg = GED("urn:vim25", "UpdateSelfSignedClientCert").pyclass
+
+UpdateSelfSignedClientCertResponseMsg = GED("urn:vim25", "UpdateSelfSignedClientCertResponse").pyclass
+
+UpdateKmsSignedCsrClientCertRequestMsg = GED("urn:vim25", "UpdateKmsSignedCsrClientCert").pyclass
+
+UpdateKmsSignedCsrClientCertResponseMsg = GED("urn:vim25", "UpdateKmsSignedCsrClientCertResponse").pyclass
+
+UploadClientCertRequestMsg = GED("urn:vim25", "UploadClientCert").pyclass
+
+UploadClientCertResponseMsg = GED("urn:vim25", "UploadClientCertResponse").pyclass
+
 ReadNextEventsRequestMsg = GED("urn:vim25", "ReadNextEvents").pyclass
 
 ReadNextEventsResponseMsg = GED("urn:vim25", "ReadNextEventsResponse").pyclass
@@ -7266,6 +10429,34 @@ LeaveCurrentDomain_TaskRequestMsg = GED("urn:vim25", "LeaveCurrentDomain_Task").
 
 LeaveCurrentDomain_TaskResponseMsg = GED("urn:vim25", "LeaveCurrentDomain_TaskResponse").pyclass
 
+EnableSmartCardAuthenticationRequestMsg = GED("urn:vim25", "EnableSmartCardAuthentication").pyclass
+
+EnableSmartCardAuthenticationResponseMsg = GED("urn:vim25", "EnableSmartCardAuthenticationResponse").pyclass
+
+InstallSmartCardTrustAnchorRequestMsg = GED("urn:vim25", "InstallSmartCardTrustAnchor").pyclass
+
+InstallSmartCardTrustAnchorResponseMsg = GED("urn:vim25", "InstallSmartCardTrustAnchorResponse").pyclass
+
+ReplaceSmartCardTrustAnchorsRequestMsg = GED("urn:vim25", "ReplaceSmartCardTrustAnchors").pyclass
+
+ReplaceSmartCardTrustAnchorsResponseMsg = GED("urn:vim25", "ReplaceSmartCardTrustAnchorsResponse").pyclass
+
+RemoveSmartCardTrustAnchorRequestMsg = GED("urn:vim25", "RemoveSmartCardTrustAnchor").pyclass
+
+RemoveSmartCardTrustAnchorResponseMsg = GED("urn:vim25", "RemoveSmartCardTrustAnchorResponse").pyclass
+
+RemoveSmartCardTrustAnchorByFingerprintRequestMsg = GED("urn:vim25", "RemoveSmartCardTrustAnchorByFingerprint").pyclass
+
+RemoveSmartCardTrustAnchorByFingerprintResponseMsg = GED("urn:vim25", "RemoveSmartCardTrustAnchorByFingerprintResponse").pyclass
+
+ListSmartCardTrustAnchorsRequestMsg = GED("urn:vim25", "ListSmartCardTrustAnchors").pyclass
+
+ListSmartCardTrustAnchorsResponseMsg = GED("urn:vim25", "ListSmartCardTrustAnchorsResponse").pyclass
+
+DisableSmartCardAuthenticationRequestMsg = GED("urn:vim25", "DisableSmartCardAuthentication").pyclass
+
+DisableSmartCardAuthenticationResponseMsg = GED("urn:vim25", "DisableSmartCardAuthenticationResponse").pyclass
+
 ReconfigureAutostartRequestMsg = GED("urn:vim25", "ReconfigureAutostart").pyclass
 
 ReconfigureAutostartResponseMsg = GED("urn:vim25", "ReconfigureAutostartResponse").pyclass
@@ -7289,6 +10480,30 @@ UpdateBootDeviceResponseMsg = GED("urn:vim25", "UpdateBootDeviceResponse").pycla
 ConfigureHostCache_TaskRequestMsg = GED("urn:vim25", "ConfigureHostCache_Task").pyclass
 
 ConfigureHostCache_TaskResponseMsg = GED("urn:vim25", "ConfigureHostCache_TaskResponse").pyclass
+
+GenerateCertificateSigningRequestRequestMsg = GED("urn:vim25", "GenerateCertificateSigningRequest").pyclass
+
+GenerateCertificateSigningRequestResponseMsg = GED("urn:vim25", "GenerateCertificateSigningRequestResponse").pyclass
+
+GenerateCertificateSigningRequestByDnRequestMsg = GED("urn:vim25", "GenerateCertificateSigningRequestByDn").pyclass
+
+GenerateCertificateSigningRequestByDnResponseMsg = GED("urn:vim25", "GenerateCertificateSigningRequestByDnResponse").pyclass
+
+InstallServerCertificateRequestMsg = GED("urn:vim25", "InstallServerCertificate").pyclass
+
+InstallServerCertificateResponseMsg = GED("urn:vim25", "InstallServerCertificateResponse").pyclass
+
+ReplaceCACertificatesAndCRLsRequestMsg = GED("urn:vim25", "ReplaceCACertificatesAndCRLs").pyclass
+
+ReplaceCACertificatesAndCRLsResponseMsg = GED("urn:vim25", "ReplaceCACertificatesAndCRLsResponse").pyclass
+
+ListCACertificatesRequestMsg = GED("urn:vim25", "ListCACertificates").pyclass
+
+ListCACertificatesResponseMsg = GED("urn:vim25", "ListCACertificatesResponse").pyclass
+
+ListCACertificateRevocationListsRequestMsg = GED("urn:vim25", "ListCACertificateRevocationLists").pyclass
+
+ListCACertificateRevocationListsResponseMsg = GED("urn:vim25", "ListCACertificateRevocationListsResponse").pyclass
 
 EnableHyperThreadingRequestMsg = GED("urn:vim25", "EnableHyperThreading").pyclass
 
@@ -7350,9 +10565,17 @@ CreateLocalDatastoreRequestMsg = GED("urn:vim25", "CreateLocalDatastore").pyclas
 
 CreateLocalDatastoreResponseMsg = GED("urn:vim25", "CreateLocalDatastoreResponse").pyclass
 
+CreateVvolDatastoreRequestMsg = GED("urn:vim25", "CreateVvolDatastore").pyclass
+
+CreateVvolDatastoreResponseMsg = GED("urn:vim25", "CreateVvolDatastoreResponse").pyclass
+
 RemoveDatastoreRequestMsg = GED("urn:vim25", "RemoveDatastore").pyclass
 
 RemoveDatastoreResponseMsg = GED("urn:vim25", "RemoveDatastoreResponse").pyclass
+
+RemoveDatastoreEx_TaskRequestMsg = GED("urn:vim25", "RemoveDatastoreEx_Task").pyclass
+
+RemoveDatastoreEx_TaskResponseMsg = GED("urn:vim25", "RemoveDatastoreEx_TaskResponse").pyclass
 
 ConfigureDatastorePrincipalRequestMsg = GED("urn:vim25", "ConfigureDatastorePrincipal").pyclass
 
@@ -7446,6 +10669,18 @@ RestoreFirmwareConfigurationRequestMsg = GED("urn:vim25", "RestoreFirmwareConfig
 
 RestoreFirmwareConfigurationResponseMsg = GED("urn:vim25", "RestoreFirmwareConfigurationResponse").pyclass
 
+RefreshGraphicsManagerRequestMsg = GED("urn:vim25", "RefreshGraphicsManager").pyclass
+
+RefreshGraphicsManagerResponseMsg = GED("urn:vim25", "RefreshGraphicsManagerResponse").pyclass
+
+IsSharedGraphicsActiveRequestMsg = GED("urn:vim25", "IsSharedGraphicsActive").pyclass
+
+IsSharedGraphicsActiveResponseMsg = GED("urn:vim25", "IsSharedGraphicsActiveResponse").pyclass
+
+UpdateGraphicsConfigRequestMsg = GED("urn:vim25", "UpdateGraphicsConfig").pyclass
+
+UpdateGraphicsConfigResponseMsg = GED("urn:vim25", "UpdateGraphicsConfigResponse").pyclass
+
 RefreshHealthStatusSystemRequestMsg = GED("urn:vim25", "RefreshHealthStatusSystem").pyclass
 
 RefreshHealthStatusSystemResponseMsg = GED("urn:vim25", "RefreshHealthStatusSystemResponse").pyclass
@@ -7453,6 +10688,42 @@ RefreshHealthStatusSystemResponseMsg = GED("urn:vim25", "RefreshHealthStatusSyst
 ResetSystemHealthInfoRequestMsg = GED("urn:vim25", "ResetSystemHealthInfo").pyclass
 
 ResetSystemHealthInfoResponseMsg = GED("urn:vim25", "ResetSystemHealthInfoResponse").pyclass
+
+ClearSystemEventLogRequestMsg = GED("urn:vim25", "ClearSystemEventLog").pyclass
+
+ClearSystemEventLogResponseMsg = GED("urn:vim25", "ClearSystemEventLogResponse").pyclass
+
+FetchSystemEventLogRequestMsg = GED("urn:vim25", "FetchSystemEventLog").pyclass
+
+FetchSystemEventLogResponseMsg = GED("urn:vim25", "FetchSystemEventLogResponse").pyclass
+
+RetrieveHostAccessControlEntriesRequestMsg = GED("urn:vim25", "RetrieveHostAccessControlEntries").pyclass
+
+RetrieveHostAccessControlEntriesResponseMsg = GED("urn:vim25", "RetrieveHostAccessControlEntriesResponse").pyclass
+
+ChangeAccessModeRequestMsg = GED("urn:vim25", "ChangeAccessMode").pyclass
+
+ChangeAccessModeResponseMsg = GED("urn:vim25", "ChangeAccessModeResponse").pyclass
+
+QuerySystemUsersRequestMsg = GED("urn:vim25", "QuerySystemUsers").pyclass
+
+QuerySystemUsersResponseMsg = GED("urn:vim25", "QuerySystemUsersResponse").pyclass
+
+UpdateSystemUsersRequestMsg = GED("urn:vim25", "UpdateSystemUsers").pyclass
+
+UpdateSystemUsersResponseMsg = GED("urn:vim25", "UpdateSystemUsersResponse").pyclass
+
+QueryLockdownExceptionsRequestMsg = GED("urn:vim25", "QueryLockdownExceptions").pyclass
+
+QueryLockdownExceptionsResponseMsg = GED("urn:vim25", "QueryLockdownExceptionsResponse").pyclass
+
+UpdateLockdownExceptionsRequestMsg = GED("urn:vim25", "UpdateLockdownExceptions").pyclass
+
+UpdateLockdownExceptionsResponseMsg = GED("urn:vim25", "UpdateLockdownExceptionsResponse").pyclass
+
+ChangeLockdownModeRequestMsg = GED("urn:vim25", "ChangeLockdownMode").pyclass
+
+ChangeLockdownModeResponseMsg = GED("urn:vim25", "ChangeLockdownModeResponse").pyclass
 
 HostImageConfigGetAcceptanceRequestMsg = GED("urn:vim25", "HostImageConfigGetAcceptance").pyclass
 
@@ -7465,6 +10736,14 @@ HostImageConfigGetProfileResponseMsg = GED("urn:vim25", "HostImageConfigGetProfi
 UpdateHostImageAcceptanceLevelRequestMsg = GED("urn:vim25", "UpdateHostImageAcceptanceLevel").pyclass
 
 UpdateHostImageAcceptanceLevelResponseMsg = GED("urn:vim25", "UpdateHostImageAcceptanceLevelResponse").pyclass
+
+fetchSoftwarePackagesRequestMsg = GED("urn:vim25", "fetchSoftwarePackages").pyclass
+
+fetchSoftwarePackagesResponseMsg = GED("urn:vim25", "fetchSoftwarePackagesResponse").pyclass
+
+installDateRequestMsg = GED("urn:vim25", "installDate").pyclass
+
+installDateResponseMsg = GED("urn:vim25", "installDateResponse").pyclass
 
 QueryVnicStatusRequestMsg = GED("urn:vim25", "QueryVnicStatus").pyclass
 
@@ -7626,6 +10905,18 @@ RefreshNetworkSystemRequestMsg = GED("urn:vim25", "RefreshNetworkSystem").pyclas
 
 RefreshNetworkSystemResponseMsg = GED("urn:vim25", "RefreshNetworkSystemResponse").pyclass
 
+CreateNvdimmNamespace_TaskRequestMsg = GED("urn:vim25", "CreateNvdimmNamespace_Task").pyclass
+
+CreateNvdimmNamespace_TaskResponseMsg = GED("urn:vim25", "CreateNvdimmNamespace_TaskResponse").pyclass
+
+DeleteNvdimmNamespace_TaskRequestMsg = GED("urn:vim25", "DeleteNvdimmNamespace_Task").pyclass
+
+DeleteNvdimmNamespace_TaskResponseMsg = GED("urn:vim25", "DeleteNvdimmNamespace_TaskResponse").pyclass
+
+DeleteNvdimmBlockNamespaces_TaskRequestMsg = GED("urn:vim25", "DeleteNvdimmBlockNamespaces_Task").pyclass
+
+DeleteNvdimmBlockNamespaces_TaskResponseMsg = GED("urn:vim25", "DeleteNvdimmBlockNamespaces_TaskResponse").pyclass
+
 CheckHostPatch_TaskRequestMsg = GED("urn:vim25", "CheckHostPatch_Task").pyclass
 
 CheckHostPatch_TaskResponseMsg = GED("urn:vim25", "CheckHostPatch_TaskResponse").pyclass
@@ -7730,6 +11021,18 @@ UnmountVmfsVolumeRequestMsg = GED("urn:vim25", "UnmountVmfsVolume").pyclass
 
 UnmountVmfsVolumeResponseMsg = GED("urn:vim25", "UnmountVmfsVolumeResponse").pyclass
 
+UnmountVmfsVolumeEx_TaskRequestMsg = GED("urn:vim25", "UnmountVmfsVolumeEx_Task").pyclass
+
+UnmountVmfsVolumeEx_TaskResponseMsg = GED("urn:vim25", "UnmountVmfsVolumeEx_TaskResponse").pyclass
+
+MountVmfsVolumeEx_TaskRequestMsg = GED("urn:vim25", "MountVmfsVolumeEx_Task").pyclass
+
+MountVmfsVolumeEx_TaskResponseMsg = GED("urn:vim25", "MountVmfsVolumeEx_TaskResponse").pyclass
+
+UnmapVmfsVolumeEx_TaskRequestMsg = GED("urn:vim25", "UnmapVmfsVolumeEx_Task").pyclass
+
+UnmapVmfsVolumeEx_TaskResponseMsg = GED("urn:vim25", "UnmapVmfsVolumeEx_TaskResponse").pyclass
+
 DeleteVmfsVolumeStateRequestMsg = GED("urn:vim25", "DeleteVmfsVolumeState").pyclass
 
 DeleteVmfsVolumeStateResponseMsg = GED("urn:vim25", "DeleteVmfsVolumeStateResponse").pyclass
@@ -7761,6 +11064,10 @@ QueryUnresolvedVmfsVolumeResponseMsg = GED("urn:vim25", "QueryUnresolvedVmfsVolu
 ResolveMultipleUnresolvedVmfsVolumesRequestMsg = GED("urn:vim25", "ResolveMultipleUnresolvedVmfsVolumes").pyclass
 
 ResolveMultipleUnresolvedVmfsVolumesResponseMsg = GED("urn:vim25", "ResolveMultipleUnresolvedVmfsVolumesResponse").pyclass
+
+ResolveMultipleUnresolvedVmfsVolumesEx_TaskRequestMsg = GED("urn:vim25", "ResolveMultipleUnresolvedVmfsVolumesEx_Task").pyclass
+
+ResolveMultipleUnresolvedVmfsVolumesEx_TaskResponseMsg = GED("urn:vim25", "ResolveMultipleUnresolvedVmfsVolumesEx_TaskResponse").pyclass
 
 UnmountForceMountedVmfsVolumeRequestMsg = GED("urn:vim25", "UnmountForceMountedVmfsVolume").pyclass
 
@@ -7850,6 +11157,10 @@ DetachScsiLunRequestMsg = GED("urn:vim25", "DetachScsiLun").pyclass
 
 DetachScsiLunResponseMsg = GED("urn:vim25", "DetachScsiLunResponse").pyclass
 
+DetachScsiLunEx_TaskRequestMsg = GED("urn:vim25", "DetachScsiLunEx_Task").pyclass
+
+DetachScsiLunEx_TaskResponseMsg = GED("urn:vim25", "DetachScsiLunEx_TaskResponse").pyclass
+
 DeleteScsiLunStateRequestMsg = GED("urn:vim25", "DeleteScsiLunState").pyclass
 
 DeleteScsiLunStateResponseMsg = GED("urn:vim25", "DeleteScsiLunStateResponse").pyclass
@@ -7857,6 +11168,10 @@ DeleteScsiLunStateResponseMsg = GED("urn:vim25", "DeleteScsiLunStateResponse").p
 AttachScsiLunRequestMsg = GED("urn:vim25", "AttachScsiLun").pyclass
 
 AttachScsiLunResponseMsg = GED("urn:vim25", "AttachScsiLunResponse").pyclass
+
+AttachScsiLunEx_TaskRequestMsg = GED("urn:vim25", "AttachScsiLunEx_Task").pyclass
+
+AttachScsiLunEx_TaskResponseMsg = GED("urn:vim25", "AttachScsiLunEx_TaskResponse").pyclass
 
 RefreshStorageSystemRequestMsg = GED("urn:vim25", "RefreshStorageSystem").pyclass
 
@@ -7869,6 +11184,110 @@ DiscoverFcoeHbasResponseMsg = GED("urn:vim25", "DiscoverFcoeHbasResponse").pycla
 MarkForRemovalRequestMsg = GED("urn:vim25", "MarkForRemoval").pyclass
 
 MarkForRemovalResponseMsg = GED("urn:vim25", "MarkForRemovalResponse").pyclass
+
+FormatVffsRequestMsg = GED("urn:vim25", "FormatVffs").pyclass
+
+FormatVffsResponseMsg = GED("urn:vim25", "FormatVffsResponse").pyclass
+
+ExtendVffsRequestMsg = GED("urn:vim25", "ExtendVffs").pyclass
+
+ExtendVffsResponseMsg = GED("urn:vim25", "ExtendVffsResponse").pyclass
+
+DestroyVffsRequestMsg = GED("urn:vim25", "DestroyVffs").pyclass
+
+DestroyVffsResponseMsg = GED("urn:vim25", "DestroyVffsResponse").pyclass
+
+MountVffsVolumeRequestMsg = GED("urn:vim25", "MountVffsVolume").pyclass
+
+MountVffsVolumeResponseMsg = GED("urn:vim25", "MountVffsVolumeResponse").pyclass
+
+UnmountVffsVolumeRequestMsg = GED("urn:vim25", "UnmountVffsVolume").pyclass
+
+UnmountVffsVolumeResponseMsg = GED("urn:vim25", "UnmountVffsVolumeResponse").pyclass
+
+DeleteVffsVolumeStateRequestMsg = GED("urn:vim25", "DeleteVffsVolumeState").pyclass
+
+DeleteVffsVolumeStateResponseMsg = GED("urn:vim25", "DeleteVffsVolumeStateResponse").pyclass
+
+RescanVffsRequestMsg = GED("urn:vim25", "RescanVffs").pyclass
+
+RescanVffsResponseMsg = GED("urn:vim25", "RescanVffsResponse").pyclass
+
+QueryAvailableSsdsRequestMsg = GED("urn:vim25", "QueryAvailableSsds").pyclass
+
+QueryAvailableSsdsResponseMsg = GED("urn:vim25", "QueryAvailableSsdsResponse").pyclass
+
+SetNFSUserRequestMsg = GED("urn:vim25", "SetNFSUser").pyclass
+
+SetNFSUserResponseMsg = GED("urn:vim25", "SetNFSUserResponse").pyclass
+
+ChangeNFSUserPasswordRequestMsg = GED("urn:vim25", "ChangeNFSUserPassword").pyclass
+
+ChangeNFSUserPasswordResponseMsg = GED("urn:vim25", "ChangeNFSUserPasswordResponse").pyclass
+
+QueryNFSUserRequestMsg = GED("urn:vim25", "QueryNFSUser").pyclass
+
+QueryNFSUserResponseMsg = GED("urn:vim25", "QueryNFSUserResponse").pyclass
+
+ClearNFSUserRequestMsg = GED("urn:vim25", "ClearNFSUser").pyclass
+
+ClearNFSUserResponseMsg = GED("urn:vim25", "ClearNFSUserResponse").pyclass
+
+TurnDiskLocatorLedOn_TaskRequestMsg = GED("urn:vim25", "TurnDiskLocatorLedOn_Task").pyclass
+
+TurnDiskLocatorLedOn_TaskResponseMsg = GED("urn:vim25", "TurnDiskLocatorLedOn_TaskResponse").pyclass
+
+TurnDiskLocatorLedOff_TaskRequestMsg = GED("urn:vim25", "TurnDiskLocatorLedOff_Task").pyclass
+
+TurnDiskLocatorLedOff_TaskResponseMsg = GED("urn:vim25", "TurnDiskLocatorLedOff_TaskResponse").pyclass
+
+MarkAsSsd_TaskRequestMsg = GED("urn:vim25", "MarkAsSsd_Task").pyclass
+
+MarkAsSsd_TaskResponseMsg = GED("urn:vim25", "MarkAsSsd_TaskResponse").pyclass
+
+MarkAsNonSsd_TaskRequestMsg = GED("urn:vim25", "MarkAsNonSsd_Task").pyclass
+
+MarkAsNonSsd_TaskResponseMsg = GED("urn:vim25", "MarkAsNonSsd_TaskResponse").pyclass
+
+MarkAsLocal_TaskRequestMsg = GED("urn:vim25", "MarkAsLocal_Task").pyclass
+
+MarkAsLocal_TaskResponseMsg = GED("urn:vim25", "MarkAsLocal_TaskResponse").pyclass
+
+MarkAsNonLocal_TaskRequestMsg = GED("urn:vim25", "MarkAsNonLocal_Task").pyclass
+
+MarkAsNonLocal_TaskResponseMsg = GED("urn:vim25", "MarkAsNonLocal_TaskResponse").pyclass
+
+UpdateVmfsUnmapPriorityRequestMsg = GED("urn:vim25", "UpdateVmfsUnmapPriority").pyclass
+
+UpdateVmfsUnmapPriorityResponseMsg = GED("urn:vim25", "UpdateVmfsUnmapPriorityResponse").pyclass
+
+UpdateVmfsUnmapBandwidthRequestMsg = GED("urn:vim25", "UpdateVmfsUnmapBandwidth").pyclass
+
+UpdateVmfsUnmapBandwidthResponseMsg = GED("urn:vim25", "UpdateVmfsUnmapBandwidthResponse").pyclass
+
+QueryVmfsConfigOptionRequestMsg = GED("urn:vim25", "QueryVmfsConfigOption").pyclass
+
+QueryVmfsConfigOptionResponseMsg = GED("urn:vim25", "QueryVmfsConfigOptionResponse").pyclass
+
+ConfigureVFlashResourceEx_TaskRequestMsg = GED("urn:vim25", "ConfigureVFlashResourceEx_Task").pyclass
+
+ConfigureVFlashResourceEx_TaskResponseMsg = GED("urn:vim25", "ConfigureVFlashResourceEx_TaskResponse").pyclass
+
+HostConfigureVFlashResourceRequestMsg = GED("urn:vim25", "HostConfigureVFlashResource").pyclass
+
+HostConfigureVFlashResourceResponseMsg = GED("urn:vim25", "HostConfigureVFlashResourceResponse").pyclass
+
+HostRemoveVFlashResourceRequestMsg = GED("urn:vim25", "HostRemoveVFlashResource").pyclass
+
+HostRemoveVFlashResourceResponseMsg = GED("urn:vim25", "HostRemoveVFlashResourceResponse").pyclass
+
+HostConfigVFlashCacheRequestMsg = GED("urn:vim25", "HostConfigVFlashCache").pyclass
+
+HostConfigVFlashCacheResponseMsg = GED("urn:vim25", "HostConfigVFlashCacheResponse").pyclass
+
+HostGetVFlashModuleDefaultConfigRequestMsg = GED("urn:vim25", "HostGetVFlashModuleDefaultConfig").pyclass
+
+HostGetVFlashModuleDefaultConfigResponseMsg = GED("urn:vim25", "HostGetVFlashModuleDefaultConfigResponse").pyclass
 
 UpdateIpConfigRequestMsg = GED("urn:vim25", "UpdateIpConfig").pyclass
 
@@ -7893,6 +11312,106 @@ SelectVnicForNicTypeResponseMsg = GED("urn:vim25", "SelectVnicForNicTypeResponse
 DeselectVnicForNicTypeRequestMsg = GED("urn:vim25", "DeselectVnicForNicType").pyclass
 
 DeselectVnicForNicTypeResponseMsg = GED("urn:vim25", "DeselectVnicForNicTypeResponse").pyclass
+
+QueryCmmdsRequestMsg = GED("urn:vim25", "QueryCmmds").pyclass
+
+QueryCmmdsResponseMsg = GED("urn:vim25", "QueryCmmdsResponse").pyclass
+
+QueryPhysicalVsanDisksRequestMsg = GED("urn:vim25", "QueryPhysicalVsanDisks").pyclass
+
+QueryPhysicalVsanDisksResponseMsg = GED("urn:vim25", "QueryPhysicalVsanDisksResponse").pyclass
+
+QueryVsanObjectsRequestMsg = GED("urn:vim25", "QueryVsanObjects").pyclass
+
+QueryVsanObjectsResponseMsg = GED("urn:vim25", "QueryVsanObjectsResponse").pyclass
+
+QueryObjectsOnPhysicalVsanDiskRequestMsg = GED("urn:vim25", "QueryObjectsOnPhysicalVsanDisk").pyclass
+
+QueryObjectsOnPhysicalVsanDiskResponseMsg = GED("urn:vim25", "QueryObjectsOnPhysicalVsanDiskResponse").pyclass
+
+AbdicateDomOwnershipRequestMsg = GED("urn:vim25", "AbdicateDomOwnership").pyclass
+
+AbdicateDomOwnershipResponseMsg = GED("urn:vim25", "AbdicateDomOwnershipResponse").pyclass
+
+QueryVsanStatisticsRequestMsg = GED("urn:vim25", "QueryVsanStatistics").pyclass
+
+QueryVsanStatisticsResponseMsg = GED("urn:vim25", "QueryVsanStatisticsResponse").pyclass
+
+ReconfigureDomObjectRequestMsg = GED("urn:vim25", "ReconfigureDomObject").pyclass
+
+ReconfigureDomObjectResponseMsg = GED("urn:vim25", "ReconfigureDomObjectResponse").pyclass
+
+QuerySyncingVsanObjectsRequestMsg = GED("urn:vim25", "QuerySyncingVsanObjects").pyclass
+
+QuerySyncingVsanObjectsResponseMsg = GED("urn:vim25", "QuerySyncingVsanObjectsResponse").pyclass
+
+RunVsanPhysicalDiskDiagnosticsRequestMsg = GED("urn:vim25", "RunVsanPhysicalDiskDiagnostics").pyclass
+
+RunVsanPhysicalDiskDiagnosticsResponseMsg = GED("urn:vim25", "RunVsanPhysicalDiskDiagnosticsResponse").pyclass
+
+GetVsanObjExtAttrsRequestMsg = GED("urn:vim25", "GetVsanObjExtAttrs").pyclass
+
+GetVsanObjExtAttrsResponseMsg = GED("urn:vim25", "GetVsanObjExtAttrsResponse").pyclass
+
+ReconfigurationSatisfiableRequestMsg = GED("urn:vim25", "ReconfigurationSatisfiable").pyclass
+
+ReconfigurationSatisfiableResponseMsg = GED("urn:vim25", "ReconfigurationSatisfiableResponse").pyclass
+
+CanProvisionObjectsRequestMsg = GED("urn:vim25", "CanProvisionObjects").pyclass
+
+CanProvisionObjectsResponseMsg = GED("urn:vim25", "CanProvisionObjectsResponse").pyclass
+
+DeleteVsanObjectsRequestMsg = GED("urn:vim25", "DeleteVsanObjects").pyclass
+
+DeleteVsanObjectsResponseMsg = GED("urn:vim25", "DeleteVsanObjectsResponse").pyclass
+
+UpgradeVsanObjectsRequestMsg = GED("urn:vim25", "UpgradeVsanObjects").pyclass
+
+UpgradeVsanObjectsResponseMsg = GED("urn:vim25", "UpgradeVsanObjectsResponse").pyclass
+
+QueryVsanObjectUuidsByFilterRequestMsg = GED("urn:vim25", "QueryVsanObjectUuidsByFilter").pyclass
+
+QueryVsanObjectUuidsByFilterResponseMsg = GED("urn:vim25", "QueryVsanObjectUuidsByFilterResponse").pyclass
+
+QueryDisksForVsanRequestMsg = GED("urn:vim25", "QueryDisksForVsan").pyclass
+
+QueryDisksForVsanResponseMsg = GED("urn:vim25", "QueryDisksForVsanResponse").pyclass
+
+AddDisks_TaskRequestMsg = GED("urn:vim25", "AddDisks_Task").pyclass
+
+AddDisks_TaskResponseMsg = GED("urn:vim25", "AddDisks_TaskResponse").pyclass
+
+InitializeDisks_TaskRequestMsg = GED("urn:vim25", "InitializeDisks_Task").pyclass
+
+InitializeDisks_TaskResponseMsg = GED("urn:vim25", "InitializeDisks_TaskResponse").pyclass
+
+RemoveDisk_TaskRequestMsg = GED("urn:vim25", "RemoveDisk_Task").pyclass
+
+RemoveDisk_TaskResponseMsg = GED("urn:vim25", "RemoveDisk_TaskResponse").pyclass
+
+RemoveDiskMapping_TaskRequestMsg = GED("urn:vim25", "RemoveDiskMapping_Task").pyclass
+
+RemoveDiskMapping_TaskResponseMsg = GED("urn:vim25", "RemoveDiskMapping_TaskResponse").pyclass
+
+UnmountDiskMapping_TaskRequestMsg = GED("urn:vim25", "UnmountDiskMapping_Task").pyclass
+
+UnmountDiskMapping_TaskResponseMsg = GED("urn:vim25", "UnmountDiskMapping_TaskResponse").pyclass
+
+UpdateVsan_TaskRequestMsg = GED("urn:vim25", "UpdateVsan_Task").pyclass
+
+UpdateVsan_TaskResponseMsg = GED("urn:vim25", "UpdateVsan_TaskResponse").pyclass
+
+QueryHostStatusRequestMsg = GED("urn:vim25", "QueryHostStatus").pyclass
+
+QueryHostStatusResponseMsg = GED("urn:vim25", "QueryHostStatusResponse").pyclass
+
+EvacuateVsanNode_TaskRequestMsg = GED("urn:vim25", "EvacuateVsanNode_Task").pyclass
+
+EvacuateVsanNode_TaskResponseMsg = GED("urn:vim25", "EvacuateVsanNode_TaskResponse").pyclass
+
+RecommissionVsanNode_TaskRequestMsg = GED("urn:vim25", "RecommissionVsanNode_Task").pyclass
+
+RecommissionVsanNode_TaskResponseMsg = GED("urn:vim25", "RecommissionVsanNode_TaskResponse").pyclass
 
 QueryOptionsRequestMsg = GED("urn:vim25", "QueryOptions").pyclass
 
@@ -7958,6 +11477,10 @@ UpdateClusterProfileRequestMsg = GED("urn:vim25", "UpdateClusterProfile").pyclas
 
 UpdateClusterProfileResponseMsg = GED("urn:vim25", "UpdateClusterProfileResponse").pyclass
 
+HostProfileResetValidationStateRequestMsg = GED("urn:vim25", "HostProfileResetValidationState").pyclass
+
+HostProfileResetValidationStateResponseMsg = GED("urn:vim25", "HostProfileResetValidationStateResponse").pyclass
+
 UpdateReferenceHostRequestMsg = GED("urn:vim25", "UpdateReferenceHost").pyclass
 
 UpdateReferenceHostResponseMsg = GED("urn:vim25", "UpdateReferenceHostResponse").pyclass
@@ -7970,6 +11493,30 @@ ExecuteHostProfileRequestMsg = GED("urn:vim25", "ExecuteHostProfile").pyclass
 
 ExecuteHostProfileResponseMsg = GED("urn:vim25", "ExecuteHostProfileResponse").pyclass
 
+UpdateHostSpecificationRequestMsg = GED("urn:vim25", "UpdateHostSpecification").pyclass
+
+UpdateHostSpecificationResponseMsg = GED("urn:vim25", "UpdateHostSpecificationResponse").pyclass
+
+UpdateHostSubSpecificationRequestMsg = GED("urn:vim25", "UpdateHostSubSpecification").pyclass
+
+UpdateHostSubSpecificationResponseMsg = GED("urn:vim25", "UpdateHostSubSpecificationResponse").pyclass
+
+RetrieveHostSpecificationRequestMsg = GED("urn:vim25", "RetrieveHostSpecification").pyclass
+
+RetrieveHostSpecificationResponseMsg = GED("urn:vim25", "RetrieveHostSpecificationResponse").pyclass
+
+DeleteHostSubSpecificationRequestMsg = GED("urn:vim25", "DeleteHostSubSpecification").pyclass
+
+DeleteHostSubSpecificationResponseMsg = GED("urn:vim25", "DeleteHostSubSpecificationResponse").pyclass
+
+DeleteHostSpecificationRequestMsg = GED("urn:vim25", "DeleteHostSpecification").pyclass
+
+DeleteHostSpecificationResponseMsg = GED("urn:vim25", "DeleteHostSpecificationResponse").pyclass
+
+HostSpecGetUpdatedHostsRequestMsg = GED("urn:vim25", "HostSpecGetUpdatedHosts").pyclass
+
+HostSpecGetUpdatedHostsResponseMsg = GED("urn:vim25", "HostSpecGetUpdatedHostsResponse").pyclass
+
 ApplyHostConfig_TaskRequestMsg = GED("urn:vim25", "ApplyHostConfig_Task").pyclass
 
 ApplyHostConfig_TaskResponseMsg = GED("urn:vim25", "ApplyHostConfig_TaskResponse").pyclass
@@ -7977,6 +11524,10 @@ ApplyHostConfig_TaskResponseMsg = GED("urn:vim25", "ApplyHostConfig_TaskResponse
 GenerateConfigTaskListRequestMsg = GED("urn:vim25", "GenerateConfigTaskList").pyclass
 
 GenerateConfigTaskListResponseMsg = GED("urn:vim25", "GenerateConfigTaskListResponse").pyclass
+
+GenerateHostProfileTaskList_TaskRequestMsg = GED("urn:vim25", "GenerateHostProfileTaskList_Task").pyclass
+
+GenerateHostProfileTaskList_TaskResponseMsg = GED("urn:vim25", "GenerateHostProfileTaskList_TaskResponse").pyclass
 
 QueryHostProfileMetadataRequestMsg = GED("urn:vim25", "QueryHostProfileMetadata").pyclass
 
@@ -8014,6 +11565,34 @@ QueryAnswerFileStatusRequestMsg = GED("urn:vim25", "QueryAnswerFileStatus").pycl
 
 QueryAnswerFileStatusResponseMsg = GED("urn:vim25", "QueryAnswerFileStatusResponse").pyclass
 
+UpdateHostCustomizations_TaskRequestMsg = GED("urn:vim25", "UpdateHostCustomizations_Task").pyclass
+
+UpdateHostCustomizations_TaskResponseMsg = GED("urn:vim25", "UpdateHostCustomizations_TaskResponse").pyclass
+
+RetrieveHostCustomizationsRequestMsg = GED("urn:vim25", "RetrieveHostCustomizations").pyclass
+
+RetrieveHostCustomizationsResponseMsg = GED("urn:vim25", "RetrieveHostCustomizationsResponse").pyclass
+
+RetrieveHostCustomizationsForProfileRequestMsg = GED("urn:vim25", "RetrieveHostCustomizationsForProfile").pyclass
+
+RetrieveHostCustomizationsForProfileResponseMsg = GED("urn:vim25", "RetrieveHostCustomizationsForProfileResponse").pyclass
+
+GenerateHostConfigTaskSpec_TaskRequestMsg = GED("urn:vim25", "GenerateHostConfigTaskSpec_Task").pyclass
+
+GenerateHostConfigTaskSpec_TaskResponseMsg = GED("urn:vim25", "GenerateHostConfigTaskSpec_TaskResponse").pyclass
+
+ApplyEntitiesConfig_TaskRequestMsg = GED("urn:vim25", "ApplyEntitiesConfig_Task").pyclass
+
+ApplyEntitiesConfig_TaskResponseMsg = GED("urn:vim25", "ApplyEntitiesConfig_TaskResponse").pyclass
+
+ValidateHostProfileComposition_TaskRequestMsg = GED("urn:vim25", "ValidateHostProfileComposition_Task").pyclass
+
+ValidateHostProfileComposition_TaskResponseMsg = GED("urn:vim25", "ValidateHostProfileComposition_TaskResponse").pyclass
+
+CompositeHostProfile_TaskRequestMsg = GED("urn:vim25", "CompositeHostProfile_Task").pyclass
+
+CompositeHostProfile_TaskResponseMsg = GED("urn:vim25", "CompositeHostProfile_TaskResponse").pyclass
+
 RemoveScheduledTaskRequestMsg = GED("urn:vim25", "RemoveScheduledTask").pyclass
 
 RemoveScheduledTaskResponseMsg = GED("urn:vim25", "RemoveScheduledTaskResponse").pyclass
@@ -8041,6 +11620,50 @@ CreateObjectScheduledTaskResponseMsg = GED("urn:vim25", "CreateObjectScheduledTa
 RetrieveObjectScheduledTaskRequestMsg = GED("urn:vim25", "RetrieveObjectScheduledTask").pyclass
 
 RetrieveObjectScheduledTaskResponseMsg = GED("urn:vim25", "RetrieveObjectScheduledTaskResponse").pyclass
+
+prepareVcha_TaskRequestMsg = GED("urn:vim25", "prepareVcha_Task").pyclass
+
+prepareVcha_TaskResponseMsg = GED("urn:vim25", "prepareVcha_TaskResponse").pyclass
+
+deployVcha_TaskRequestMsg = GED("urn:vim25", "deployVcha_Task").pyclass
+
+deployVcha_TaskResponseMsg = GED("urn:vim25", "deployVcha_TaskResponse").pyclass
+
+configureVcha_TaskRequestMsg = GED("urn:vim25", "configureVcha_Task").pyclass
+
+configureVcha_TaskResponseMsg = GED("urn:vim25", "configureVcha_TaskResponse").pyclass
+
+createPassiveNode_TaskRequestMsg = GED("urn:vim25", "createPassiveNode_Task").pyclass
+
+createPassiveNode_TaskResponseMsg = GED("urn:vim25", "createPassiveNode_TaskResponse").pyclass
+
+createWitnessNode_TaskRequestMsg = GED("urn:vim25", "createWitnessNode_Task").pyclass
+
+createWitnessNode_TaskResponseMsg = GED("urn:vim25", "createWitnessNode_TaskResponse").pyclass
+
+getVchaConfigRequestMsg = GED("urn:vim25", "getVchaConfig").pyclass
+
+getVchaConfigResponseMsg = GED("urn:vim25", "getVchaConfigResponse").pyclass
+
+destroyVcha_TaskRequestMsg = GED("urn:vim25", "destroyVcha_Task").pyclass
+
+destroyVcha_TaskResponseMsg = GED("urn:vim25", "destroyVcha_TaskResponse").pyclass
+
+setClusterMode_TaskRequestMsg = GED("urn:vim25", "setClusterMode_Task").pyclass
+
+setClusterMode_TaskResponseMsg = GED("urn:vim25", "setClusterMode_TaskResponse").pyclass
+
+getClusterModeRequestMsg = GED("urn:vim25", "getClusterMode").pyclass
+
+getClusterModeResponseMsg = GED("urn:vim25", "getClusterModeResponse").pyclass
+
+GetVchaClusterHealthRequestMsg = GED("urn:vim25", "GetVchaClusterHealth").pyclass
+
+GetVchaClusterHealthResponseMsg = GED("urn:vim25", "GetVchaClusterHealthResponse").pyclass
+
+initiateFailover_TaskRequestMsg = GED("urn:vim25", "initiateFailover_Task").pyclass
+
+initiateFailover_TaskResponseMsg = GED("urn:vim25", "initiateFailover_TaskResponse").pyclass
 
 OpenInventoryViewFolderRequestMsg = GED("urn:vim25", "OpenInventoryViewFolder").pyclass
 
@@ -8094,9 +11717,21 @@ RenameSnapshotRequestMsg = GED("urn:vim25", "RenameSnapshot").pyclass
 
 RenameSnapshotResponseMsg = GED("urn:vim25", "RenameSnapshotResponse").pyclass
 
+ExportSnapshotRequestMsg = GED("urn:vim25", "ExportSnapshot").pyclass
+
+ExportSnapshotResponseMsg = GED("urn:vim25", "ExportSnapshotResponse").pyclass
+
 CheckCompatibility_TaskRequestMsg = GED("urn:vim25", "CheckCompatibility_Task").pyclass
 
 CheckCompatibility_TaskResponseMsg = GED("urn:vim25", "CheckCompatibility_TaskResponse").pyclass
+
+CheckVmConfig_TaskRequestMsg = GED("urn:vim25", "CheckVmConfig_Task").pyclass
+
+CheckVmConfig_TaskResponseMsg = GED("urn:vim25", "CheckVmConfig_TaskResponse").pyclass
+
+CheckPowerOn_TaskRequestMsg = GED("urn:vim25", "CheckPowerOn_Task").pyclass
+
+CheckPowerOn_TaskResponseMsg = GED("urn:vim25", "CheckPowerOn_TaskResponse").pyclass
 
 QueryVMotionCompatibilityEx_TaskRequestMsg = GED("urn:vim25", "QueryVMotionCompatibilityEx_Task").pyclass
 
@@ -8109,6 +11744,34 @@ CheckMigrate_TaskResponseMsg = GED("urn:vim25", "CheckMigrate_TaskResponse").pyc
 CheckRelocate_TaskRequestMsg = GED("urn:vim25", "CheckRelocate_Task").pyclass
 
 CheckRelocate_TaskResponseMsg = GED("urn:vim25", "CheckRelocate_TaskResponse").pyclass
+
+CheckClone_TaskRequestMsg = GED("urn:vim25", "CheckClone_Task").pyclass
+
+CheckClone_TaskResponseMsg = GED("urn:vim25", "CheckClone_TaskResponse").pyclass
+
+CheckInstantClone_TaskRequestMsg = GED("urn:vim25", "CheckInstantClone_Task").pyclass
+
+CheckInstantClone_TaskResponseMsg = GED("urn:vim25", "CheckInstantClone_TaskResponse").pyclass
+
+AddGuestAliasRequestMsg = GED("urn:vim25", "AddGuestAlias").pyclass
+
+AddGuestAliasResponseMsg = GED("urn:vim25", "AddGuestAliasResponse").pyclass
+
+RemoveGuestAliasRequestMsg = GED("urn:vim25", "RemoveGuestAlias").pyclass
+
+RemoveGuestAliasResponseMsg = GED("urn:vim25", "RemoveGuestAliasResponse").pyclass
+
+RemoveGuestAliasByCertRequestMsg = GED("urn:vim25", "RemoveGuestAliasByCert").pyclass
+
+RemoveGuestAliasByCertResponseMsg = GED("urn:vim25", "RemoveGuestAliasByCertResponse").pyclass
+
+ListGuestAliasesRequestMsg = GED("urn:vim25", "ListGuestAliases").pyclass
+
+ListGuestAliasesResponseMsg = GED("urn:vim25", "ListGuestAliasesResponse").pyclass
+
+ListGuestMappedAliasesRequestMsg = GED("urn:vim25", "ListGuestMappedAliases").pyclass
+
+ListGuestMappedAliasesResponseMsg = GED("urn:vim25", "ListGuestMappedAliasesResponse").pyclass
 
 ValidateCredentialsInGuestRequestMsg = GED("urn:vim25", "ValidateCredentialsInGuest").pyclass
 
@@ -8181,3 +11844,271 @@ TerminateProcessInGuestResponseMsg = GED("urn:vim25", "TerminateProcessInGuestRe
 ReadEnvironmentVariableInGuestRequestMsg = GED("urn:vim25", "ReadEnvironmentVariableInGuest").pyclass
 
 ReadEnvironmentVariableInGuestResponseMsg = GED("urn:vim25", "ReadEnvironmentVariableInGuestResponse").pyclass
+
+CreateRegistryKeyInGuestRequestMsg = GED("urn:vim25", "CreateRegistryKeyInGuest").pyclass
+
+CreateRegistryKeyInGuestResponseMsg = GED("urn:vim25", "CreateRegistryKeyInGuestResponse").pyclass
+
+ListRegistryKeysInGuestRequestMsg = GED("urn:vim25", "ListRegistryKeysInGuest").pyclass
+
+ListRegistryKeysInGuestResponseMsg = GED("urn:vim25", "ListRegistryKeysInGuestResponse").pyclass
+
+DeleteRegistryKeyInGuestRequestMsg = GED("urn:vim25", "DeleteRegistryKeyInGuest").pyclass
+
+DeleteRegistryKeyInGuestResponseMsg = GED("urn:vim25", "DeleteRegistryKeyInGuestResponse").pyclass
+
+SetRegistryValueInGuestRequestMsg = GED("urn:vim25", "SetRegistryValueInGuest").pyclass
+
+SetRegistryValueInGuestResponseMsg = GED("urn:vim25", "SetRegistryValueInGuestResponse").pyclass
+
+ListRegistryValuesInGuestRequestMsg = GED("urn:vim25", "ListRegistryValuesInGuest").pyclass
+
+ListRegistryValuesInGuestResponseMsg = GED("urn:vim25", "ListRegistryValuesInGuestResponse").pyclass
+
+DeleteRegistryValueInGuestRequestMsg = GED("urn:vim25", "DeleteRegistryValueInGuest").pyclass
+
+DeleteRegistryValueInGuestResponseMsg = GED("urn:vim25", "DeleteRegistryValueInGuestResponse").pyclass
+
+HostCreateDisk_TaskRequestMsg = GED("urn:vim25", "HostCreateDisk_Task").pyclass
+
+HostCreateDisk_TaskResponseMsg = GED("urn:vim25", "HostCreateDisk_TaskResponse").pyclass
+
+HostRegisterDiskRequestMsg = GED("urn:vim25", "HostRegisterDisk").pyclass
+
+HostRegisterDiskResponseMsg = GED("urn:vim25", "HostRegisterDiskResponse").pyclass
+
+HostExtendDisk_TaskRequestMsg = GED("urn:vim25", "HostExtendDisk_Task").pyclass
+
+HostExtendDisk_TaskResponseMsg = GED("urn:vim25", "HostExtendDisk_TaskResponse").pyclass
+
+HostInflateDisk_TaskRequestMsg = GED("urn:vim25", "HostInflateDisk_Task").pyclass
+
+HostInflateDisk_TaskResponseMsg = GED("urn:vim25", "HostInflateDisk_TaskResponse").pyclass
+
+HostRenameVStorageObjectRequestMsg = GED("urn:vim25", "HostRenameVStorageObject").pyclass
+
+HostRenameVStorageObjectResponseMsg = GED("urn:vim25", "HostRenameVStorageObjectResponse").pyclass
+
+HostRetrieveVStorageInfrastructureObjectPolicyRequestMsg = GED("urn:vim25", "HostRetrieveVStorageInfrastructureObjectPolicy").pyclass
+
+HostRetrieveVStorageInfrastructureObjectPolicyResponseMsg = GED("urn:vim25", "HostRetrieveVStorageInfrastructureObjectPolicyResponse").pyclass
+
+HostDeleteVStorageObject_TaskRequestMsg = GED("urn:vim25", "HostDeleteVStorageObject_Task").pyclass
+
+HostDeleteVStorageObject_TaskResponseMsg = GED("urn:vim25", "HostDeleteVStorageObject_TaskResponse").pyclass
+
+HostRetrieveVStorageObjectRequestMsg = GED("urn:vim25", "HostRetrieveVStorageObject").pyclass
+
+HostRetrieveVStorageObjectResponseMsg = GED("urn:vim25", "HostRetrieveVStorageObjectResponse").pyclass
+
+HostRetrieveVStorageObjectStateRequestMsg = GED("urn:vim25", "HostRetrieveVStorageObjectState").pyclass
+
+HostRetrieveVStorageObjectStateResponseMsg = GED("urn:vim25", "HostRetrieveVStorageObjectStateResponse").pyclass
+
+HostListVStorageObjectRequestMsg = GED("urn:vim25", "HostListVStorageObject").pyclass
+
+HostListVStorageObjectResponseMsg = GED("urn:vim25", "HostListVStorageObjectResponse").pyclass
+
+HostCloneVStorageObject_TaskRequestMsg = GED("urn:vim25", "HostCloneVStorageObject_Task").pyclass
+
+HostCloneVStorageObject_TaskResponseMsg = GED("urn:vim25", "HostCloneVStorageObject_TaskResponse").pyclass
+
+HostRelocateVStorageObject_TaskRequestMsg = GED("urn:vim25", "HostRelocateVStorageObject_Task").pyclass
+
+HostRelocateVStorageObject_TaskResponseMsg = GED("urn:vim25", "HostRelocateVStorageObject_TaskResponse").pyclass
+
+HostSetVStorageObjectControlFlagsRequestMsg = GED("urn:vim25", "HostSetVStorageObjectControlFlags").pyclass
+
+HostSetVStorageObjectControlFlagsResponseMsg = GED("urn:vim25", "HostSetVStorageObjectControlFlagsResponse").pyclass
+
+HostClearVStorageObjectControlFlagsRequestMsg = GED("urn:vim25", "HostClearVStorageObjectControlFlags").pyclass
+
+HostClearVStorageObjectControlFlagsResponseMsg = GED("urn:vim25", "HostClearVStorageObjectControlFlagsResponse").pyclass
+
+HostReconcileDatastoreInventory_TaskRequestMsg = GED("urn:vim25", "HostReconcileDatastoreInventory_Task").pyclass
+
+HostReconcileDatastoreInventory_TaskResponseMsg = GED("urn:vim25", "HostReconcileDatastoreInventory_TaskResponse").pyclass
+
+HostScheduleReconcileDatastoreInventoryRequestMsg = GED("urn:vim25", "HostScheduleReconcileDatastoreInventory").pyclass
+
+HostScheduleReconcileDatastoreInventoryResponseMsg = GED("urn:vim25", "HostScheduleReconcileDatastoreInventoryResponse").pyclass
+
+HostVStorageObjectCreateSnapshot_TaskRequestMsg = GED("urn:vim25", "HostVStorageObjectCreateSnapshot_Task").pyclass
+
+HostVStorageObjectCreateSnapshot_TaskResponseMsg = GED("urn:vim25", "HostVStorageObjectCreateSnapshot_TaskResponse").pyclass
+
+HostVStorageObjectDeleteSnapshot_TaskRequestMsg = GED("urn:vim25", "HostVStorageObjectDeleteSnapshot_Task").pyclass
+
+HostVStorageObjectDeleteSnapshot_TaskResponseMsg = GED("urn:vim25", "HostVStorageObjectDeleteSnapshot_TaskResponse").pyclass
+
+HostVStorageObjectRetrieveSnapshotInfoRequestMsg = GED("urn:vim25", "HostVStorageObjectRetrieveSnapshotInfo").pyclass
+
+HostVStorageObjectRetrieveSnapshotInfoResponseMsg = GED("urn:vim25", "HostVStorageObjectRetrieveSnapshotInfoResponse").pyclass
+
+HostVStorageObjectCreateDiskFromSnapshot_TaskRequestMsg = GED("urn:vim25", "HostVStorageObjectCreateDiskFromSnapshot_Task").pyclass
+
+HostVStorageObjectCreateDiskFromSnapshot_TaskResponseMsg = GED("urn:vim25", "HostVStorageObjectCreateDiskFromSnapshot_TaskResponse").pyclass
+
+HostVStorageObjectRevert_TaskRequestMsg = GED("urn:vim25", "HostVStorageObjectRevert_Task").pyclass
+
+HostVStorageObjectRevert_TaskResponseMsg = GED("urn:vim25", "HostVStorageObjectRevert_TaskResponse").pyclass
+
+CreateDisk_TaskRequestMsg = GED("urn:vim25", "CreateDisk_Task").pyclass
+
+CreateDisk_TaskResponseMsg = GED("urn:vim25", "CreateDisk_TaskResponse").pyclass
+
+RegisterDiskRequestMsg = GED("urn:vim25", "RegisterDisk").pyclass
+
+RegisterDiskResponseMsg = GED("urn:vim25", "RegisterDiskResponse").pyclass
+
+ExtendDisk_TaskRequestMsg = GED("urn:vim25", "ExtendDisk_Task").pyclass
+
+ExtendDisk_TaskResponseMsg = GED("urn:vim25", "ExtendDisk_TaskResponse").pyclass
+
+InflateDisk_TaskRequestMsg = GED("urn:vim25", "InflateDisk_Task").pyclass
+
+InflateDisk_TaskResponseMsg = GED("urn:vim25", "InflateDisk_TaskResponse").pyclass
+
+RenameVStorageObjectRequestMsg = GED("urn:vim25", "RenameVStorageObject").pyclass
+
+RenameVStorageObjectResponseMsg = GED("urn:vim25", "RenameVStorageObjectResponse").pyclass
+
+UpdateVStorageObjectPolicy_TaskRequestMsg = GED("urn:vim25", "UpdateVStorageObjectPolicy_Task").pyclass
+
+UpdateVStorageObjectPolicy_TaskResponseMsg = GED("urn:vim25", "UpdateVStorageObjectPolicy_TaskResponse").pyclass
+
+UpdateVStorageInfrastructureObjectPolicy_TaskRequestMsg = GED("urn:vim25", "UpdateVStorageInfrastructureObjectPolicy_Task").pyclass
+
+UpdateVStorageInfrastructureObjectPolicy_TaskResponseMsg = GED("urn:vim25", "UpdateVStorageInfrastructureObjectPolicy_TaskResponse").pyclass
+
+RetrieveVStorageInfrastructureObjectPolicyRequestMsg = GED("urn:vim25", "RetrieveVStorageInfrastructureObjectPolicy").pyclass
+
+RetrieveVStorageInfrastructureObjectPolicyResponseMsg = GED("urn:vim25", "RetrieveVStorageInfrastructureObjectPolicyResponse").pyclass
+
+DeleteVStorageObject_TaskRequestMsg = GED("urn:vim25", "DeleteVStorageObject_Task").pyclass
+
+DeleteVStorageObject_TaskResponseMsg = GED("urn:vim25", "DeleteVStorageObject_TaskResponse").pyclass
+
+RetrieveVStorageObjectRequestMsg = GED("urn:vim25", "RetrieveVStorageObject").pyclass
+
+RetrieveVStorageObjectResponseMsg = GED("urn:vim25", "RetrieveVStorageObjectResponse").pyclass
+
+RetrieveVStorageObjectStateRequestMsg = GED("urn:vim25", "RetrieveVStorageObjectState").pyclass
+
+RetrieveVStorageObjectStateResponseMsg = GED("urn:vim25", "RetrieveVStorageObjectStateResponse").pyclass
+
+RetrieveVStorageObjectAssociationsRequestMsg = GED("urn:vim25", "RetrieveVStorageObjectAssociations").pyclass
+
+RetrieveVStorageObjectAssociationsResponseMsg = GED("urn:vim25", "RetrieveVStorageObjectAssociationsResponse").pyclass
+
+ListVStorageObjectRequestMsg = GED("urn:vim25", "ListVStorageObject").pyclass
+
+ListVStorageObjectResponseMsg = GED("urn:vim25", "ListVStorageObjectResponse").pyclass
+
+CloneVStorageObject_TaskRequestMsg = GED("urn:vim25", "CloneVStorageObject_Task").pyclass
+
+CloneVStorageObject_TaskResponseMsg = GED("urn:vim25", "CloneVStorageObject_TaskResponse").pyclass
+
+RelocateVStorageObject_TaskRequestMsg = GED("urn:vim25", "RelocateVStorageObject_Task").pyclass
+
+RelocateVStorageObject_TaskResponseMsg = GED("urn:vim25", "RelocateVStorageObject_TaskResponse").pyclass
+
+SetVStorageObjectControlFlagsRequestMsg = GED("urn:vim25", "SetVStorageObjectControlFlags").pyclass
+
+SetVStorageObjectControlFlagsResponseMsg = GED("urn:vim25", "SetVStorageObjectControlFlagsResponse").pyclass
+
+ClearVStorageObjectControlFlagsRequestMsg = GED("urn:vim25", "ClearVStorageObjectControlFlags").pyclass
+
+ClearVStorageObjectControlFlagsResponseMsg = GED("urn:vim25", "ClearVStorageObjectControlFlagsResponse").pyclass
+
+AttachTagToVStorageObjectRequestMsg = GED("urn:vim25", "AttachTagToVStorageObject").pyclass
+
+AttachTagToVStorageObjectResponseMsg = GED("urn:vim25", "AttachTagToVStorageObjectResponse").pyclass
+
+DetachTagFromVStorageObjectRequestMsg = GED("urn:vim25", "DetachTagFromVStorageObject").pyclass
+
+DetachTagFromVStorageObjectResponseMsg = GED("urn:vim25", "DetachTagFromVStorageObjectResponse").pyclass
+
+ListVStorageObjectsAttachedToTagRequestMsg = GED("urn:vim25", "ListVStorageObjectsAttachedToTag").pyclass
+
+ListVStorageObjectsAttachedToTagResponseMsg = GED("urn:vim25", "ListVStorageObjectsAttachedToTagResponse").pyclass
+
+ListTagsAttachedToVStorageObjectRequestMsg = GED("urn:vim25", "ListTagsAttachedToVStorageObject").pyclass
+
+ListTagsAttachedToVStorageObjectResponseMsg = GED("urn:vim25", "ListTagsAttachedToVStorageObjectResponse").pyclass
+
+ReconcileDatastoreInventory_TaskRequestMsg = GED("urn:vim25", "ReconcileDatastoreInventory_Task").pyclass
+
+ReconcileDatastoreInventory_TaskResponseMsg = GED("urn:vim25", "ReconcileDatastoreInventory_TaskResponse").pyclass
+
+ScheduleReconcileDatastoreInventoryRequestMsg = GED("urn:vim25", "ScheduleReconcileDatastoreInventory").pyclass
+
+ScheduleReconcileDatastoreInventoryResponseMsg = GED("urn:vim25", "ScheduleReconcileDatastoreInventoryResponse").pyclass
+
+VStorageObjectCreateSnapshot_TaskRequestMsg = GED("urn:vim25", "VStorageObjectCreateSnapshot_Task").pyclass
+
+VStorageObjectCreateSnapshot_TaskResponseMsg = GED("urn:vim25", "VStorageObjectCreateSnapshot_TaskResponse").pyclass
+
+DeleteSnapshot_TaskRequestMsg = GED("urn:vim25", "DeleteSnapshot_Task").pyclass
+
+DeleteSnapshot_TaskResponseMsg = GED("urn:vim25", "DeleteSnapshot_TaskResponse").pyclass
+
+RetrieveSnapshotInfoRequestMsg = GED("urn:vim25", "RetrieveSnapshotInfo").pyclass
+
+RetrieveSnapshotInfoResponseMsg = GED("urn:vim25", "RetrieveSnapshotInfoResponse").pyclass
+
+CreateDiskFromSnapshot_TaskRequestMsg = GED("urn:vim25", "CreateDiskFromSnapshot_Task").pyclass
+
+CreateDiskFromSnapshot_TaskResponseMsg = GED("urn:vim25", "CreateDiskFromSnapshot_TaskResponse").pyclass
+
+RevertVStorageObject_TaskRequestMsg = GED("urn:vim25", "RevertVStorageObject_Task").pyclass
+
+RevertVStorageObject_TaskResponseMsg = GED("urn:vim25", "RevertVStorageObject_TaskResponse").pyclass
+
+DestroyPropertyFilterRequestMsg = GED("urn:vim25", "DestroyPropertyFilter").pyclass
+
+DestroyPropertyFilterResponseMsg = GED("urn:vim25", "DestroyPropertyFilterResponse").pyclass
+
+CreateFilterRequestMsg = GED("urn:vim25", "CreateFilter").pyclass
+
+CreateFilterResponseMsg = GED("urn:vim25", "CreateFilterResponse").pyclass
+
+RetrievePropertiesRequestMsg = GED("urn:vim25", "RetrieveProperties").pyclass
+
+RetrievePropertiesResponseMsg = GED("urn:vim25", "RetrievePropertiesResponse").pyclass
+
+CheckForUpdatesRequestMsg = GED("urn:vim25", "CheckForUpdates").pyclass
+
+CheckForUpdatesResponseMsg = GED("urn:vim25", "CheckForUpdatesResponse").pyclass
+
+WaitForUpdatesRequestMsg = GED("urn:vim25", "WaitForUpdates").pyclass
+
+WaitForUpdatesResponseMsg = GED("urn:vim25", "WaitForUpdatesResponse").pyclass
+
+CancelWaitForUpdatesRequestMsg = GED("urn:vim25", "CancelWaitForUpdates").pyclass
+
+CancelWaitForUpdatesResponseMsg = GED("urn:vim25", "CancelWaitForUpdatesResponse").pyclass
+
+WaitForUpdatesExRequestMsg = GED("urn:vim25", "WaitForUpdatesEx").pyclass
+
+WaitForUpdatesExResponseMsg = GED("urn:vim25", "WaitForUpdatesExResponse").pyclass
+
+RetrievePropertiesExRequestMsg = GED("urn:vim25", "RetrievePropertiesEx").pyclass
+
+RetrievePropertiesExResponseMsg = GED("urn:vim25", "RetrievePropertiesExResponse").pyclass
+
+ContinueRetrievePropertiesExRequestMsg = GED("urn:vim25", "ContinueRetrievePropertiesEx").pyclass
+
+ContinueRetrievePropertiesExResponseMsg = GED("urn:vim25", "ContinueRetrievePropertiesExResponse").pyclass
+
+CancelRetrievePropertiesExRequestMsg = GED("urn:vim25", "CancelRetrievePropertiesEx").pyclass
+
+CancelRetrievePropertiesExResponseMsg = GED("urn:vim25", "CancelRetrievePropertiesExResponse").pyclass
+
+CreatePropertyCollectorRequestMsg = GED("urn:vim25", "CreatePropertyCollector").pyclass
+
+CreatePropertyCollectorResponseMsg = GED("urn:vim25", "CreatePropertyCollectorResponse").pyclass
+
+DestroyPropertyCollectorRequestMsg = GED("urn:vim25", "DestroyPropertyCollector").pyclass
+
+DestroyPropertyCollectorResponseMsg = GED("urn:vim25", "DestroyPropertyCollectorResponse").pyclass

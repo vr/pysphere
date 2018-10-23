@@ -1,4 +1,4 @@
-# $Id$
+# $Id: __init__.py 1261 2006-10-10 23:45:43Z boverhof $
 
 __all__ = ['wsdl2python', 'utility', 'containers', 'commands']
 

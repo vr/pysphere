@@ -3,13 +3,12 @@
 '''Simple CGI dispatching.
 '''
 
-import os, sys
-from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
-from pysphere.ZSI import TC, EvaluateException, FaultFromZSIException, \
-    SoapWriter, Fault, FaultFromException, UNICODE_ENCODING, ParsedSoap, \
-    ParseException
-from pysphere.ZSI import _child_elements, _seqtypes, _find_arraytype, _find_type, resolvers
-from pysphere.ZSI.auth import ClientBinding
+import types, os, sys
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from pysphere.ZSI import *
+from pysphere.ZSI import _child_elements, _copyright, _seqtypes, _find_arraytype, _find_type, resolvers 
+from pysphere.ZSI.auth import _auth_tc, AUTH, ClientBinding
+import collections
 
 
 # Client binding information is stored in a global. We provide an accessor
@@ -22,14 +21,14 @@ def GetClientBinding():
     return _client_binding
 
 gettypecode = lambda mod,e: getattr(mod, str(e.localName)).typecode
-def _Dispatch(ps, modules, SendResponse, SendFault, nsdict={}, typesmodule=None,
+def _Dispatch(ps, modules, SendResponse, SendFault, nsdict={}, typesmodule=None, 
               gettypecode=gettypecode, rpc=False, docstyle=False, **kw):
     '''Find a handler for the SOAP request in ps; search modules.
     Call SendResponse or SendFault to send the reply back, appropriately.
 
     Behaviors:
         default -- Call "handler" method with pyobj representation of body root, and return
-            a self-describing request (w/typecode).  Parsing done via a typecode from
+            a self-describing request (w/typecode).  Parsing done via a typecode from 
             typesmodule, or Any.
 
         docstyle -- Call "handler" method with ParsedSoap instance and parse result with an
@@ -37,7 +36,7 @@ def _Dispatch(ps, modules, SendResponse, SendFault, nsdict={}, typesmodule=None,
 
         rpc -- Specify RPC wrapper of result. Behavior, ignore body root (RPC Wrapper)
            of request, parse all "parts" of message via individual typecodes.  Expect
-           the handler to return the parts of the message, whether it is a dict, single instance,
+           the handler to return the parts of the message, whether it is a dict, single instance, 
            or a list try to serialize it as a Struct but if this is not possible put it in an Array.
            Parsing done via a typecode from typesmodule, or Any.
 
@@ -55,11 +54,11 @@ def _Dispatch(ps, modules, SendResponse, SendFault, nsdict={}, typesmodule=None,
             raise TypeError("Unknown method " + what)
 
         # Of those modules, see who's callable.
-        handlers = [ h for h in handlers if callable(h) ]
+        handlers = [ h for h in handlers if isinstance(h, collections.Callable) ]
         if len(handlers) == 0:
             raise TypeError("Unimplemented method " + what)
         if len(handlers) > 1:
-            raise TypeError("Multiple implementations found: %s" % handlers)
+            raise TypeError("Multiple implementations found: " + repr(handlers))
         handler = handlers[0]
 
         _client_binding = ClientBinding(ps)
@@ -74,19 +73,19 @@ def _Dispatch(ps, modules, SendResponse, SendFault, nsdict={}, typesmodule=None,
 
             try:
                 arg = tc.parse(ps.body_root, ps)
-            except EvaluateException, ex:
+            except EvaluateException as ex:
                 SendFault(FaultFromZSIException(ex), **kw)
                 return
 
             try:
                 result = handler(arg)
-            except Exception,ex:
+            except Exception as ex:
                 SendFault(FaultFromZSIException(ex), **kw)
                 return
 
             try:
                 tc = result.typecode
-            except AttributeError,ex:
+            except AttributeError as ex:
                 SendFault(FaultFromZSIException(ex), **kw)
                 return
 
@@ -100,34 +99,34 @@ def _Dispatch(ps, modules, SendResponse, SendFault, nsdict={}, typesmodule=None,
 
                 try:
                     kwargs[str(e.localName)] = tc.parse(e, ps)
-                except EvaluateException, ex:
+                except EvaluateException as ex:
                     SendFault(FaultFromZSIException(ex), **kw)
                     return
 
             result = handler(**kwargs)
             aslist = False
             # make sure data is wrapped, try to make this a Struct
-            if isinstance(result,_seqtypes):
-                for _ in result:
-                    aslist = hasattr(result, 'typecode')
-                    if aslist: break
-            elif not isinstance(result, dict):
-                aslist = not hasattr(result, 'typecode')
-                result = (result,)
+            if type(result) in _seqtypes:
+                 for o in result:
+                     aslist = hasattr(result, 'typecode')
+                     if aslist: break
+            elif type(result) is not dict:
+                 aslist = not hasattr(result, 'typecode')
+                 result = (result,)
 
             tc = TC.Any(pname=what+'Response', aslist=aslist)
         else:
             # if this is an Array, call handler with list
             # if this is an Struct, call handler with dict
             tp = _find_type(ps.body_root)
-            isarray = ((isinstance(tp, (tuple,list)) and tp[1] == 'Array') or _find_arraytype(ps.body_root))
+            isarray = ((type(tp) in (tuple,list) and tp[1] == 'Array') or _find_arraytype(ps.body_root))
             data = _child_elements(ps.body_root)
             tc = TC.Any()
             if isarray and len(data) == 0:
                 result = handler()
             elif isarray:
                 try: arg = [ tc.parse(e, ps) for e in data ]
-                except EvaluateException, e:
+                except EvaluateException as e:
                     #SendFault(FaultFromZSIException(e), **kw)
                     SendFault(RuntimeError("THIS IS AN ARRAY: %s" %isarray))
                     return
@@ -135,7 +134,7 @@ def _Dispatch(ps, modules, SendResponse, SendFault, nsdict={}, typesmodule=None,
                 result = handler(*arg)
             else:
                 try: kwarg = dict([ (str(e.localName),tc.parse(e, ps)) for e in data ])
-                except EvaluateException, e:
+                except EvaluateException as e:
                     SendFault(FaultFromZSIException(e), **kw)
                     return
 
@@ -148,9 +147,9 @@ def _Dispatch(ps, modules, SendResponse, SendFault, nsdict={}, typesmodule=None,
         sw = SoapWriter(nsdict=nsdict)
         sw.serialize(result, tc)
         return SendResponse(str(sw), **kw)
-    except Fault, e:
+    except Fault as e:
         return SendFault(e, **kw)
-    except Exception, e:
+    except Exception as e:
         # Something went wrong, send a fault.
         return SendFault(FaultFromException(e, 0, sys.exc_info()[2]), **kw)
 
@@ -176,11 +175,11 @@ def _JonPySendXML(text, code=200, **kw):
     req.write(text)
 
 def _CGISendXML(text, code=200, **kw):
-    print 'Status: %d' % code
-    print 'Content-Type: text/xml; charset="%s"' %UNICODE_ENCODING
-    print 'Content-Length: %d' % len(text)
-    print ''
-    print text
+    print('Status: %d' % code)
+    print('Content-Type: text/xml; charset="%s"' %UNICODE_ENCODING)
+    print('Content-Length: %d' % len(text))
+    print('')
+    print(text)
 
 def _CGISendFault(f, **kw):
     _CGISendXML(f.AsSOAP(), 500, **kw)
@@ -195,13 +194,13 @@ class SOAPRequestHandler(BaseHTTPRequestHandler):
         '''Send some XML.
         '''
         self.send_response(code)
-
+        
         if text:
             self.send_header('Content-type', 'text/xml; charset="%s"' %UNICODE_ENCODING)
             self.send_header('Content-Length', str(len(text)))
 
         self.end_headers()
-
+        
         if text:
             self.wfile.write(text)
 
@@ -224,10 +223,10 @@ class SOAPRequestHandler(BaseHTTPRequestHandler):
             else:
                 length = int(self.headers['content-length'])
                 ps = ParsedSoap(self.rfile.read(length))
-        except ParseException, e:
+        except ParseException as e:
             self.send_fault(FaultFromZSIException(e))
             return
-        except Exception, e:
+        except Exception as e:
             # Faulted while processing; assume it's in the header.
             self.send_fault(FaultFromException(e, 1, sys.exc_info()[2]))
             return
@@ -262,7 +261,7 @@ def AsCGI(nsdict={}, typesmodule=None, rpc=False, modules=None):
         else:
             length = int(os.environ['CONTENT_LENGTH'])
             ps = ParsedSoap(sys.stdin.read(length))
-    except ParseException, e:
+    except ParseException as e:
         _CGISendFault(FaultFromZSIException(e))
         return
     _Dispatch(ps, modules, _CGISendXML, _CGISendFault, nsdict=nsdict,
@@ -273,7 +272,7 @@ def AsHandler(request=None, modules=None, **kw):
     ps = ParsedSoap(request)
     kw['request'] = request
     _Dispatch(ps, modules, _ModPythonSendXML, _ModPythonSendFault, **kw)
-
+    
 def AsJonPy(request=None, modules=None, **kw):
     '''Dispatch within a jonpy CGI/FastCGI script.
     '''
@@ -291,8 +290,10 @@ def AsJonPy(request=None, modules=None, **kw):
         else:
             length = int(request.environ['CONTENT_LENGTH'])
             ps = ParsedSoap(request.stdin.read(length))
-    except ParseException, e:
+    except ParseException as e:
         _JonPySendFault(FaultFromZSIException(e), **kw)
         return
     _Dispatch(ps, modules, _JonPySendXML, _JonPySendFault, **kw)
 
+
+if __name__ == '__main__': print(_copyright)

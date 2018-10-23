@@ -3,14 +3,15 @@
    -- use with wsdl2py generated modules.
 '''
 
-import urlparse, sys, thread,re
-from BaseHTTPServer import HTTPServer
+import urllib.parse, types, os, sys, io as StringIO, _thread,re
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from pysphere.ZSI import ParseException, FaultFromException, FaultFromZSIException, Fault
-from pysphere.ZSI import _get_element_nsuri_name, resolvers
+from pysphere.ZSI import _copyright, _seqtypes, _get_element_nsuri_name, resolvers
 from pysphere.ZSI import _get_idstr
 from pysphere.ZSI.address import Address
 from pysphere.ZSI.parse import ParsedSoap
 from pysphere.ZSI.writer import SoapWriter
+from pysphere.ZSI.dispatch import _ModPythonSendXML, _ModPythonSendFault, _CGISendXML, _CGISendFault
 from pysphere.ZSI.dispatch import SOAPRequestHandler as BaseSOAPRequestHandler
 
 """
@@ -54,7 +55,7 @@ class SOAPContext:
 _contexts = dict()
 def GetSOAPContext():
     global _contexts
-    return _contexts[thread.get_ident()]
+    return _contexts[_thread.get_ident()]
 
 def _Dispatch(ps, server, SendResponse, SendFault, post, action, nsdict={}, **kw):
     '''Send ParsedSoap instance to ServiceContainer, which dispatches to
@@ -75,7 +76,7 @@ def _Dispatch(ps, server, SendResponse, SendFault, post, action, nsdict={}, **kw
         address = Address()
         try:
             address.parse(ps)
-        except Exception, e:
+        except Exception as e:
             return SendFault(FaultFromException(e, 0, sys.exc_info()[2]), **kw)
         if action and action != address.getAction():
             e = WSActionException('SOAP Action("%s") must match WS-Action("%s") if specified.' \
@@ -97,15 +98,15 @@ def _Dispatch(ps, server, SendResponse, SendFault, post, action, nsdict={}, **kw
 
     try:
         method = service.getOperation(ps, address)
-    except Exception, e:
+    except Exception as e:
         return SendFault(FaultFromException(e, 0, sys.exc_info()[2]), **kw)
 
     try:
-        if isWSResource is True:
-            _,result = method(ps, address)
-        else:
-            _,result = method(ps)
-    except Exception, e:
+        if isWSResource is True: 
+            request,result = method(ps, address)
+        else: 
+            request,result = method(ps)
+    except Exception as e:
         return SendFault(FaultFromException(e, 0, sys.exc_info()[2]), **kw)
 
     # Verify if Signed
@@ -118,7 +119,7 @@ def _Dispatch(ps, server, SendResponse, SendFault, post, action, nsdict={}, **kw
     sw = SoapWriter(nsdict=nsdict)
     try:
         sw.serialize(result)
-    except Exception, e:
+    except Exception as e:
         return SendFault(FaultFromException(e, 0, sys.exc_info()[2]), **kw)
 
     if isWSResource is True:
@@ -127,7 +128,7 @@ def _Dispatch(ps, server, SendResponse, SendFault, post, action, nsdict={}, **kw
         try:
             addressRsp.setResponseFromWSAddress(address, localURL)
             addressRsp.serialize(sw)
-        except Exception, e:
+        except Exception as e:
             return SendFault(FaultFromException(e, 0, sys.exc_info()[2]), **kw)
 
     # Create Signatures
@@ -136,7 +137,7 @@ def _Dispatch(ps, server, SendResponse, SendFault, post, action, nsdict={}, **kw
     try:
         soapdata = str(sw)
         return SendResponse(soapdata, **kw)
-    except Exception, e:
+    except Exception as e:
         return SendFault(FaultFromException(e, 0, sys.exc_info()[2]), **kw)
 
 
@@ -154,12 +155,12 @@ class ServiceInterface:
 
     class variables:
         soapAction -- dictionary of soapAction keys, and operation name values.
-           These are specified in the WSDL soap bindings. There must be a
+           These are specified in the WSDL soap bindings. There must be a 
            class method matching the operation name value.  If WS-Action is
            used the keys are WS-Action request values, according to the spec
            if soapAction and WS-Action is specified they must be equal.
-
-        wsAction -- dictionary of operation name keys and WS-Action
+           
+        wsAction -- dictionary of operation name keys and WS-Action 
            response values.  These values are specified by the portType.
 
         root -- dictionary of root element keys, and operation name values.
@@ -201,9 +202,7 @@ class ServiceInterface:
         method = self.root.get(_get_element_nsuri_name(ps.body_root)) or \
             self.soapAction.get(action)
         if method is None:
-            raise UnknownRequestException(
-                'failed to map request to a method: action(%s), root%s' 
-                %(action,_get_element_nsuri_name(ps.body_root)))
+            raise UnknownRequestException('failed to map request to a method: action(%s), root%s' %(action,_get_element_nsuri_name(ps.body_root)))
         return method
 
 
@@ -223,7 +222,7 @@ class WSAResource(ServiceSOAPBinding):
     on WS-Action values rather than SOAP Action.
 
     class variables:
-        encoding
+        encoding  
         wsAction -- Must override to set output Action values.
         soapAction -- Must override to set input Action values.
     '''
@@ -248,7 +247,7 @@ class WSAResource(ServiceSOAPBinding):
 
     def getOperation(self, ps, address):
         '''Returns a method of class.
-        address -- ws-address
+        address -- ws-address 
         '''
         action = address.getAction()
         opName = self.getOperationName(ps, action)
@@ -259,9 +258,8 @@ class WSAResource(ServiceSOAPBinding):
            action -- request WS-Action value.
         '''
         opName = self.getOperationName(ps, action)
-        if not opName in self.wsAction:
-            raise WSActionNotSpecified('wsAction dictionary missing key(%s)'
-                                       % opName)
+        if (opName in self.wsAction) is False:
+            raise WSActionNotSpecified('wsAction dictionary missing key(%s)' %opName)
         return self.wsAction[opName]
 
     def do_POST(self):
@@ -282,20 +280,18 @@ class WSAResource(ServiceSOAPBinding):
             if ct.startswith('multipart/'):
                 cid = resolvers.MIMEResolver(ct, self.rfile)
                 xml = cid.GetSOAPPart()
-                #ps = ParsedSoap(xml, resolver=cid.Resolve, readerclass=DomletteReader)
-                ps = ParsedSoap(xml, resolver=cid.Resolve)
+                ps = ParsedSoap(xml, resolver=cid.Resolve, readerclass=DomletteReader)
             else:
                 length = int(self.headers['content-length'])
-                #ps = ParsedSoap(self.rfile.read(length), readerclass=DomletteReader)
-                ps = ParsedSoap(self.rfile.read(length))
-        except ParseException, e:
+                ps = ParsedSoap(self.rfile.read(length), readerclass=DomletteReader)
+        except ParseException as e:
             self.send_fault(FaultFromZSIException(e))
-        except Exception, e:
+        except Exception as e:
             # Faulted while processing; assume it's in the header.
             self.send_fault(FaultFromException(e, 1, sys.exc_info()[2]))
         else:
             # Keep track of calls
-            thread_id = thread.get_ident()
+            thread_id = _thread.get_ident()
             _contexts[thread_id] = SOAPContext(self.server, xml, ps,
                                                self.connection,
                                                self.headers, soapAction)
@@ -303,7 +299,7 @@ class WSAResource(ServiceSOAPBinding):
             try:
                 _Dispatch(ps, self.server, self.send_xml, self.send_fault,
                     post=post, action=soapAction)
-            except Exception, e:
+            except Exception as e:
                 self.send_fault(FaultFromException(e, 0, sys.exc_info()[2]))
 
             # Clean up after the call
@@ -335,22 +331,22 @@ class SOAPRequestHandler(BaseSOAPRequestHandler):
                 length = int(self.headers['content-length'])
                 xml = self.rfile.read(length)
                 ps = ParsedSoap(xml)
-        except ParseException, e:
+        except ParseException as e:
             self.send_fault(FaultFromZSIException(e))
-        except Exception, e:
+        except Exception as e:
             # Faulted while processing; assume it's in the header.
             self.send_fault(FaultFromException(e, 1, sys.exc_info()[2]))
         else:
             # Keep track of calls
-            thread_id = thread.get_ident()
+            thread_id = _thread.get_ident()
             _contexts[thread_id] = SOAPContext(self.server, xml, ps,
                                                self.connection,
                                                self.headers, soapAction)
 
             try:
-                _Dispatch(ps, self.server, self.send_xml, self.send_fault,
+                _Dispatch(ps, self.server, self.send_xml, self.send_fault, 
                     post=post, action=soapAction)
-            except Exception, e:
+            except Exception as e:
                 self.send_fault(FaultFromException(e, 0, sys.exc_info()[2]))
 
             # Clean up after the call
@@ -359,7 +355,7 @@ class SOAPRequestHandler(BaseSOAPRequestHandler):
 
     def do_GET(self):
         '''The GET command.
-	'''
+        '''
         if self.path.lower().endswith("?wsdl"):
             service_path = self.path[:-5]
             service = self.server.getNode(service_path)
@@ -385,7 +381,7 @@ class SOAPRequestHandler(BaseSOAPRequestHandler):
             self.send_error(404, "Service not found [%s]." % self.path)
 
 class ServiceContainer(HTTPServer):
-    '''HTTPServer that stores service instances according
+    '''HTTPServer that stores service instances according 
     to POST values.  An action value is instance specific,
     and specifies an operation (function) of an instance.
     '''
@@ -398,33 +394,33 @@ class ServiceContainer(HTTPServer):
         def __str__(self):
             return str(self.__dict)
 
-        def listNodes(self):
-            print list(self.__dict.iterkeys())
+    def listNodes(self):
+        print(list(self.__dict.keys()))
 
         def getNode(self, url):
-            path = urlparse.urlsplit(url)[2]
+            path = urllib.parse.urlsplit(url)[2]
             if path.startswith("/"):
                 path = path[1:]
 
             if path in self.__dict:
                 return self.__dict[path]
             else:
-                raise NoSuchService('No service(%s) in ServiceContainer' % path)
+                raise NoSuchService('No service(%s) in ServiceContainer' %path)
 
         def setNode(self, service, url):
-            path = urlparse.urlsplit(url)[2]
+            path = urllib.parse.urlsplit(url)[2]
             if path.startswith("/"):
                 path = path[1:]
 
             if not isinstance(service, ServiceSOAPBinding):
-                raise TypeError('A Service must implement class ServiceSOAPBinding')
+               raise TypeError('A Service must implement class ServiceSOAPBinding')
             if path in self.__dict:
                 raise ServiceAlreadyPresent('Service(%s) already in ServiceContainer' % path)
             else:
                 self.__dict[path] = service
 
         def removeNode(self, url):
-            path = urlparse.urlsplit(url)[2]
+            path = urllib.parse.urlsplit(url)[2]
             if path.startswith("/"):
                 path = path[1:]
 
@@ -433,15 +429,15 @@ class ServiceContainer(HTTPServer):
                 del self.__dict[path]
                 return node
             else:
-                raise NoSuchService('No service(%s) in ServiceContainer' % path)
-
+                raise NoSuchService('No service(%s) in ServiceContainer' %path)
+            
     def __init__(self, server_address, services=[], RequestHandlerClass=SOAPRequestHandler):
-        '''server_address --
-           RequestHandlerClass --
+        '''server_address -- 
+           RequestHandlerClass -- 
         '''
         HTTPServer.__init__(self, server_address, RequestHandlerClass)
         self._nodes = self.NodeTree()
-        [self.setNode(s) for s in services]
+        list(map(lambda s: self.setNode(s), services))
 
     def __str__(self):
         return '%s(%s) nodes( %s )' %(self.__class__, _get_idstr(self), str(self._nodes))
@@ -450,17 +446,17 @@ class ServiceContainer(HTTPServer):
         '''ps -- ParsedSoap representing the request
            post -- HTTP POST --> instance
            action -- Soap Action header --> method
-           address -- Address instance representing WS-Address
+           address -- Address instance representing WS-Address 
         '''
         method = self.getCallBack(ps, post, action)
-        if (isinstance(method.im_self, WSAResource) or
-            isinstance(method.im_self, SimpleWSResource)):
+        if (isinstance(method.__self__, WSAResource) or 
+            isinstance(method.__self__, SimpleWSResource)):
             return method(ps, address)
         return method(ps)
 
 
     def setNode(self, service, url=None):
-        if url is None:
+        if url is None: 
             url = service.getPost()
         self._nodes.setNode(service, url)
 
@@ -490,9 +486,11 @@ class SimpleWSResource(ServiceSOAPBinding):
         '''
         node = self.getNode(post)
         if node is None:
-            raise Exception
-            
+            raise NoSuchFunction
         if node.authorize(None, post, action):
             return node.getOperation(ps, action)
         else:
             raise NotAuthorized("Authorization failed for method %s" % action)
+
+
+if __name__ == '__main__': print(_copyright)

@@ -3,8 +3,8 @@
 # See Copyright for copyright notice!
 ###########################################################################
 
-import time, urlparse, socket
-from pysphere.ZSI import EvaluateException, WSActionException
+import time, urllib.parse, socket
+from pysphere.ZSI import _seqtypes, EvaluateException, WSActionException
 from pysphere.ZSI.schema import GED, GTD, _has_type_definition
 from pysphere.ZSI.wstools.Namespaces import WSA_LIST
 
@@ -37,8 +37,7 @@ class Address(object):
                 _has_type_definition(WSA.ADDRESS, epr) is True:
                 break
         else:
-            raise EvaluateException(
-               'enabling wsAddressing requires the inclusion of that namespace')
+            raise EvaluateException('enabling wsAddressing requires the inclusion of that namespace')
 
         self.wsAddressURI = WSA.ADDRESS
         self.anonymousURI = WSA.ANONYMOUS
@@ -52,22 +51,21 @@ class Address(object):
         if action is None:
             raise WSActionException('Response missing WSAddress Action')
         if not value:
-            raise WSActionException('missing WSAddress Action, expecting %s'
-                                     % action)
+            raise WSActionException('missing WSAddress Action, expecting %s' %action)
         if value != action:
-            raise WSActionException('wrong WSAddress Action(%s), expecting %s'
-                                    % (value,action))
+            raise WSActionException('wrong WSAddress Action(%s), expecting %s'%(value,action))
 
     def _checkFrom(self, pyobj):
-        '''WS-Address From,
+        '''WS-Address From, 
         XXX currently not checking the hostname, not forwarding messages.
         pyobj  -- From server returned.
         '''
         if pyobj is None: return
         value = pyobj._Address
         if value != self._addressTo:
-            scheme,netloc,path,query,fragment = urlparse.urlsplit(value)
-            schemeF,netlocF,pathF,queryF,fragmentF = urlparse.urlsplit(self._addressTo)
+            scheme,netloc,path,query,fragment = urllib.parse.urlsplit(value)
+            hostport = netloc.split(':')
+            schemeF,netlocF,pathF,queryF,fragmentF = urllib.parse.urlsplit(self._addressTo)
             if scheme==schemeF and path==pathF and query==queryF and fragment==fragmentF:
                 netloc = netloc.split(':') + ['80']
                 netlocF = netlocF.split(':') + ['80']
@@ -83,7 +81,7 @@ class Address(object):
         '''
         if value != self._messageID:
             raise WSActionException('wrong WS-Address RelatesTo(%s), expecting %s'%(value,self._messageID))
-
+        
     def _checkReplyTo(self, value):
         '''WS-Address From
         value  -- From server returned in wsa:To
@@ -108,24 +106,21 @@ class Address(object):
         '''
         typecodes = []
         try:
-            for nsuri,elements in kw.iteritems():
+            for nsuri,elements in list(kw.items()):
                 for el in elements:
                     typecode = GED(nsuri, el)
                     if typecode is None:
-                        raise WSActionException('Missing namespace, import "%s"'
-                                                % nsuri)
+                        raise WSActionException('Missing namespace, import "%s"' %nsuri)
 
                     typecodes.append(typecode)
             else:
                 pass
-        except EvaluateException:
-            raise EvaluateException(
-                'To use ws-addressing register typecodes for namespace(%s)'
-                % self.wsAddressURI)
+        except EvaluateException as ex:
+            raise EvaluateException('To use ws-addressing register typecodes for namespace(%s)' %self.wsAddressURI)
         return typecodes
 
     def checkResponse(self, ps, action):
-        '''
+        ''' 
         ps -- ParsedSoap
         action -- ws-action for response
         '''
@@ -181,16 +176,14 @@ class Address(object):
 
             if isinstance(endPointReference.typecode, \
                 GTD(namespaceURI ,'EndpointReferenceType')) is False:
-                raise EvaluateException('endPointReference must be of type %s'
+                raise EvaluateException('endPointReference must be of type %s' \
                     %GTD(namespaceURI ,'EndpointReferenceType'))
 
             ReferenceProperties = getattr(endPointReference, '_ReferenceProperties', None)
-            if ReferenceProperties is None: # In recent WS-A attribute name changed
-                ReferenceProperties = getattr(endPointReference, '_ReferenceParameters', None)
             if ReferenceProperties is not None:
                 for v in getattr(ReferenceProperties, '_any', ()):
                     if not hasattr(v,'typecode'):
-                        raise EvaluateException('<any> element, instance missing typecode attribute')
+                       raise EvaluateException('<any> element, instance missing typecode attribute')
 
                     pyobjs.append(v)
 
@@ -206,7 +199,7 @@ class Address(object):
         namespaceURI = self.wsAddressURI
 
         for nsuri,name,value in (\
-             (namespaceURI, "Action", self._action),
+             (namespaceURI, "Action", self._action), 
              (namespaceURI, "MessageID","uuid:%s" %time.time()),
              (namespaceURI, "RelatesTo", address.getMessageID()),
              (namespaceURI, "To", self.anonymousURI),):
@@ -230,7 +223,7 @@ class Address(object):
                 raise RuntimeError('all header pyobjs must have a typecode attribute')
 
             sw.serialize_header(pyobj, **kw)
-
+        
 
     def parse(self, ps, **kw):
         '''
@@ -247,3 +240,6 @@ class Address(object):
         self._from = pyobjs[(namespaceURI,elements[3])]
         self._relatesTo = pyobjs[(namespaceURI,elements[4])]
 
+
+
+if __name__ == '__main__': print(_copyright)

@@ -13,7 +13,7 @@
 	Radovan Garabik <garabik@melkor.dnp.fmph.uniba.sk>
 """
 
-ident = "$Id$"
+ident = "$Id: TimeoutSocket.py 237 2003-05-20 21:10:14Z warnes $"
 
 import socket, select, errno
 
@@ -46,7 +46,7 @@ class TimeoutSocket:
             sock.connect(*addr)
             sock.setblocking(timeout != 0)
             return 1
-        except socket.error,why:
+        except socket.error as why:
             if not timeout:
                 raise
             sock.setblocking(1)
@@ -58,12 +58,12 @@ class TimeoutSocket:
                 errno.EINPROGRESS, errno.EALREADY, errno.EWOULDBLOCK
                 ):
                 raise
-            _,w,_ = select.select([],[sock],[],timeout)
+            r,w,e = select.select([],[sock],[],timeout)
             if w:
                 try:
                     sock.connect(*addr)
                     return 1
-                except socket.error,why:
+                except socket.error as why:
                     if len(why.args) == 1:
                         code = 0
                     else:
@@ -77,7 +77,7 @@ class TimeoutSocket:
         total = len(data)
         next = 0
         while 1:
-            _, w, _ = select.select([],[self.sock], [], self.timeout)
+            r, w, e = select.select([],[self.sock], [], self.timeout)
             if w:
                 buff = data[next:next + 8192]
                 sent = self.sock.send(buff, flags)
@@ -106,7 +106,7 @@ class TimeoutSocket:
             self.sock.close()
 
     def read(self, n=-1):
-        if not isinstance(n, int):
+        if not isinstance(n, type(1)):
             n = -1
         if n >= 0:
             k = len(self._rbuf)
@@ -139,6 +139,7 @@ class TimeoutSocket:
         return "".join(L)
 
     def readline(self, limit=-1):
+        data = ""
         i = self._rbuf.find('\n')
         while i < 0 and not (0 < limit <= len(self._rbuf)):
             new = self.recv(self.buffsize)
@@ -154,18 +155,18 @@ class TimeoutSocket:
 
     def readlines(self, sizehint = 0):
         total = 0
-        l = []
+        list = []
         while 1:
             line = self.readline()
             if not line: break
-            l.append(line)
+            list.append(line)
             total += len(line)
             if sizehint and total >= sizehint:
                 break
-        return l
+        return list
 
-    def writelines(self, l):
-        self.send(''.join(l))
+    def writelines(self, list):
+        self.send(''.join(list))
 
     def write(self, data):
         self.send(data)

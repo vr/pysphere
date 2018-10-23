@@ -3,34 +3,39 @@
 '''SOAP messaging parsing.
 '''
 
-from pysphere.ZSI import _child_elements, EvaluateException, TC
-import multifile, mimetools, urllib
-import cStringIO as StringIO
+from pysphere.ZSI import _copyright, _child_elements, EvaluateException, TC, UNICODE_ENCODING
+import urllib.request, urllib.parse, urllib.error
+from base64 import decodestring as b64decode
+import email
+import io
 
 
 def Opaque(uri, tc, ps, **keywords):
     '''Resolve a URI and return its content as a string.
     '''
-    source = urllib.urlopen(uri, **keywords)
-    enc = source.info().getencoding()
-    if enc in ['7bit', '8bit', 'binary']: return source.read()
-
-    data = StringIO.StringIO()
-    mimetools.decode(source, data, enc)
-    return data.getvalue()
+    source = urllib.request.urlopen(uri, **keywords)
+    enc = source.info().get('Content-Transfer-Encoding', '7bit')
+    if enc in ['7bit', '8bit', 'binary']:
+        return source.read()
+    else:
+        raise NotImplementedError()
+    #data = io.StringIO()
+    #mimetools.decode(source, data, enc)
+    #return data.getvalue()
 
 
 def XML(uri, tc, ps, **keywords):
     '''Resolve a URI and return its content as an XML DOM.
     '''
-    source = urllib.urlopen(uri, **keywords)
-    enc = source.info().getencoding()
+    source = urllib.request.urlopen(uri, **keywords)
+    enc = source.info().get('Content-Transfer-Encoding', '7bit')
     if enc in ['7bit', '8bit', 'binary']:
         data = source
     else:
-        data = StringIO.StringIO()
-        mimetools.decode(source, data, enc)
-        data.seek(0)
+        raise NotImplementedError()
+        #data = io.StringIO()
+        #mimetools.decode(source, data, enc)
+        #data.seek(0)
     dom = ps.readerclass().fromStream(data)
     return _child_elements(dom)[0]
 
@@ -67,6 +72,7 @@ class MIMEResolver:
 
     def __init__(self, ct, f, next=None, uribase='thismessage:/',
     seekable=0, **kw):
+        """
         # Get the boundary.  It's too bad I have to write this myself,
         # but no way am I going to import cgi for 10 lines of code!
         for param in ct.split(';'):
@@ -86,7 +92,7 @@ class MIMEResolver:
 
         mf = multifile.MultiFile(f, seekable)
         mf.push(boundary)
-        while mf.next():
+        while next(mf):
             head = mimetools.Message(mf)
             body = StringIO.StringIO()
             mimetools.decode(mf, body, head.getencoding())
@@ -100,29 +106,46 @@ class MIMEResolver:
             key = head.get('content-location')
             if key: self.loc_dict[key] = part
         mf.pop()
+        """
+        self.id_dict, self.loc_dict, self.parts = {}, {}, []
+        self.next = next
+        self.base = uribase
+        msg = email.message_from_file(f)
+        for m in msg.walk():
+            body = io.StringIO()
+            body.write(m.get_payload(decode=True).decode(UNICODE_ENCODING))
+            body.seek(0)
+            part = (m, body)
+            self.parts.append(part)
+            key = m.get('content-id')
+            if key:
+                if key[0] == '<' and key[-1] == '>': key = key[1:-1]
+                self.id_dict[key] = part
+            key = m.get('content-location')
+            if key: self.loc_dict[key] = part
 
     def GetSOAPPart(self):
         '''Get the SOAP body part.
         '''
-        _, part = self.parts[0]
-        return StringIO.StringIO(part.getvalue())
+        head, part = self.parts[0]
+        return io.StringIO(part.getvalue())
 
     def get(self, uri):
         '''Get the content for the bodypart identified by the uri.
         '''
         if uri.startswith('cid:'):
             # Content-ID, so raise exception if not found.
-            _, part = self.id_dict[uri[4:]]
-            return StringIO.StringIO(part.getvalue())
+            head, part = self.id_dict[uri[4:]]
+            return io.StringIO(part.getvalue())
         if uri in self.loc_dict:
-            _, part = self.loc_dict[uri]
-            return StringIO.StringIO(part.getvalue())
+            head, part = self.loc_dict[uri]
+            return io.StringIO(part.getvalue())
         return None
 
     def Opaque(self, uri, tc, ps, **keywords):
         content = self.get(uri)
         if content: return content.getvalue()
-        if not self.next: raise EvaluateException("Unresolvable URI " + uri)
+        if not self.__next__: raise EvaluateException("Unresolvable URI " + uri)
         return self.next.Opaque(uri, tc, ps, **keywords)
 
     def XML(self, uri, tc, ps, **keywords):
@@ -130,7 +153,7 @@ class MIMEResolver:
         if content:
             dom = ps.readerclass().fromStream(content)
             return _child_elements(dom)[0]
-        if not self.next: raise EvaluateException("Unresolvable URI " + uri)
+        if not self.__next__: raise EvaluateException("Unresolvable URI " + uri)
         return self.next.XML(uri, tc, ps, **keywords)
 
     def Resolve(self, uri, tc, ps, **keywords):
@@ -139,6 +162,8 @@ class MIMEResolver:
         return self.Opaque(uri, tc, ps, **keywords)
 
     def __getitem__(self, cid):
-        _, body = self.id_dict[cid]
-        newio = StringIO.StringIO(body.getvalue())
+        head, body = self.id_dict[cid]
+        newio = io.StringIO(body.getvalue())
         return newio
+
+if __name__ == '__main__': print(_copyright)

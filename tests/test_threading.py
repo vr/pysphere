@@ -2,7 +2,7 @@ import os
 from threading import Thread
 import random
 import time
-import ConfigParser
+import configparser
 from unittest import TestCase
 
 from pysphere import VIServer
@@ -12,7 +12,7 @@ class ThreadingTest(TestCase):
     @classmethod
     def setUpClass(cls):
         config_path = os.path.join(os.path.dirname(__file__), "config.ini")
-        cls.config = ConfigParser.ConfigParser()
+        cls.config = configparser.ConfigParser()
         cls.config.read(config_path)
         
         host = cls.config.get("READ_ONLY_ENV", "host")
@@ -30,7 +30,7 @@ class ThreadingTest(TestCase):
     def test_same_server(self):        
         self.passes = True
         def check_result(expected, method, times, *args, **kwargs):
-            for _ in xrange(times):
+            for _ in range(times):
                 try:
                     obtained = method(*args, **kwargs)                    
                     if not expected == obtained:

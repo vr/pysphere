@@ -12,15 +12,22 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 
-ident = "$Id$"
+ident = "$Id: XMLSchema.py 1434 2007-11-01 22:42:47Z boverhof $"
 
 import types, weakref, sys, warnings
-from pysphere.ZSI.wstools.Namespaces import SCHEMA, XMLNS, SOAP, APACHE
+from pysphere.ZSI.wstools.Namespaces import SCHEMA, XMLNS, SOAP
 from pysphere.ZSI.wstools.Utility import DOM, DOMException, Collection, SplitQName, basejoin
-from StringIO import StringIO
+from io import StringIO
 
 # If we have no threading, this should be a no-op
-from threading import RLock
+try:
+    from threading import RLock
+except ImportError:
+    class RLock:
+        def acquire():
+            pass
+        def release():
+            pass
 
 # 
 # Collections in XMLSchema class
@@ -30,7 +37,7 @@ ATTRIBUTE_GROUPS = 'attr_groups'
 ATTRIBUTES = 'attr_decl'
 ELEMENTS = 'elements'
 MODEL_GROUPS = 'model_groups'
-BUILT_IN_NAMESPACES = [SOAP.ENC,] + SCHEMA.XSD_LIST + [APACHE.AXIS_NS]
+BUILT_IN_NAMESPACES = [SOAP.ENC,] + SCHEMA.XSD_LIST
 
 def GetSchema(component):
     """convience function for finding the parent XMLSchema instance.
@@ -61,7 +68,7 @@ class SchemaReader:
         """Add dictionary of imports to schema instance.
            schema -- XMLSchema instance
         """
-        for ns in schema.imports.iterkeys(): 
+        for ns,val in list(schema.imports.items()): 
             if ns in self._imports:
                 schema.addImportSchema(self._imports[ns])
 
@@ -69,9 +76,10 @@ class SchemaReader:
         """Add dictionary of includes to schema instance.
            schema -- XMLSchema instance
         """
-        for schemaLocation in schema.includes.iterkeys(): 
+        for schemaLocation, val in list(schema.includes.items()): 
             if schemaLocation in self._includes:
-                schema.addIncludeSchema(schemaLocation, self._imports[schemaLocation])
+                #schema.addIncludeSchema(schemaLocation, self._imports[schemaLocation])
+                schema.addIncludeSchema(schemaLocation, self._includes[schemaLocation])
 
     def addSchemaByLocation(self, location, schema):
         """provide reader with schema document for a location.
@@ -95,16 +103,16 @@ class SchemaReader:
         schema.load(reader)
         return schema
         
-    def loadFromStream(self, _file, url=None):
+    def loadFromStream(self, file, url=None):
         """Return an XMLSchema instance loaded from a file object.
-           _file -- file object
+           file -- file object
            url -- base location for resolving imports/includes.
         """
         reader = self.__readerClass()
-        reader.loadDocument(_file)
+        reader.loadDocument(file)
         schema = XMLSchema()
         if url is not None:
-            schema.setBaseUrl(url)
+             schema.setBaseUrl(url)
         schema.load(reader)
         self.__setIncludes(schema)
         self.__setImports(schema)
@@ -139,11 +147,11 @@ class SchemaReader:
         """
         if self.__base_url:
             filename = basejoin(self.__base_url,filename)
-        f = open(filename, 'rb')
+        file = open(filename, 'rb')
         try:
-            schema = self.loadFromStream(f, filename)
+            schema = self.loadFromStream(file, filename)
         finally:
-            f.close()
+            file.close()
 
         return schema
 
@@ -198,7 +206,7 @@ class DOMAdapterInterface:
         """
         raise NotImplementedError('adapter method not implemented')
 
-    def loadDocument(self, _file):
+    def loadDocument(self, file):
         """load a Document from a file object
            file --
         """
@@ -244,11 +252,11 @@ class DOMAdapter(DOMAdapterInterface):
             if child.nodeType == ELEMENT_NODE and\
                SplitQName(child.tagName)[1] in contents:
                 nodes.append(child)
-        return [self.__class__(x) for x in nodes]
+        return list(map(self.__class__, nodes))
 
     def setAttributeDictionary(self):
         self.__attributes = {}
-        for v in self.__node._attrs.itervalues():
+        for v in self.__node._get_attributes().values():
             self.__attributes[v.nodeName] = v.nodeValue
 
     def getAttributeDictionary(self):
@@ -274,15 +282,15 @@ class DOMAdapter(DOMAdapterInterface):
         else:
             try:
                 namespace = DOM.findNamespaceURI(prefix, self.__node)
-            except DOMException:
+            except DOMException as ex:
                 if prefix != 'xml':
-                    raise SchemaError('%s namespace not declared for %s'
+                    raise SchemaError('%s namespace not declared for %s'\
                         %(prefix, self.__node._get_tagName()))
                 namespace = XMLNS.XML
         return namespace
            
-    def loadDocument(self, _file):
-        self.__node = DOM.loadDocument(_file)
+    def loadDocument(self, file):
+        self.__node = DOM.loadDocument(file)
         if hasattr(self.__node, 'documentElement'):
             self.__node = self.__node.documentElement
 
@@ -303,7 +311,7 @@ class XMLBase:
         XMLBase.__rlock.acquire()
         XMLBase.__indent += 1
         tmp = "<" + str(self.__class__) + '>\n'
-        for k,v in self.__dict__.iteritems():
+        for k,v in list(self.__dict__.items()):
             tmp += "%s* %s = %s\n" %(XMLBase.__indent*'  ', k, v)
         XMLBase.__indent -= 1 
         XMLBase.__rlock.release()
@@ -597,8 +605,8 @@ class XMLSchemaComponent(XMLBase, MarkerInterface):
         if parent.targetNamespace == namespace:
             try:
                 obj = getattr(parent, collection)[name]
-            except KeyError:
-                raise KeyError('targetNamespace(%s) collection(%s) has no item(%s)'
+            except KeyError as ex:
+                raise KeyError('targetNamespace(%s) collection(%s) has no item(%s)'\
                     %(namespace, collection, name))
                     
             return obj
@@ -624,7 +632,7 @@ class XMLSchemaComponent(XMLBase, MarkerInterface):
                 # built-in just return
                 return
             
-            raise SchemaError('no schema instance for imported namespace (%s).'
+            raise SchemaError('no schema instance for imported namespace (%s).'\
                 %(namespace))
                 
         if not isinstance(schema, XMLSchema):
@@ -632,8 +640,8 @@ class XMLSchemaComponent(XMLBase, MarkerInterface):
                 
         try:
             obj = getattr(schema, collection)[name]
-        except KeyError:
-            raise KeyError('targetNamespace(%s) collection(%s) has no item(%s)'
+        except KeyError as ex:
+            raise KeyError('targetNamespace(%s) collection(%s) has no item(%s)'\
                 %(namespace, collection, name))
                     
         return obj
@@ -653,13 +661,13 @@ class XMLSchemaComponent(XMLBase, MarkerInterface):
             if not ns and isinstance(parent, WSDLToolsAdapter):
                 if prefix is None:
                     return ''
-                raise SchemaError('unknown prefix %s' % prefix)
+                raise SchemaError('unknown prefix %s' %prefix)
         return ns
 
     def getAttribute(self, attribute):
         """return requested attribute value or None
         """
-        if isinstance(attribute, (list, tuple)):
+        if type(attribute) in (list, tuple):
             if len(attribute) != 2:
                 raise LookupError('To access attributes must use name or (namespace,name)')
 
@@ -703,19 +711,19 @@ class XMLSchemaComponent(XMLBase, MarkerInterface):
                    with QName.
         """
         self.attributes = {XMLSchemaComponent.xmlns:{}}
-        for k,v in node.getAttributeDictionary().iteritems():
+        for k,v in list(node.getAttributeDictionary().items()):
             prefix,value = SplitQName(k)
             if value == XMLSchemaComponent.xmlns:
                 self.attributes[value][prefix or XMLSchemaComponent.xmlns_key] = v
             elif prefix:
                 ns = node.getNamespace(prefix)
                 if not ns: 
-                    raise SchemaError('no namespace for attribute prefix %s'
+                    raise SchemaError('no namespace for attribute prefix %s'\
                         %prefix)
                 if ns not in self.attributes:
                     self.attributes[ns] = {}
                 elif value in self.attributes[ns]:
-                    raise SchemaError('attribute %s declared multiple times in %s'
+                    raise SchemaError('attribute %s declared multiple times in %s'\
                         %(value, ns))
                 self.attributes[ns][value] = v
             elif value not in self.attributes:
@@ -756,7 +764,7 @@ class XMLSchemaComponent(XMLBase, MarkerInterface):
            it must be defined as an instance variable.
         """
         for k,v in list(self.__class__.attributes.items()):
-            if v is not None and k not in self.attributes:
+            if v is not None and (k in self.attributes) is False:
                 if isinstance(v, types.FunctionType):
                     self.attributes[k] = v(self)
                 else:
@@ -770,21 +778,20 @@ class XMLSchemaComponent(XMLBase, MarkerInterface):
         """
         for a in self.__class__.required:
             if a not in self.attributes:
-                raise SchemaError(
-                    'class instance %s, missing required attribute %s'
+                raise SchemaError('class instance %s, missing required attribute %s'\
                     %(self.__class__, a))
-        for a,v in self.attributes.iteritems():
+        for a,v in list(self.attributes.items()):
             # attribute #other, ie. not in empty namespace
-            if isinstance(v, dict):
+            if type(v) is dict:
                 continue
             
             # predefined prefixes xmlns, xml
             if a in (XMLSchemaComponent.xmlns, XMLNS.XML):
                 continue
             
-            if (a not in self.__class__.attributes.keys() and not 
-                (self.isAttribute() and self.isReference())):
-                raise SchemaError('%s, unknown attribute(%s,%s)' 
+            if (a not in list(self.__class__.attributes.keys())) and not\
+                (self.isAttribute() and self.isReference()):
+                raise SchemaError('%s, unknown attribute(%s,%s)' \
                     %(self.getItemTrace(), a, self.attributes[a]))
 
 
@@ -1153,7 +1160,7 @@ class XMLSchema(XMLSchemaComponent):
                 self.setAttributes(pnode)
                 attributes.update(self.attributes)
                 self.setAttributes(node)
-                for k,v in attributes['xmlns'].iteritems():
+                for k,v in list(attributes['xmlns'].items()):
                     if k not in self.attributes['xmlns']:
                         self.attributes['xmlns'][k] = v
             else:
@@ -1185,7 +1192,7 @@ class XMLSchema(XMLSchemaComponent):
                 for collection in ['imports','elements','types',
                                    'attr_decl','attr_groups','model_groups',
                                    'notations']:
-                    for k,v in getattr(schema,collection).iteritems():
+                    for k,v in list(getattr(schema,collection).items()):
                         if k not in getattr(self,collection):
                             v._parent = weakref.ref(self)
                             getattr(self,collection)[k] = v
@@ -1204,24 +1211,21 @@ class XMLSchema(XMLSchemaComponent):
                     slocd[import_ns] = schema
                     try:
                         tp.loadSchema(schema)
-                    except NoSchemaLocationWarning, ex:
+                    except NoSchemaLocationWarning as ex:
                         # Dependency declaration, hopefully implementation
                         # is aware of this namespace (eg. SOAP,WSDL,?)
-                        print "IMPORT: ", import_ns
-                        print ex
                         del slocd[import_ns]
                         continue
-                    except SchemaError, ex:
-                        #warnings.warn(\
-                        #    '<import namespace="%s" schemaLocation=?>, %s'\
-                        #    %(import_ns, 'failed to load schema instance')
-                        #)
-                        print ex
+                    except SchemaError as ex:
+                        warnings.warn(\
+                            '<import namespace="%s">, %s'\
+                            %(import_ns, 'failed to load schema instance, resort to lazy eval when necessary')
+                        )
                         del slocd[import_ns]
                         class _LazyEvalImport(str):
                             '''Lazy evaluation of import, replace entry in self.imports.'''
                             #attributes = dict(namespace=import_ns)
-                            def getSchema(self, namespace):
+                            def getSchema(namespace):
                                 schema = slocd.get(namespace)
                                 if schema is None:
                                     parent = self._parent()
@@ -1336,7 +1340,7 @@ class XMLSchema(XMLSchemaComponent):
                 if not schema:
                     url = self.attributes.get('schemaLocation')
                     if not url:
-                        raise SchemaError('namespace(%s) is unknown' % ns)
+                        raise SchemaError('namespace(%s) is unknown' %ns)
                     base_url = self._parent().getBaseUrl()
                     reader = SchemaReader(base_url=base_url)
                     reader._imports = self._parent().getImportSchemas()
@@ -1911,7 +1915,7 @@ class ElementDeclaration(XMLSchemaComponent,\
         parent = self
         while 1:
             nsdict = parent.attributes[XMLSchemaComponent.xmlns]
-            for v in nsdict.itervalues():
+            for k,v in list(nsdict.items()):
                 if v not in SCHEMA.XSD_LIST: continue
                 return TypeDescriptionComponent((v, 'anyType'))
             
@@ -2432,13 +2436,13 @@ class ComplexType(XMLSchemaComponent,\
         m = self.getAttribute('mixed')
         if m == 0 or m == False:
             return False
-        if isinstance(m, basestring):
+        if isinstance(m, str) is True:
             if m in ('false', '0'):
                 return False
             if m in ('true', '1'):
                 return True
 
-        raise SchemaError('invalid value for attribute mixed(%s): %s'
+        raise SchemaError('invalid value for attribute mixed(%s): %s'\
             %(m, self.getItemTrace()))
 
     def getAttributeContent(self):
@@ -2464,8 +2468,7 @@ class ComplexType(XMLSchemaComponent,\
             self.annotation = Annotation(self)
             self.annotation.fromDom(contents[indx])
             indx += 1
-            if indx < num:
-                component = SplitQName(contents[indx].getTagName())[1]
+            component = SplitQName(contents[indx].getTagName())[1]
 
         self.content = None
         if component == 'simpleContent':
@@ -2501,7 +2504,7 @@ class ComplexType(XMLSchemaComponent,\
                 elif component == 'anyAttribute':
                     self.attr_content.append(AttributeWildCard(self))
                 else:
-                    raise SchemaError('Unknown component (%s): %s' 
+                    raise SchemaError('Unknown component (%s): %s' \
                         %(contents[indx].getTagName(),self.getItemTrace()))
                 self.attr_content[-1].fromDom(contents[indx])
                 indx += 1
@@ -2557,12 +2560,12 @@ class ComplexType(XMLSchemaComponent,\
             m = self.getAttribute('mixed')
             if m == 0 or m == False:
                 return False
-            if isinstance(m, basestring):
+            if isinstance(m, str) is True:
                 if m in ('false', '0'):
                     return False
                 if m in ('true', '1'):
                     return True
-            raise SchemaError('invalid value for attribute mixed(%s): %s'
+            raise SchemaError('invalid value for attribute mixed(%s): %s'\
                 %(m, self.getItemTrace()))
 
         class _DerivationBase(XMLSchemaComponent):
@@ -2748,7 +2751,7 @@ class ComplexType(XMLSchemaComponent,\
                     elif component == 'anyAttribute':
                         content.append(AttributeWildCard(self))
                     else:
-                        raise SchemaError('Unknown component (%s)'
+                        raise SchemaError('Unknown component (%s)'\
                             %(contents[indx].getTagName()))
                     content[-1].fromDom(contents[indx])
                     indx += 1
@@ -2817,7 +2820,7 @@ class ComplexType(XMLSchemaComponent,\
                         self.content.append(AnonymousSimpleType(self))
                         self.content[-1].fromDom(contents[indx])
                     else:
-                        raise SchemaError('Unknown component (%s)'
+                        raise SchemaError('Unknown component (%s)'\
                             %(contents[indx].getTagName()))
                     content[-1].fromDom(contents[indx])
                     indx += 1
@@ -2953,7 +2956,7 @@ class SimpleType(XMLSchemaComponent,\
                 elif component in RestrictionMarker.facets:
                     self.facets.append(contents[indx])
                 else:
-                    raise SchemaError('Unknown component (%s)' %(component))
+                    raise SchemaError('Unknown component (%s)' %(i.getTagName()))
             self.content = tuple(content)
 
 
@@ -2993,7 +2996,7 @@ class SimpleType(XMLSchemaComponent,\
                     content.append(AnonymousSimpleType(self))
                     content[-1].fromDom(contents[indx])
                 else:
-                    raise SchemaError('Unknown component (%s)' %(component))
+                    raise SchemaError('Unknown component (%s)' %(i.getTagName()))
             self.content = tuple(content)
 
     class List(XMLSchemaComponent, 
@@ -3045,7 +3048,7 @@ class SimpleType(XMLSchemaComponent,\
                     self.content.fromDom(contents[indx])
                     break
                 else:
-                    raise SchemaError('Unknown component (%s)' %(component))
+                    raise SchemaError('Unknown component (%s)' %(i.getTagName()))
 
                  
 class AnonymousSimpleType(SimpleType,\
@@ -3079,31 +3082,20 @@ class Redefine:
 ###########################
 
 
-if sys.version_info[:2] >= (2, 2):
-    tupleClass = tuple
-else:
-    from pysphere.ZSI.wstools import UserTuple
-    tupleClass = UserTuple.UserTuple
-
-class TypeDescriptionComponent(tupleClass):
+class TypeDescriptionComponent(tuple):
     """Tuple of length 2, consisting of
        a namespace and unprefixed name.
     """
-    def __init__(self, args):
+    def __new__(cls, args):
         """args -- (namespace, name)
            Remove the name's prefix, irrelevant.
         """
         if len(args) != 2:
-            raise TypeError('expecting tuple (namespace, name), got %s' %args)
-        elif args[1].find(':') >= 0:
-            args = (args[0], SplitQName(args[1])[1])
-        tuple.__init__(self, args)
-        return
-
+            raise TypeError('expecting tuple (namespace, name), got %s' % args)
+        return tuple.__new__(cls, args)
+    
     def getTargetNamespace(self):
         return self[0]
-
+    
     def getName(self):
         return self[1]
-
-

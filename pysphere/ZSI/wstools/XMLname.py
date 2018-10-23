@@ -13,17 +13,17 @@ Version 0.9.0
 
 """
 
-ident = "$Id$"
+ident = "$Id: XMLname.py 954 2005-02-16 14:45:37Z warnes $"
 
 from re import sub
 
 
 def _NCNameChar(x):
-    return x.isalpha() or x.isdigit() or x=="." or x=='-' or x=="_" 
+    return x.isalpha() or x.isdigit() or x=="." or x=='-' or x=="_"
 
 
 def _NCNameStartChar(x):
-    return x.isalpha() or x=="_" 
+    return x.isalpha() or x=="_"
 
 
 def _toUnicodeHex(x):
@@ -37,14 +37,14 @@ def _toUnicodeHex(x):
     elif (hexlen==5): hexval = "000" + hexval
     elif (hexlen==6): hexval = "00"  + hexval
     elif (hexlen==7): hexval = "0"   + hexval
-    elif (hexlen==8): hexval = ""    + hexval    
+    elif (hexlen==8): hexval = ""    + hexval
     else: raise Exception("Illegal Value returned from hex(ord(x))")
-    
+
     return "_x"+ hexval + "_"
 
 
 def _fromUnicodeHex(x):
-    return eval( r'u"\u'+x[2:-1]+'"' ) 
+    return eval( r'u"\u'+x[2:-1]+'"' )
 
 
 def toXMLname(string):
@@ -54,27 +54,27 @@ def toXMLname(string):
     else:
         prefix = None
         localname = string
-    
-    T = unicode(localname)
+
+    T = str(localname)
 
     N = len(localname)
     X = [];
     for i in range(N) :
-        if i< N-1 and T[i]==u'_' and T[i+1]==u'x':
-            X.append(u'_x005F_')
+        if i< N-1 and T[i]=='_' and T[i+1]=='x':
+            X.append('_x005F_')
         elif i==0 and N >= 3 and \
-                 ( T[0]==u'x' or T[0]==u'X' ) and \
-                 ( T[1]==u'm' or T[1]==u'M' ) and \
-                 ( T[2]==u'l' or T[2]==u'L' ):
-            X.append(u'_xFFFF_' + T[0])
+                 ( T[0]=='x' or T[0]=='X' ) and \
+                 ( T[1]=='m' or T[1]=='M' ) and \
+                 ( T[2]=='l' or T[2]=='L' ):
+            X.append('_xFFFF_' + T[0])
         elif (not _NCNameChar(T[i])) or (i==0 and not _NCNameStartChar(T[i])):
             X.append(_toUnicodeHex(T[i]))
         else:
             X.append(T[i])
-    
+
     if prefix:
-        return "%s:%s" % (prefix, u''.join(X))
-    return u''.join(X)
+        return "%s:%s" % (prefix, ''.join(X))
+    return ''.join(X)
 
 
 def fromXMLname(string):
@@ -86,5 +86,5 @@ def fromXMLname(string):
         return _fromUnicodeHex( matchobj.group(0) )
 
     retval = sub(r'_x[0-9A-Za-z]+_', fun, retval )
-        
+
     return retval

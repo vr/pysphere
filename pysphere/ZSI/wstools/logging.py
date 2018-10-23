@@ -1,10 +1,10 @@
 # Copyright (c) 2003, The Regents of the University of California,
 # through Lawrence Berkeley National Laboratory (subject to receipt of
 # any required approvals from the U.S. Dept. of Energy).  All rights
-# reserved. 
+# reserved.
 #
 """Logging"""
-ident = "$Id$"
+ident = "$Id: logging.py 1395 2007-06-14 06:49:35Z boverhof $"
 import os, sys
 
 WARN = 1
@@ -27,14 +27,14 @@ class ILogger:
     def setLevel(cls, level):
         cls.level = level
     setLevel = classmethod(setLevel)
-    
+
     debugOn = lambda self: self.level >= DEBUG
     warnOn = lambda self: self.level >= WARN
-    
+
 
 class BasicLogger(ILogger):
     last = ''
-    
+
     def __init__(self, msg, out=sys.stdout):
         self.msg, self.out = msg, out
 
@@ -42,30 +42,31 @@ class BasicLogger(ILogger):
         if self.warnOn() is False: return
         if BasicLogger.last != self.msg:
             BasicLogger.last = self.msg
-            print >>self, "---- ", self.msg, " ----"
-        print >>self, "    %s  " %self.WARN,
-        print >>self, msg %args
+            print("---- ", self.msg, " ----", file=self)
+        print("    %s  " %self.WARN, end=' ', file=self)
+        print(msg %args, file=self)
     WARN = '[WARN]'
     def debug(self, msg, *args, **kw):
         if self.debugOn() is False: return
         if BasicLogger.last != self.msg:
             BasicLogger.last = self.msg
-            print >>self, "---- ", self.msg, " ----"
-        print >>self, "    %s  " %self.DEBUG,
-        print >>self, msg %args
+            print("---- ", self.msg, " ----", file=self)
+        print("    %s  " %self.DEBUG, end=' ', file=self)
+        print(msg %args, file=self)
     DEBUG = '[DEBUG]'
     def error(self, msg, *args, **kw):
         if BasicLogger.last != self.msg:
             BasicLogger.last = self.msg
-            print >>self, "---- ", self.msg, " ----"
-        print >>self, "    %s  " %self.ERROR,
-        print >>self, msg %args
+            print("---- ", self.msg, " ----", file=self)
+        print("    %s  " %self.ERROR, end=' ', file=self)
+        print(msg %args, file=self)
     ERROR = '[ERROR]'
 
     def write(self, *args):
         '''Write convenience function; writes strings.
         '''
         for s in args: self.out.write(s)
+        event = ''.join(*args)
 
 
 _LoggerClass = BasicLogger
@@ -96,7 +97,7 @@ class GLRecord(dict):
 
     event -- log event name
         Below is EBNF for the event name part of a log message.
-            name	= <nodot> ( "." <name> )? 
+            name	= <nodot> ( "." <name> )?
             nodot	= {RFC3896-chars except "."}
 
         Suffixes:
@@ -107,14 +108,14 @@ class GLRecord(dict):
     ts -- timestamp
     level -- logging level (see levels below)
     status -- integer status code
-    gid -- global grid identifier 
+    gid -- global grid identifier
     gid, cgid -- parent/child identifiers
     prog -- program name
 
 
     More info: http://www.cedps.net/wiki/index.php/LoggingBestPractices#Python
 
-    reserved -- list of reserved names, 
+    reserved -- list of reserved names,
     omitname -- list of reserved names, output only values ('ts', 'event',)
     levels -- dict of levels and description
     """
@@ -139,15 +140,15 @@ class GLRecord(dict):
     def __str__(self):
         """
         """
-        from cStringIO import StringIO
-        s = StringIO()
+        from io import StringIO
+        s = StringIO(); n = " "
         reserved = self.reserved; omitname = self.omitname; levels = self.levels
 
-        for k in ( list([i for i in reserved if i in self]) + 
-            list([i for i in self.iterkeys() if i not in reserved])
+        for k in ( list([i for i in reserved if i in self]) +
+            list([i for i in list(self.keys()) if i not in reserved])
         ):
             v = self[k]
-            if k in omitname: 
+            if k in omitname:
                 s.write( "%s " %self.format[type(v)](v) )
                 continue
 
@@ -161,10 +162,10 @@ class GLRecord(dict):
 
     class GLDate(str):
         """Grid logging Date Format
-        all timestamps should all be in the same time zone (UTC). 
+        all timestamps should all be in the same time zone (UTC).
         Grid timestamp value format that is a highly readable variant of the ISO8601 time standard [1]:
 
-	YYYY-MM-DDTHH:MM:SS.SSSSSSZ 
+	YYYY-MM-DDTHH:MM:SS.SSSSSSZ
 
         """
         def __new__(self, args=None):
@@ -177,8 +178,8 @@ class GLRecord(dict):
 
             return str.__new__(self, "%04d-%02d-%02dT%02d:%02d:%02d.%06d%s" %l)
 
-    format = { int:str, float:lambda x: "%lf" % x, long:str, str:lambda x:x,
-        unicode:str, GLDate:str, }
+    format = { int:str, float:lambda x: "%lf" % x, int:str, str:lambda x:x,
+        str:str, GLDate:str, }
 
 
 def gridLog(**kw):
@@ -190,21 +191,22 @@ def gridLog(**kw):
     GRIDLOG_ON   -- turn grid logging on
     GRIDLOG_DEST -- provide URL destination
     """
+    import os
 
     if not bool( int(os.environ.get('GRIDLOG_ON', 0)) ):
         return
 
     url = os.environ.get('GRIDLOG_DEST')
-    if url is None: 
+    if url is None:
         return
 
-    ## NOTE: urlparse problem w/customized schemes 
+    ## NOTE: urlparse problem w/customized schemes
     try:
         scheme = url[:url.find('://')]
         send = GLRegistry[scheme]
         send( url, str(GLRecord(**kw)), )
-    except Exception:
-        print >>sys.stderr, "*** gridLog failed -- %s" %(str(kw))
+    except Exception as ex:
+        print("*** gridLog failed -- %s" %(str(kw)), file=sys.stderr)
 
 
 def sendUDP(url, outputStr):
@@ -216,14 +218,14 @@ def sendUDP(url, outputStr):
     socket(AF_INET, SOCK_DGRAM).sendto( outputStr, (host,int(port)), )
 
 def writeToFile(url, outputStr):
-    print >> open(url.split('://')[1], 'a+'), outputStr
+    print(outputStr, file=open(url.split('://')[1], 'a+'))
 
 GLRegistry["gridlog-udp"] = sendUDP
 GLRegistry["file"] = writeToFile
 
 
 def setBasicLogger():
-    '''Use Basic Logger. 
+    '''Use Basic Logger.
     '''
     setLoggerClass(BasicLogger)
     BasicLogger.setLevel(0)
@@ -245,6 +247,9 @@ def setBasicLoggerDEBUG():
     setLoggerClass(BasicLogger)
     BasicLogger.setLevel(DEBUG)
 
+def setLoggerClass(loggingClass):
+    '''Set Logging Class.
+    '''
 
 def setLoggerClass(loggingClass):
     '''Set Logging Class.

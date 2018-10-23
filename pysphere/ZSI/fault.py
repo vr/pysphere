@@ -3,20 +3,24 @@
 '''Faults.
 '''
 
-from pysphere.ZSI import _get_idstr, _seqtypes, SoapWriter, ZSIException
+from pysphere.ZSI import _copyright, _children, _child_elements, \
+        _get_idstr, _stringtypes, _seqtypes, _Node, SoapWriter, ZSIException
 
 from pysphere.ZSI.TCcompound import Struct
-from pysphere.ZSI.TC import QName, URI, String, AnyElement, UNBOUNDED
+from pysphere.ZSI.TC import QName, URI, String, XMLString, AnyElement, UNBOUNDED
 
 from pysphere.ZSI.wstools.Namespaces import SOAP, ZSI_SCHEMA_URI
-from pysphere.ZSI.TC import ElementDeclaration
+from pysphere.ZSI.wstools.c14n import Canonicalize
+from pysphere.ZSI.TC import ElementDeclaration, MetaTypeCode
+from pysphere.ZSI.schema import SchemaInstanceType, MetaTypeCodeAndSchemaInstanceType
 
-import traceback
+import traceback, io as StringIO
+from six import with_metaclass
 
 
 class Detail:
-    def __init__(self, _any=None):
-        self.any = _any
+    def __init__(self, any=None):
+        self.any = any
 
 Detail.typecode = Struct(Detail, [AnyElement(aname='any',minOccurs=0, maxOccurs="unbounded",processContents="lax")], pname='detail', minOccurs=0)
 
@@ -26,18 +30,18 @@ class FaultType:
         self.faultstring= faultstring
         self.faultactor = faultactor
         self.detail = detail
-
+        
 FaultType.typecode = \
     Struct(FaultType,
-        [QName(pname='faultcode'),
+        [QName(pname='faultcode'), 
          String(pname='faultstring'),
          URI(pname=(SOAP.ENV,'faultactor'), minOccurs=0),
          Detail.typecode,
          AnyElement(aname='any',minOccurs=0, maxOccurs=UNBOUNDED, processContents="lax"),
-        ],
-        pname=(SOAP.ENV,'Fault'),
+        ], 
+        pname=(SOAP.ENV,'Fault'), 
         inline=True,
-        hasextras=0,
+        hasextras=0, 
     )
 
 class ZSIHeaderDetail:
@@ -45,12 +49,12 @@ class ZSIHeaderDetail:
         self.any = detail
 
 ZSIHeaderDetail.typecode =\
-    Struct(ZSIHeaderDetail,
-           [AnyElement(aname='any', minOccurs=0, maxOccurs=UNBOUNDED, processContents="lax")],
+    Struct(ZSIHeaderDetail, 
+           [AnyElement(aname='any', minOccurs=0, maxOccurs=UNBOUNDED, processContents="lax")], 
            pname=(ZSI_SCHEMA_URI, 'detail'))
 
 
-class ZSIFaultDetailTypeCode(ElementDeclaration, Struct):
+class ZSIFaultDetailTypeCode(with_metaclass(MetaTypeCodeAndSchemaInstanceType, ElementDeclaration, Struct)):
     '''<ZSI:FaultDetail>
            <ZSI:string>%s</ZSI:string>
            <ZSI:trace>%s</ZSI:trace>
@@ -59,8 +63,8 @@ class ZSIFaultDetailTypeCode(ElementDeclaration, Struct):
     schema = ZSI_SCHEMA_URI
     literal = 'FaultDetail'
     def __init__(self, **kw):
-        Struct.__init__(self, ZSIFaultDetail, [String(pname=(ZSI_SCHEMA_URI, 'string')),
-            String(pname=(ZSI_SCHEMA_URI, 'trace'),minOccurs=0),],
+        Struct.__init__(self, ZSIFaultDetail, [String(pname=(ZSI_SCHEMA_URI, 'string')), 
+            String(pname=(ZSI_SCHEMA_URI, 'trace'),minOccurs=0),], 
             pname=(ZSI_SCHEMA_URI, 'FaultDetail'), **kw
         )
 
@@ -79,7 +83,7 @@ class ZSIFaultDetail:
 ZSIFaultDetail.typecode = ZSIFaultDetailTypeCode()
 
 
-class URIFaultDetailTypeCode(ElementDeclaration, Struct):
+class URIFaultDetailTypeCode(with_metaclass(MetaTypeCodeAndSchemaInstanceType, ElementDeclaration, Struct)):
     '''
     <ZSI:URIFaultDetail>
         <ZSI:URI>uri</ZSI:URI>
@@ -89,8 +93,8 @@ class URIFaultDetailTypeCode(ElementDeclaration, Struct):
     schema = ZSI_SCHEMA_URI
     literal = 'URIFaultDetail'
     def __init__(self, **kw):
-        Struct.__init__(self, URIFaultDetail,
-           [String(pname=(ZSI_SCHEMA_URI, 'URI')), String(pname=(ZSI_SCHEMA_URI, 'localname')),],
+        Struct.__init__(self, URIFaultDetail, 
+           [String(pname=(ZSI_SCHEMA_URI, 'URI')), String(pname=(ZSI_SCHEMA_URI, 'localname')),], 
             pname=(ZSI_SCHEMA_URI, 'URIFaultDetail'), **kw
         )
 
@@ -101,7 +105,7 @@ class URIFaultDetail:
 URIFaultDetail.typecode = URIFaultDetailTypeCode()
 
 
-class ActorFaultDetailTypeCode(ElementDeclaration, Struct):
+class ActorFaultDetailTypeCode(with_metaclass(MetaTypeCodeAndSchemaInstanceType, ElementDeclaration, Struct)):
     '''
     <ZSI:ActorFaultDetail>
         <ZSI:URI>%s</ZSI:URI>
@@ -124,15 +128,15 @@ class Fault(ZSIException):
     '''SOAP Faults.
     '''
 
-    Client = "soapenv:Client"
-    Server = "soapenv:Server"
-    MU     = "soapenv:MustUnderstand"
+    Client = "SOAP-ENV:Client"
+    Server = "SOAP-ENV:Server"
+    MU     = "SOAP-ENV:MustUnderstand"
 
     def __init__(self, code, string,
                 actor=None, detail=None, headerdetail=None):
-        if detail is not None and not isinstance(detail, _seqtypes):
+        if detail is not None and type(detail) not in _seqtypes:
             detail = (detail,)
-        if headerdetail is not None and not isinstance(headerdetail, _seqtypes):
+        if headerdetail is not None and type(headerdetail) not in _seqtypes:
             headerdetail = (headerdetail,)
         self.code, self.string, self.actor, self.detail, self.headerdetail = \
                 code, string, actor, detail, headerdetail
@@ -146,7 +150,7 @@ class Fault(ZSIException):
     def serialize(self, sw):
         '''Serialize the object.'''
         detail = None
-        if self.detail is not None:
+        if self.detail is not None: 
             detail = Detail()
             detail.any = self.detail
 
@@ -155,7 +159,7 @@ class Fault(ZSIException):
 
     def AsSOAP(self, **kw):
 
-        header = self.DataForSOAPHeader()
+        header = self.DataForSOAPHeader() 
         sw = SoapWriter(**kw)
         self.serialize(sw)
         if header is not None:
@@ -211,8 +215,8 @@ def FaultFromZSIException(ex, actor=None):
 def FaultFromException(ex, inheader, tb=None, actor=None):
     '''Return a Fault object created from a Python exception.
 
-    <soapenv:Fault>
-      <faultcode>soapenv:Server</faultcode>
+    <SOAP-ENV:Fault>
+      <faultcode>SOAP-ENV:Server</faultcode>
       <faultstring>Processing Failure</faultstring>
       <detail>
         <ZSI:FaultDetail>
@@ -220,18 +224,18 @@ def FaultFromException(ex, inheader, tb=None, actor=None):
           <ZSI:trace></ZSI:trace>
         </ZSI:FaultDetail>
       </detail>
-    </soapenv:Fault>
+    </SOAP-ENV:Fault>
     '''
     tracetext = None
     if tb:
         try:
             lines = '\n'.join(['%s:%d:%s' % (name, line, func)
-                        for name, line, func, _ in traceback.extract_tb(tb)])
+                        for name, line, func, text in traceback.extract_tb(tb)])
         except:
             pass
         else:
             tracetext = lines
-
+  
     exceptionName = ""
     try:
         exceptionName = ":".join([ex.__module__, ex.__class__.__name__])
@@ -255,3 +259,6 @@ def FaultFromFaultMessage(ps):
 
     return Fault(pyobj.faultcode, pyobj.faultstring,
                 pyobj.faultactor, detailany)
+
+
+if __name__ == '__main__': print(_copyright)

@@ -153,14 +153,14 @@ UNICODE_ENCODING = 'utf-8'
 
 ##
 ##  Not public constants.
-_inttypes = (int, long)
-_floattypes = (float, )
-_seqtypes = (tuple, list)
-_stringtypes = ( str, unicode )
+_inttypes = [ int ]
+_floattypes = [ float ]
+_seqtypes = [ tuple, list ]
+_stringtypes = [ str ]
 
 ##
 ##  Low-level DOM oriented utilities; useful for typecode implementors.
-_attrs = lambda E: (E.attributes and E.attributes.values()) or []
+_attrs = lambda E: (E.attributes and list(E.attributes.values())) or []
 _children = lambda E: E.childNodes or []
 _child_elements = lambda E: [ n for n in (E.childNodes or [])
                         if n.nodeType == _Node.ELEMENT_NODE ]
@@ -232,13 +232,14 @@ _get_element_nsuri_name = lambda E: (E.namespaceURI, E.localName)
 _is_element = lambda E: E.nodeType == _Node.ELEMENT_NODE
 
 def _resolve_prefix(celt, prefix):
-    '''resolve prefix to a namespaceURI.  If None or
+    '''resolve prefix to a namespaceURI.  If None or 
     empty str, return default namespace or None.
 
     Parameters:
       celt -- element node
       prefix -- xmlns:prefix, or empty str or None
     '''
+    namespace = None
     while _is_element(celt):
         if prefix:
             namespaceURI = _find_xmlns_prefix(celt, prefix)
@@ -247,8 +248,8 @@ def _resolve_prefix(celt, prefix):
         if namespaceURI: break
         celt = celt.parentNode
     else:
-        if prefix:
-            raise EvaluateException('cant resolve xmlns:%s' % prefix)
+        if prefix:  
+            raise EvaluateException('cant resolve xmlns:%s' %prefix)
     return namespaceURI
 
 def _valid_encoding(elt):
@@ -273,7 +274,7 @@ def _backtrace(elt, dom):
     while elt != dom:
         name, parent = elt.nodeName, elt.parentNode
         if parent is None: break
-        matches = [ c for c in _child_elements(parent)
+        matches = [ c for c in _child_elements(parent) 
                         if c.nodeName == name ]
         if len(matches) == 1:
             s = '/' + name + s
@@ -296,14 +297,14 @@ def _get_idstr(pyobj):
 def _get_postvalue_from_absoluteURI(url):
     """Bug [ 1513000 ] POST Request-URI not limited to "abs_path"
     Request-URI = "*" | absoluteURI | abs_path | authority
-
+    
     Not a complete solution, but it seems to work with all known
     implementations.  ValueError thrown if bad uri.
     """
     cache = _get_postvalue_from_absoluteURI.cache
     path = cache.get(url, '')
     if not path:
-        _,authpath = url.split('://')
+        scheme,authpath = url.split('://')
         s = authpath.split('/', 1)
         if len(s) == 2: path = '/%s' %s[1]
         if len(cache) > _get_postvalue_from_absoluteURI.MAXLEN:cache.clear()
@@ -324,9 +325,9 @@ class ParseException(ZSIException):
     '''Exception raised during parsing.
     '''
 
-    def __init__(self, _str, inheader, elt=None, dom=None):
+    def __init__(self, str, inheader, elt=None, dom=None):
         Exception.__init__(self)
-        self.str, self.inheader, self.trace = _str, inheader, None
+        self.str, self.inheader, self.trace = str, inheader, None
         if elt and dom:
             self.trace = _backtrace(elt, dom)
 
@@ -343,9 +344,9 @@ class EvaluateException(ZSIException):
     '''Exception raised during data evaluation (serialization).
     '''
 
-    def __init__(self, _str, trace=None):
+    def __init__(self, str, trace=None):
         Exception.__init__(self)
-        self.str, self.trace = _str, trace
+        self.str, self.trace = str, trace
 
     def __str__(self):
         if self.trace:
@@ -409,14 +410,14 @@ TC.RegisterType(TC.gYear, minOccurs=0, nillable=False)
 TC.RegisterType(TC.gMonthDay, minOccurs=0, nillable=False)
 TC.RegisterType(TC.gDay, minOccurs=0, nillable=False)
 TC.RegisterType(TC.gTime, minOccurs=0, nillable=False)
-TC.RegisterType(TC.Apache.Map , minOccurs=0, nillable=False)
+TC.RegisterType(TC.Apache.Map, minOccurs=0, nillable=False)
 
 ##
 ## Register Wrappers for builtin types.
 ## TC.AnyElement wraps builtins so element name information can be saved
 ##
 from pysphere.ZSI import schema
-for i in [int,float,str,tuple,list,unicode]:
+for i in [int,float,str,tuple,list]:
     schema._GetPyobjWrapper.RegisterBuiltin(i)
 
 ## Load up Wrappers for builtin types
@@ -427,3 +428,5 @@ schema.RegisterAnyElement()
 #    from ServiceProxy import *
 #except:
 #    pass
+
+if __name__ == '__main__': print(_copyright)

@@ -1,6 +1,6 @@
 import os
 import random
-import ConfigParser
+import configparser
 from unittest import TestCase
 
 from pysphere import VIServer, VIProperty, MORTypes, VIException, FaultTypes, \
@@ -11,7 +11,7 @@ class VIServerTest(TestCase):
     @classmethod
     def setUpClass(cls):
         config_path = os.path.join(os.path.dirname(__file__), "config.ini")
-        cls.config = ConfigParser.ConfigParser()
+        cls.config = configparser.ConfigParser()
         cls.config.read(config_path)
         
         host = cls.config.get("READ_ONLY_ENV", "host")
@@ -29,7 +29,7 @@ class VIServerTest(TestCase):
         all_hosts = self.server.get_hosts()
         datacenters = self.server.get_datacenters()
         hosts_by_datacenter = [self.server.get_hosts(from_mor=dc)
-                            for dc in datacenters.keys()]
+                            for dc in list(datacenters.keys())]
         all_hosts2 = {}
         [all_hosts2.update(group) for group in hosts_by_datacenter]
         
@@ -39,7 +39,7 @@ class VIServerTest(TestCase):
         clusters = self.server.get_clusters()
         count_hosts1 = 0
         count_hosts2 = 0
-        for cl in clusters.keys():
+        for cl in list(clusters.keys()):
             count_hosts1 += len(self.server.get_hosts(from_mor=cl))
             prop = VIProperty(self.server, cl)
             count_hosts2 += len(prop.host)
@@ -49,7 +49,7 @@ class VIServerTest(TestCase):
         all_datastores = self.server.get_datastores()
         datacenters = self.server.get_datacenters()
         datastores_by_datacenter = [self.server.get_datastores(from_mor=dc)
-                            for dc in datacenters.keys()]
+                            for dc in list(datacenters.keys())]
         all_datastores2 = {}
         [all_datastores2.update(group) for group in datastores_by_datacenter]
         
@@ -58,10 +58,10 @@ class VIServerTest(TestCase):
     def test_get_resource_pools(self):
         all_rp = self.server.get_resource_pools()
         rp_by_root_rp = []
-        for rp_key, rp_path in all_rp.items():
+        for rp_key, rp_path in list(all_rp.items()):
             if rp_path.count('/') == 1:
-                rp_by_root_rp.extend(self.server.get_resource_pools(
-                                                        from_mor=rp_key).keys())
+                rp_by_root_rp.extend(list(self.server.get_resource_pools(
+                                                        from_mor=rp_key).keys()))
         assert sorted(rp_by_root_rp) == sorted(all_rp.keys())
         
     def test_get_registered_vms(self):
@@ -70,10 +70,10 @@ class VIServerTest(TestCase):
         vms_by_datacenter = []
         resource_pools = self.server.get_resource_pools()
         vms_by_root_rp = []
-        for dc in datacenters.keys():
+        for dc in list(datacenters.keys()):
             vms_by_datacenter.extend(self.server.get_registered_vms(
                                                                  datacenter=dc))
-        for rp_key, rp_path in resource_pools.items():
+        for rp_key, rp_path in list(resource_pools.items()):
             if rp_path.count('/') == 1:
                 vms_by_root_rp.extend(self.server.get_registered_vms(
                                                           resource_pool=rp_key))
@@ -109,13 +109,13 @@ class VIServerTest(TestCase):
                                                                  vms_by_root_rp)
 
     def test_get_registered_vms_by_datacenter(self):
-        for dc_key, dc_name in self.server.get_datacenters().items():
+        for dc_key, dc_name in list(self.server.get_datacenters().items()):
             vms1 = self.server.get_registered_vms(datacenter=dc_key)
             vms2 = self.server.get_registered_vms(datacenter=dc_name)
             assert vms1 == vms2
 
     def test_get_registered_vms_by_cluster(self):
-        for cl_key, cl_name in self.server.get_clusters().items():
+        for cl_key, cl_name in list(self.server.get_clusters().items()):
             vms1 = self.server.get_registered_vms(cluster=cl_key)
             vms2 = self.server.get_registered_vms(cluster=cl_name)
             assert vms1 == vms2
@@ -170,14 +170,14 @@ class VIServerTest(TestCase):
     def test_unexistent_vm_path(self):
         try:
             self.server.get_vm_by_path("zaraza")
-        except VIException, e:
+        except VIException as e:
             assert e.fault == FaultTypes.OBJECT_NOT_FOUND
         else:
             assert False
 
     def test_existent_vm_path_by_datacenter(self):
         datacenters = self.server.get_datacenters()
-        for k, v in datacenters.items():
+        for k, v in list(datacenters.items()):
             vms = self.server.get_registered_vms(datacenter=k)
             path = random.choice(vms)
             vm1 = self.server.get_vm_by_path(path, datacenter=k)
@@ -187,13 +187,13 @@ class VIServerTest(TestCase):
     def test_existent_vm_path_in_other_datacenter(self):
         datacenters = self.server.get_datacenters()
         if len(datacenters) >= 2:
-            dc1 = datacenters.keys()[0]
-            dc2 = datacenters.keys()[1]
+            dc1 = list(datacenters.keys())[0]
+            dc2 = list(datacenters.keys())[1]
             vms = self.server.get_registered_vms(datacenter=dc1)
             path = random.choice(vms)
             try:
                 self.server.get_vm_by_path(path, datacenter=dc2)
-            except VIException, e:
+            except VIException as e:
                 assert e.fault == FaultTypes.OBJECT_NOT_FOUND
             else:
                 raise AssertionError("VM shouldn't be found")
@@ -201,7 +201,7 @@ class VIServerTest(TestCase):
     def test_get_object_properties(self):
         hosts = self.server.get_hosts()
         props = ['name', 'summary.config.vmotionEnabled']
-        for mor, name in hosts.items():
+        for mor, name in list(hosts.items()):
             prop = self.server._get_object_properties(mor, 
                                                           property_names=props)
             assert prop.Obj == mor
@@ -221,7 +221,7 @@ class VIServerTest(TestCase):
     def test_get_object_properties_get_all(self):
         datastores = self.server.get_datastores()
         props = ['name', 'info.url']
-        for mor, name in datastores.items():
+        for mor, name in list(datastores.items()):
             prop = self.server._get_object_properties(mor, 
                                                         property_names=props,
                                                         get_all=True)
@@ -242,7 +242,7 @@ class VIServerTest(TestCase):
         random.shuffle(oc)
         vms = dict([(o.Obj, o.PropSet[0].Val) for o in oc[:10]])
         
-        all_mors = hosts.keys() + datastores.keys() + vms.keys()
+        all_mors = list(hosts.keys()) + list(datastores.keys()) + list(vms.keys())
         found = []
         random.shuffle(all_mors)
         

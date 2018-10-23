@@ -102,7 +102,7 @@ class VITaskHistoryCollector(VIHistoryCollector):
             request.set_element_filter(_filter)
             resp = server._proxy.CreateCollectorForTasks(request)._returnval
         
-        except (VI.ZSI.FaultException), e:
+        except (VI.ZSI.FaultException) as e:
             raise VIApiException(e)
         
         self._mor = resp
@@ -170,7 +170,7 @@ class VITaskHistoryCollector(VIHistoryCollector):
             for task in resp:
                 ret.append(VITask(task.Task, self._server))
         
-        except (VI.ZSI.FaultException), e:
+        except (VI.ZSI.FaultException) as e:
             raise VIApiException(e)
         
         return ret

@@ -40,7 +40,7 @@ class VIProperty(object):
     def _flush_cache(self):
         if not self._values_set:
             return
-        for name in self._values.iterkeys():
+        for name in self._values.keys():
             try:
                 delattr(self, name)
             except AttributeError:
@@ -80,7 +80,7 @@ class VIProperty(object):
 
 
     def _get_prop_value(self, prop):
-        basic_types = (bool, int, float, basestring, tuple, long)
+        basic_types = (bool, int, float, str, tuple, int)
         class_name = prop.__class__.__name__
 
         #Holder is also a str, so this "if" must be first

@@ -107,7 +107,7 @@ class VITask:
             
             self._server._proxy.CancelTask(request)
             
-        except (VI.ZSI.FaultException), e:
+        except (VI.ZSI.FaultException) as e:
             raise VIApiException(e)
         
     def __poll_task_info(self, retries=3, interval=2):
@@ -115,7 +115,7 @@ class VITask:
             try:
                 self.info = VIProperty(self._server, self._mor).info
                 return True
-            except Exception, e:
+            except Exception as e:
                 if i == retries -1:
                     raise e
             time.sleep(interval)

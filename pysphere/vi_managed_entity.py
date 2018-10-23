@@ -69,7 +69,7 @@ class VIManagedEntity(object):
 
             return vi_task
 
-        except (VI.ZSI.FaultException), e:
+        except (VI.ZSI.FaultException) as e:
             raise VIApiException(e)
         
     def reload(self):
@@ -90,7 +90,7 @@ class VIManagedEntity(object):
             _this.set_attribute_type(self._mor.get_attribute_type())
             request.set_element__this(_this)
             self._server._proxy.Reload(request)
-        except (VI.ZSI.FaultException), e:
+        except (VI.ZSI.FaultException) as e:
             raise VIApiException(e)
         
     def destroy(self, sync_run=True):
@@ -119,5 +119,5 @@ class VIManagedEntity(object):
                 return
 
             return vi_task
-        except (VI.ZSI.FaultException), e:
+        except (VI.ZSI.FaultException) as e:
             raise VIApiException(e)

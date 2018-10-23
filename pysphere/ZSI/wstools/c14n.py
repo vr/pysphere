@@ -5,10 +5,10 @@ Patches Applied to xml.dom.ext.c14n:
     http://sourceforge.net/projects/pyxml/
 
     [ 1444526 ] c14n.py: http://www.w3.org/TR/xml-exc-c14n/ fix
-        -- includes [ 829905 ] c14n.py fix for bug #825115, 
+        -- includes [ 829905 ] c14n.py fix for bug #825115,
            Date Submitted: 2003-10-24 23:43
-        -- include dependent namespace declarations declared in ancestor nodes 
-           (checking attributes and tags), 
+        -- include dependent namespace declarations declared in ancestor nodes
+           (checking attributes and tags),
         -- handle InclusiveNamespaces PrefixList parameter
 
 This module generates canonical XML of a document or element.
@@ -33,7 +33,7 @@ Authors:
     "Joseph M. Reagle Jr." <reagle@w3.org>
     "Rich Salz" <rsalz@zolera.com>
 
-$Date$ by $Author$
+$Date: 2006-03-30 23:47:16 +0000 (Thu, 30 Mar 2006) $ by $Author: boverhof $
 '''
 
 _copyright = '''Copyright 2001, Zolera Systems Inc.  All Rights Reserved.
@@ -47,19 +47,17 @@ or
   http://www.w3.org/Consortium/Legal/copyright-software-19980720
 '''
 
+from functools import cmp_to_key
 from xml.dom import Node
-
 try:
-    import cStringIO
-    StringIO = cStringIO
-except ImportError:
-    import StringIO
+    from xml.ns import XMLNS
+except:
+    class XMLNS:
+        BASE = "http://www.w3.org/2000/xmlns/"
+        XML = "http://www.w3.org/XML/1998/namespace"
+import io
 
-class XMLNS:
-    BASE = "http://www.w3.org/2000/xmlns/"
-    XML = "http://www.w3.org/XML/1998/namespace"
-
-_attrs = lambda E: (E.attributes and E.attributes.values()) or []
+_attrs = lambda E: (E.attributes and list(E.attributes.values())) or []
 _children = lambda E: E.childNodes or []
 _IN_XML_NS = lambda n: n.name.startswith("xmlns")
 _inclusive = lambda n: n.unsuppressedPrefixes == None
@@ -67,15 +65,15 @@ _inclusive = lambda n: n.unsuppressedPrefixes == None
 
 # Does a document/PI has lesser/greater document order than the
 # first element?
-_LesserElement, _Element, _GreaterElement = range(3)
+_LesserElement, _Element, _GreaterElement = list(range(3))
 
 def _sorter(n1,n2):
     '''_sorter(n1,n2) -> int
     Sorting predicate for non-NS attributes.'''
 
-    i = cmp(n1.namespaceURI, n2.namespaceURI)
+    i = (n1.namespaceURI > n2.namespaceURI) - (n1.namespaceURI < n2.namespaceURI)
     if i: return i
-    return cmp(n1.localName, n2.localName)
+    return (n1.localName > n2.localName) - (n1.localName < n2.localName)
 
 
 def _sorter_ns(n1,n2):
@@ -84,7 +82,7 @@ def _sorter_ns(n1,n2):
 
     if n1[0] == 'xmlns': return -1
     if n2[0] == 'xmlns': return 1
-    return cmp(n1[0], n2[0])
+    return (n1[0] > n2[0]) - (n1[0] < n2[0])
 
 def _utilized(n, node, other_attrs, unsuppressedPrefixes):
     '''_utilized(n, node, other_attrs, unsuppressedPrefixes) -> boolean
@@ -94,7 +92,7 @@ def _utilized(n, node, other_attrs, unsuppressedPrefixes):
     elif n.startswith('xmlns'):
         n = n[5:]
     if (n=="" and node.prefix in ["#default", None]) or \
-        n == node.prefix or n in unsuppressedPrefixes: 
+        n == node.prefix or n in unsuppressedPrefixes:
             return 1
     for attr in other_attrs:
         if n == attr.prefix: return 1
@@ -102,13 +100,13 @@ def _utilized(n, node, other_attrs, unsuppressedPrefixes):
     if unsuppressedPrefixes is not None:
         for attr in _attrs(node):
             if n == attr.prefix: return 1
-            
+
     return 0
 
 
 def _inclusiveNamespacePrefixes(node, context, unsuppressedPrefixes):
-    '''http://www.w3.org/TR/xml-exc-c14n/ 
-    InclusiveNamespaces PrefixList parameter, which lists namespace prefixes that 
+    '''http://www.w3.org/TR/xml-exc-c14n/
+    InclusiveNamespaces PrefixList parameter, which lists namespace prefixes that
     are handled in the manner described by the Canonical XML Recommendation'''
     inclusive = []
     if node.prefix:
@@ -154,10 +152,10 @@ class _implementation:
         self.comments = kw.get('comments', 0)
         self.unsuppressedPrefixes = kw.get('unsuppressedPrefixes')
         nsdict = kw.get('nsdict', { 'xml': XMLNS.XML, 'xmlns': XMLNS.BASE })
-        
+
         # Processing state.
         self.state = (nsdict, {'xml':''}, {}, {}) #0422
-        
+
         if node.nodeType == Node.DOCUMENT_NODE:
             self._do_document(node)
         elif node.nodeType == Node.ELEMENT_NODE:
@@ -182,12 +180,12 @@ class _implementation:
         canonicalization.'''
 
         # Collect the initial list of xml:foo attributes.
-        xmlattrs = [x for x in _attrs(node) if _IN_XML_NS(x)]
+        xmlattrs = list(filter(_IN_XML_NS, _attrs(node)))
 
         # Walk up and get all xml:XXX attributes we inherit.
         inherited, parent = [], node.parentNode
         while parent and parent.nodeType == Node.ELEMENT_NODE:
-            for a in [x for x in _attrs(parent) if _IN_XML_NS(x)]:
+            for a in filter(_IN_XML_NS, _attrs(parent)):
                 n = a.localName
                 if n not in xmlattrs:
                     xmlattrs.append(n)
@@ -224,6 +222,8 @@ class _implementation:
         Process a text or CDATA node.  Render various special characters
         as their C14N entity representations.'''
         if not _in_subset(self.subset, node): return
+        if isinstance(node.data, bytes):
+            node.data = node.data.decode('utf-8')
         s = node.data.replace("&", "&amp;")
         s = s.replace("<", "&lt;")
         s = s.replace(">", "&gt;")
@@ -278,6 +278,8 @@ class _implementation:
         W(' ')
         W(n)
         W('="')
+        if isinstance(value, bytes):
+            value = value.decode('utf-8')
         s = value.replace("&", "&amp;")
         s = s.replace("<", "&lt;")
         s = s.replace('"', '&quot;')
@@ -301,11 +303,11 @@ class _implementation:
         #   ns_unused_inherited -- not rendered namespaces, used for exclusive 
         ns_parent, ns_rendered, xml_attrs = \
                 self.state[0], self.state[1].copy(), self.state[2].copy() #0422
-                
+
         ns_unused_inherited = unused
         if unused is None:
             ns_unused_inherited = self.state[3].copy()
-            
+
         ns_local = ns_parent.copy()
         inclusive = _inclusive(self)
         xml_attrs_local = {}
@@ -324,7 +326,10 @@ class _implementation:
             else:
                 if  _in_subset(self.subset, a):     #020925 Test to see if attribute node in subset
                     other_attrs.append(a)
-                    
+
+#                # TODO: exclusive, might need to define xmlns:prefix here
+#                if not inclusive and a.prefix is not None and not ns_rendered.has_key('xmlns:%s' %a.prefix):
+#                    ns_local['xmlns:%s' %a.prefix] = ??
 
             #add local xml:foo attributes to ancestor's xml:foo attributes
             xml_attrs.update(xml_attrs_local)
@@ -338,22 +343,21 @@ class _implementation:
                     prefix = 'xmlns:%s' %node.prefix
                 else:
                     prefix = 'xmlns'
-                    
+
                 if prefix not in ns_rendered and prefix not in ns_local:
                     if prefix not in ns_unused_inherited:
-                        raise RuntimeError(
-                            'For exclusive c14n, unable to map prefix "%s" in %s' %(
+                        raise RuntimeError('For exclusive c14n, unable to map prefix "%s" in %s' %(
                             prefix, node))
-                    
+
                     ns_local[prefix] = ns_unused_inherited[prefix]
                     del ns_unused_inherited[prefix]
-                
+
             W('<')
             W(name)
 
             # Create list of NS attributes to render.
             ns_to_render = []
-            for n,v in ns_local.iteritems():
+            for n,v in list(ns_local.items()):
 
                 # If default namespace is XMLNS.BASE or empty,
                 # and if an ancestor was the same
@@ -371,14 +375,14 @@ class _implementation:
 
                 # If not previously rendered
                 # and it's inclusive  or utilized
-                if (n,v) not in list(ns_rendered.iteritems()):
+                if (n,v) not in list(ns_rendered.items()):
                     if inclusive or _utilized(n, node, other_attrs, self.unsuppressedPrefixes):
                         ns_to_render.append((n, v))
                     elif not inclusive:
                         ns_unused_inherited[n] = v
 
             # Sort and render the ns, marking what was rendered.
-            ns_to_render.sort(_sorter_ns)
+            ns_to_render.sort(key=cmp_to_key(_sorter_ns))
             for n,v in ns_to_render:
                 self._do_attr(n, v)
                 ns_rendered[n]=v    #0417
@@ -387,10 +391,10 @@ class _implementation:
             # Else, add all local and ancestor xml attributes
             # Sort and render the attributes.
             if not inclusive or _in_subset(self.subset,node.parentNode):  #0426
-                other_attrs.extend(xml_attrs_local.itervalues())
+                other_attrs.extend(list(xml_attrs_local.values()))
             else:
-                other_attrs.extend(xml_attrs.itervalues())
-            other_attrs.sort(_sorter)
+                other_attrs.extend(list(xml_attrs.values()))
+            other_attrs.sort(key=cmp_to_key(_sorter))
             for a in other_attrs:
                 self._do_attr(a.nodeName, a.value)
             W('>')
@@ -423,6 +427,6 @@ def Canonicalize(node, output=None, **kw):
     if output:
         _implementation(*(node, output.write), **kw)
     else:
-        s = StringIO.StringIO()
+        s = io.StringIO()
         _implementation(*(node, s.write), **kw)
         return s.getvalue()

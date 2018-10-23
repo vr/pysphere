@@ -4,10 +4,11 @@
 '''
 
 from xml.dom import expatbuilder
-from pysphere.ZSI import _children, _attrs, _child_elements, _stringtypes, \
+from pysphere.ZSI import _copyright, _children, _attrs, _child_elements, _stringtypes, \
         _backtrace, EvaluateException, ParseException, _valid_encoding, \
-        _Node, _find_attr, _resolve_prefix
+        _Node, _find_attr, _resolve_prefix, UNICODE_ENCODING
 from pysphere.ZSI.TC import AnyElement
+import types
 
 from pysphere.ZSI.wstools.Namespaces import SOAP, XMLNS
 from pysphere.ZSI.wstools.Utility import SplitQName
@@ -39,17 +40,16 @@ class ParsedSoap:
     '''
     defaultReaderClass = DefaultReader
 
-    def __init__(self, _input, readerclass=None, keepdom=False,
+    def __init__(self, input, readerclass=None, keepdom=False,
     trailers=False, resolver=None,  envelope=True, **kw):
-        """Initialize.
+        '''Initialize.
         Keyword arguments:
             trailers -- allow trailer elments (default is zero)
             resolver -- function (bound method) to resolve URI's
             readerclass -- factory class to create a reader
             keepdom -- do not release the DOM
             envelope -- look for a SOAP envelope.
-        """
-
+        '''
         self.readerclass = readerclass
         self.keepdom = keepdom
         if not self.readerclass:
@@ -57,11 +57,13 @@ class ParsedSoap:
 
         try:
             self.reader = self.readerclass()
-            if isinstance(_input, _stringtypes):
-                self.dom = self.reader.fromString(_input)
+            if isinstance(input, str):
+                self.dom = self.reader.fromString(input)
+            elif isinstance(input, bytes):
+                self.dom = self.reader.fromString(input.decode(UNICODE_ENCODING))
             else:
-                self.dom = self.reader.fromStream(_input)
-        except Exception:
+                self.dom = self.reader.fromStream(input)
+        except Exception as e:
             # Is this in the header?  Your guess is as good as mine.
             #raise ParseException("Can't parse document (" + \
             #    str(e.__class__) + "): " + str(e), 0)
@@ -209,18 +211,18 @@ class ParsedSoap:
             if t != _Node.ELEMENT_NODE:
                 if t == _Node.TEXT_NODE and n.nodeValue.strip() == "":
                     continue
-                raise ParseException("Non-element child in " + name,
+                raise ParseException("Non-element child in " + name, 
                         inheader, elt, self.dom)
             if mustqualify and not n.namespaceURI:
                 raise ParseException('Unqualified element "' + \
                         n.nodeName + '" in ' + name, inheader, elt, self.dom)
 
-    def _check_for_pi_nodes(self, _list, inheader):
+    def _check_for_pi_nodes(self, list, inheader):
         '''Raise an exception if any of the list descendants are PI nodes.
         '''
-        _list = _list[:]
-        while _list:
-            elt = _list.pop()
+        list = list[:]
+        while list:
+            elt = list.pop()
             t = elt.nodeType
             if t == _Node.PROCESSING_INSTRUCTION_NODE:
                 raise ParseException('Found processing instruction "<?' + \
@@ -229,7 +231,7 @@ class ParsedSoap:
             elif t == _Node.DOCUMENT_TYPE_NODE:
                 raise ParseException('Found DTD', inheader,
                         elt.parentNode, self.dom)
-            _list += _children(elt)
+            list += _children(elt)
 
     def Backtrace(self, elt):
         '''Return a human-readable "backtrace" from the document root to
@@ -250,17 +252,17 @@ class ParsedSoap:
         if e: return e
         # Do a breadth-first search, in the data first.  Most likely
         # to find multi-ref targets shallow in the data area.
-        _list = self.data_elements[:] + [self.body_root]
-        if headers: _list.extend(self.header_elements)
-        while _list:
-            e = _list.pop()
+        list = self.data_elements[:] + [self.body_root]
+        if headers: list.extend(self.header_elements)
+        while list:
+            e = list.pop()
             if e.nodeType == _Node.ELEMENT_NODE:
                 nodeid = _find_id(e)
                 if nodeid:
                     self.id_cache[nodeid] = e
                     if nodeid == frag: return e
-            _list += _children(e)
-        raise EvaluateException("""Can't find node for HREF '%s'""" % href,
+            list += _children(e)
+        raise EvaluateException('''Can't find node for HREF "%s"''' % href,
                 self.Backtrace(elt))
 
     def ResolveHREF(self, uri, tc, **keywords):
@@ -268,10 +270,10 @@ class ParsedSoap:
         if not r:
             raise EvaluateException('No resolver for "' + uri + '"')
         try:
-            if isinstance(uri, unicode): uri = str(uri)
+            if type(uri) == str: uri = str(uri)
             retval = r(uri, tc, self, **keywords)
-        except Exception, e:
-            raise EvaluateException("""Can't resolve '""" + uri + "' (" + \
+        except Exception as e:
+            raise EvaluateException('''Can't resolve "''' + uri + '" (' + \
                 str(e.__class__) + "): " + str(e))
         return retval
 
@@ -321,7 +323,7 @@ class ParsedSoap:
     def Parse(self, how):
         '''Parse the message.
         '''
-        if isinstance(how, type): how = how.typecode
+        if type(how) == type: how = how.typecode
         return how.parse(self.body_root, self)
 
     def WhatMustIUnderstand(self):
@@ -332,9 +334,9 @@ class ParsedSoap:
                 for E in self.header_elements if _find_mu(E) == "1" ]
 
     def WhatActorsArePresent(self):
-        """Return a list of URI's of all the actor attributes found in
+        '''Return a list of URI's of all the actor attributes found in
         the header.  The special actor "next" is ignored.
-        """
+        '''
         results = []
         for E in self.header_elements:
             a = _find_actor(E)
@@ -347,12 +349,13 @@ class ParsedSoap:
         '''
         d = {}
         lenofwhat = len(ofwhat)
-        c, crange = self.header_elements[:], range(len(self.header_elements))
+        c, crange = self.header_elements[:], list(range(len(self.header_elements)))
         for i,what in [ (i, ofwhat[i]) for i in range(lenofwhat) ]:
-            if isinstance(what, AnyElement):
-                raise EvaluateException('not supporting <any> as child of soapenc:Header')
+            if isinstance(what, AnyElement): 
+                raise EvaluateException('not supporting <any> as child of SOAP-ENC:Header')
 
             v = []
+            occurs = 0
             namespaceURI,tagName = what.nspname,what.pname
             for j,c_elt in [ (j, c[j]) for j in crange if c[j] ]:
                 prefix,name = SplitQName(c_elt.tagName)
@@ -364,10 +367,13 @@ class ParsedSoap:
                 v.append(pyobj)
                 c[j] = None
             if what.minOccurs > len(v) > what.maxOccurs:
-                raise EvaluateException('number of occurances(%d) doesnt fit constraints (%d,%s)'\
+               raise EvaluateException('number of occurances(%d) doesnt fit constraints (%d,%s)'\
                    %(len(v),what.minOccurs,what.maxOccurs))
             if what.maxOccurs == 1:
                 if len(v) == 0: v = None
                 else: v = v[0]
             d[(what.nspname,what.pname)] = v
         return d
+
+
+if __name__ == '__main__': print(_copyright)

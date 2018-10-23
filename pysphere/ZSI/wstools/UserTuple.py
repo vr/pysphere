@@ -44,7 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-# $Id$
+# $Id: UserTuple.py 277 2003-07-21 14:18:54Z warnes $
 
 #XXX tuple instances (in Python 2.2) contain also:
 #   __class__, __delattr__, __getattribute__, __hash__, __new__,

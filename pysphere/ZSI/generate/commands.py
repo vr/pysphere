@@ -4,11 +4,8 @@
 # See Copyright for copyright notice!
 ############################################################################
 
-import exceptions, sys, optparse, os, warnings, traceback
+import sys, optparse, os, warnings, traceback
 from os.path import isfile, join, split
-
-#from operator import xor
-#import pysphere.ZSI
 
 from pysphere.ZSI.generate.wsdl2python import WriteServiceModule
 from pysphere.ZSI.wstools import WSDLTools, XMLSchema
@@ -19,7 +16,7 @@ from pysphere.ZSI.generate.wsdl2dispatch import ServiceModuleWriter as ServiceDe
 from pysphere.ZSI.generate.wsdl2dispatch import WSAServiceModuleWriter as ServiceDescriptionWSA
 
 
-warnings.filterwarnings('ignore', '', exceptions.UserWarning)
+warnings.filterwarnings('ignore', '', UserWarning)
 def SetDebugCallback(option, opt, value, parser, *args, **kwargs):
     setBasicLoggerDEBUG()
     warnings.resetwarnings()
@@ -28,7 +25,7 @@ def SetPyclassMetaclass(option, opt, value, parser, *args, **kwargs):
     """set up pyclass metaclass for complexTypes"""
     from pysphere.ZSI.generate.containers import ServiceHeaderContainer,\
         TypecodeContainerBase, TypesHeaderContainer
-
+        
     TypecodeContainerBase.metaclass = kwargs['metaclass']
     TypesHeaderContainer.imports.append(\
             'from %(module)s import %(metaclass)s' %kwargs
@@ -40,32 +37,32 @@ def SetPyclassMetaclass(option, opt, value, parser, *args, **kwargs):
 def SetUpLazyEvaluation(option, opt, value, parser, *args, **kwargs):
     from pysphere.ZSI.generate.containers import TypecodeContainerBase
     TypecodeContainerBase.lazy = True
-
+    
 
 
 def wsdl2py(args=None):
     """Utility for automatically generating client/service interface code from
-    a wsdl definition, and a set of classes representing element declarations
-    and type definitions.  By default invoking this script produces three files,
+    a wsdl definition, and a set of classes representing element declarations 
+    and type definitions.  By default invoking this script produces three files, 
     each named after the wsdl definition name, in the current working directory.
-
+    
     Generated Modules Suffix:
         _client.py -- client locator, rpc proxy port, messages
-        _types.py  -- typecodes representing
+        _types.py  -- typecodes representing 
         _server.py -- server-side bindings
-
+        
     Parameters:
-        args -- optional can provide arguments, rather than parsing
+        args -- optional can provide arguments, rather than parsing 
             command-line.
-
+            
     return:
         Default behavior is to return None, if args are provided then
         return names of the generated files.
-
+                                                    
     """
     op = optparse.OptionParser(usage="USAGE: %wsdl2py [options] WSDL",
                  description=wsdl2py.__doc__)
-
+    
     # Basic options
     op.add_option("-x", "--schema",
                   action="store_true", dest="schema", default=False,
@@ -74,38 +71,43 @@ def wsdl2py(args=None):
     op.add_option("-d", "--debug",
                   action="callback", callback=SetDebugCallback,
                   help="debug output")
-
+                  
     # WS Options
     op.add_option("-a", "--address",
                   action="store_true", dest="address", default=False,
                   help="ws-addressing support, must include WS-Addressing schema.")
-
-    # pyclass Metaclass
+                  
+    # pyclass Metaclass 
     op.add_option("-b", "--complexType",
-                  action="callback", callback=SetPyclassMetaclass,
-                  callback_kwargs={'module':'pysphere.ZSI.generate.pyclass',
+                  action="callback", callback=SetPyclassMetaclass, 
+                  callback_kwargs={'module':'pysphere.ZSI.generate.pyclass', 
                       'metaclass':'pyclass_type'},
                   help="add convenience functions for complexTypes, including Getters, Setters, factory methods, and properties (via metaclass). *** DONT USE WITH --simple-naming ***")
-
+    
     # Lazy Evaluation of Typecodes (done at serialization/parsing when needed).
     op.add_option("-l", "--lazy",
-                  action="callback", callback=SetUpLazyEvaluation,
+                  action="callback", callback=SetUpLazyEvaluation, 
                   callback_kwargs={},
                   help="EXPERIMENTAL: recursion error solution, lazy evalution of typecodes")
-
+    
+    # Use Twisted
+    op.add_option("-w", "--twisted",
+                  action="store_true", dest='twisted', default=False,
+                  help="generate a twisted.web client/server, dependencies python>=2.4, Twisted>=2.0.0, TwistedWeb>=0.5.0")
+    
     op.add_option("-o", "--output-dir",
                   action="store", dest="output_dir", default=".", type="string",
                   help="save files in directory")
-
+    
     op.add_option("-s", "--simple-naming",
                   action="store_true", dest="simple_naming", default=False,
                   help="map element names directly to python attributes")
-
+    
     op.add_option("-p", "--pydoc",
                   action="store_true", dest="pydoc", default=False,
                   help="top-level directory for pydoc documentation.")
-
-
+    
+    
     is_cmdline = args is None
     if is_cmdline:
         (options, args) = op.parse_args()
@@ -113,9 +115,9 @@ def wsdl2py(args=None):
         (options, args) = op.parse_args(args)
 
     if len(args) != 1:
-        print>>sys.stderr, 'Expecting a file/url as argument (WSDL).'
-        sys.exit()
-
+        print('Expecting a file/url as argument (WSDL).', file=sys.stderr)
+        sys.exit(os.EX_USAGE)
+        
     location = args[0]
     if options.schema is True:
         reader = XMLSchema.SchemaReader(base_url=location)
@@ -128,28 +130,28 @@ def wsdl2py(args=None):
 
     try:
         wsdl = load(location)
-    except Exception, e:
-        print >> sys.stderr, "Error loading %s: \n\t%s" % (location, e)
-        traceback.print_exc(sys.stderr)
+    except Exception as e:
+        print("Error loading %s: \n\t%s" % (location, e), file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
         # exit code UNIX specific, Windows?
         if hasattr(os, 'EX_NOINPUT'): sys.exit(os.EX_NOINPUT)
         sys.exit("error loading %s" %location)
-
-    if isinstance(wsdl, XMLSchema.XMLSchema):
+  
+    if isinstance(wsdl, XMLSchema.XMLSchema): 
         wsdl.location = location
         files = _wsdl2py(options, wsdl)
     else:
         files = _wsdl2py(options, wsdl)
         files.append(_wsdl2dispatch(options, wsdl))
-
+    
     if getattr(options, 'pydoc', False):
         _writepydoc(os.path.join('docs', 'API'), *files)
-
+        
     if is_cmdline:
         return
-
+    
     return files
-
+    
 
 #def wsdl2dispatch(args=None):
 #    """Deprecated: wsdl2py now generates everything
@@ -172,16 +174,16 @@ def wsdl2py(args=None):
 #    op.add_option("-s", "--simple-naming",
 #                  action="store_true", dest="simple_naming", default=False,
 #                  help="Simplify generated naming.")
-#
+#    
 #    if args is None:
 #        (options, args) = op.parse_args()
 #    else:
 #        (options, args) = op.parse_args(args)
-#
+#        
 #    if len(args) != 1:
 #        print>>sys.stderr, 'Expecting a file/url as argument (WSDL).'
 #        sys.exit(os.EX_USAGE)
-#
+#        
 #    reader = WSDLTools.WSDLReader()
 #    if isfile(args[0]):
 #        _wsdl2dispatch(options, reader.loadFromFile(args[0]))
@@ -191,6 +193,15 @@ def wsdl2py(args=None):
 
 
 def _wsdl2py(options, wsdl):
+
+    if options.twisted:
+        from pysphere.ZSI.generate.containers import ServiceHeaderContainer
+        try:
+            ServiceHeaderContainer.imports.remove('from pysphere.ZSI import client')
+        except ValueError:
+            pass
+        ServiceHeaderContainer.imports.append('from pysphere.ZSI.twisted import client')
+
 
     if options.simple_naming:
         # Use a different client suffix
@@ -218,14 +229,14 @@ def _wsdl2py(options, wsdl):
         fd = open(client_file, 'w+')
         wsm.writeClient(fd)
         fd.close()
-
+    
     types_mod = wsm.getTypesModuleName()
     types_file = join(options.output_dir, '%s.py' %types_mod)
     append(types_file)
     fd = open(types_file, 'w+' )
     wsm.writeTypes(fd)
     fd.close()
-
+    
     return files
 
 
@@ -233,19 +244,25 @@ def _wsdl2dispatch(options, wsdl):
     """TOOD: Remove ServiceContainer stuff, and replace with WSGI.
     """
     kw = dict()
-    
-    # TODO: make all this handler arch
-    if options.address is True:
-        ss = ServiceDescriptionWSA()
-    else:
+    if options.twisted:
+        from pysphere.ZSI.twisted.WSresource import WSResource
+        kw['base'] = WSResource
         ss = ServiceDescription(**kw)
+        if options.address is True:
+            raise RuntimeError('WS-Address w/twisted currently unsupported, edit the "factory" attribute by hand')
+    else:
+        # TODO: make all this handler arch
+        if options.address is True:
+            ss = ServiceDescriptionWSA()
+        else:
+            ss = ServiceDescription(**kw)
 
     ss.fromWSDL(wsdl)
     file_name = ss.getServiceModuleName()+'.py'
     fd = open( join(options.output_dir, file_name), 'w+')
     ss.write(fd)
     fd.close()
-
+    
     return file_name
 
 
@@ -260,13 +277,16 @@ class _XMLSchemaAdapter:
         """
         self.name = '_'.join(split(location)[-1].split('.'))
         self.types = {schema.targetNamespace:schema}
-
-
-
-
-import pydoc, inspect
+        
+        
+        
+        
+import os, pydoc, sys, warnings, inspect
+import  os.path
 
 from distutils import log
+from distutils.command.build_py import build_py
+from distutils.util import convert_path
 
 #from setuptools import find_packages
 #from setuptools import Command
@@ -275,7 +295,7 @@ from pysphere.ZSI.schema import ElementDeclaration, TypeDefinition
 #from pyGridWare.utility.generate.Modules import CLIENT, TYPES
 
 #def find_packages_modules(where='.'):
-#    #pack,mod,mod_file
+#    #pack,mod,mod_file 
 #    """Return a list all Python packages found within directory 'where'
 #    """
 #    out = []
@@ -293,11 +313,11 @@ from pysphere.ZSI.schema import ElementDeclaration, TypeDefinition
 #                stack.append((fn,prefix+name+'.'))
 #                continue
 #
-#            if name == '__init__.py' or not name.endswith('.py'):
+#            if name == '__init__.py' or not name.endswith('.py'): 
 #                continue
 #
-#            out.append((prefix, name.split('.py')[0]))
-#
+#            out.append((prefix, name.split('.py')[0])) 
+#            
 #    return out
 
 
@@ -305,30 +325,30 @@ def _writedoc(doc, thing, forceload=0):
     """Write HTML documentation to a file in the current directory.
     """
     try:
-        obj, name = pydoc.resolve(thing, forceload)
-        page = pydoc.html.page(pydoc.describe(obj), pydoc.html.document(obj, name))
+        object, name = pydoc.resolve(thing, forceload)
+        page = pydoc.html.page(pydoc.describe(object), pydoc.html.document(object, name))
         fname = os.path.join(doc, name + '.html')
-        fd = open(fname, 'w')
-        fd.write(page)
-        fd.close()
-    except (ImportError, pydoc.ErrorDuringImport):
-        traceback.print_exc(sys.stderr)
+        file = open(fname, 'w')
+        file.write(page)
+        file.close()
+    except (ImportError, pydoc.ErrorDuringImport) as value:
+        traceback.print_exc(file=sys.stderr)
     else:
         return name + '.html'
-
+        
 
 def _writeclientdoc(doc, thing, forceload=0):
     """Write HTML documentation to a file in the current directory.
     """
     docmodule = pydoc.HTMLDoc.docmodule
-    def strongarm(self, obj, name=None, mod=None, *ignored):
-        result = docmodule(self, obj, name, mod, *ignored)
+    def strongarm(self, object, name=None, mod=None, *ignored):
+        result = docmodule(self, object, name, mod, *ignored)
 
         # Grab all the aliases to pyclasses and create links.
         nonmembers = []
         push = nonmembers.append
-        for k,v in inspect.getmembers(obj, inspect.isclass):
-            if inspect.getmodule(v) is not obj and getattr(v,'typecode',None) is not None:
+        for k,v in inspect.getmembers(object, inspect.isclass):
+            if inspect.getmodule(v) is not object and getattr(v,'typecode',None) is not None:
                 push('<a href="%s.html">%s</a>: pyclass alias<br/>' %(v.__name__,k))
 
         result += self.bigsection('Aliases', '#ffffff', '#eeaa77', ''.join(nonmembers))
@@ -336,13 +356,13 @@ def _writeclientdoc(doc, thing, forceload=0):
 
     pydoc.HTMLDoc.docmodule = strongarm
     try:
-        obj, name = pydoc.resolve(thing, forceload)
-        page = pydoc.html.page(pydoc.describe(obj), pydoc.html.document(obj, name))
+        object, name = pydoc.resolve(thing, forceload)
+        page = pydoc.html.page(pydoc.describe(object), pydoc.html.document(object, name))
         name = os.path.join(doc, name + '.html')
-        fd = open(name, 'w')
-        fd.write(page)
-        fd.close()
-    except (ImportError, pydoc.ErrorDuringImport), value:
+        file = open(name, 'w')
+        file.write(page)
+        file.close()
+    except (ImportError, pydoc.ErrorDuringImport) as value:
         log.debug(str(value))
 
     pydoc.HTMLDoc.docmodule = docmodule
@@ -351,12 +371,12 @@ def _writetypesdoc(doc, thing, forceload=0):
     """Write HTML documentation to a file in the current directory.
     """
     try:
-        obj, name = pydoc.resolve(thing, forceload)
+        object, name = pydoc.resolve(thing, forceload)
         name = os.path.join(doc, name + '.html')
-    except (ImportError, pydoc.ErrorDuringImport), value:
+    except (ImportError, pydoc.ErrorDuringImport) as value:
         log.debug(str(value))
         return
-
+        
     # inner classes
     cdict = {}
     fdict = {}
@@ -365,21 +385,21 @@ def _writetypesdoc(doc, thing, forceload=0):
     for kname,klass in inspect.getmembers(thing, inspect.isclass):
         if thing is not inspect.getmodule(klass):
             continue
-
+        
         cdict[kname] = inspect.getmembers(klass, inspect.isclass)
         for iname,iklass in cdict[kname]:
             key = (kname,iname)
             fdict[key] = _writedoc(doc, iklass)
             if issubclass(iklass, ElementDeclaration):
-
+                
                 try:
                     typecode = iklass()
-                except (AttributeError,RuntimeError), ex:
+                except (AttributeError,RuntimeError) as ex:
                     elements_dict[iname] = _writebrokedoc(doc, ex, iname)
                     continue
 
                 elements_dict[iname] = None
-                if typecode.pyclass is not None:
+                if typecode.pyclass is not None:                        
                     elements_dict[iname] = _writedoc(doc, typecode.pyclass)
 
                 continue
@@ -387,7 +407,7 @@ def _writetypesdoc(doc, thing, forceload=0):
             if issubclass(iklass, TypeDefinition):
                 try:
                     typecode = iklass(None)
-                except (AttributeError,RuntimeError), ex:
+                except (AttributeError,RuntimeError) as ex:
                     types_dict[iname] = _writebrokedoc(doc, ex, iname)
                     continue
 
@@ -396,33 +416,33 @@ def _writetypesdoc(doc, thing, forceload=0):
                     types_dict[iname] = _writedoc(doc, typecode.pyclass)
 
                 continue
-
-
-    def strongarm(self, obj, name=None, mod=None, funcs={}, classes={}, *ignored):
+                        
+                
+    def strongarm(self, object, name=None, mod=None, funcs={}, classes={}, *ignored):
         """Produce HTML documentation for a class object."""
-        realname = obj.__name__
+        realname = object.__name__
         name = name or realname
-        bases = obj.__bases__
-        obj, name = pydoc.resolve(obj, forceload)
+        bases = object.__bases__
+        object, name = pydoc.resolve(object, forceload)
         contents = []
         push = contents.append
         if name == realname:
             title = '<a name="%s">class <strong>%s</strong></a>' % (
                 name, realname)
-        else:
+        else:   
             title = '<strong>%s</strong> = <a name="%s">class %s</a>' % (
                 name, name, realname)
-
+                
         mdict = {}
         if bases:
             parents = []
             for base in bases:
-                parents.append(self.classlink(base, obj.__module__))
+                parents.append(self.classlink(base, object.__module__))
             title = title + '(%s)' % pydoc.join(parents, ', ')
-
-        doc = self.markup(pydoc.getdoc(obj), self.preformat, funcs, classes, mdict)
+            
+        doc = self.markup(pydoc.getdoc(object), self.preformat, funcs, classes, mdict)
         doc = doc and '<tt>%s<br>&nbsp;</tt>' % doc
-        for iname,_ in cdict[name]:
+        for iname,iclass in cdict[name]:
             fname = fdict[(name,iname)]
 
             if iname in elements_dict:
@@ -444,35 +464,35 @@ def _writetypesdoc(doc, thing, forceload=0):
                     push('</ul>')
             else:
                 push('class <a href="%s">%s</a>: TODO not sure what this is<br/>' %(fname,iname))
-
+                
         contents = ''.join(contents)
-        return self.section(title, '#000000', '#ffc8d8', contents, 3, doc)
-
+        return self.section(title, '#000000', '#ffc8d8', contents, 3, doc) 
+    
     doclass = pydoc.HTMLDoc.docclass
     pydoc.HTMLDoc.docclass = strongarm
-
+            
     try:
-        page = pydoc.html.page(pydoc.describe(obj), pydoc.html.document(obj, name))
-        fd = open(name, 'w')
-        fd.write(page)
-        fd.close()
-    except (ImportError, pydoc.ErrorDuringImport), value:
+        page = pydoc.html.page(pydoc.describe(object), pydoc.html.document(object, name))
+        file = open(name, 'w')
+        file.write(page)
+        file.close()
+    except (ImportError, pydoc.ErrorDuringImport) as value:
         log.debug(str(value))
-
+        
     pydoc.HTMLDoc.docclass = doclass
+    
 
-
-
+        
 def _writebrokedoc(doc, ex, name, forceload=0):
     try:
         fname = os.path.join(doc, name + '.html')
         page = pydoc.html.page(pydoc.describe(ex), pydoc.html.document(str(ex), fname))
-        fd = open(fname, 'w')
-        fd.write(page)
-        fd.close()
-    except (ImportError, pydoc.ErrorDuringImport), value:
+        file = open(fname, 'w')
+        file.write(page)
+        file.close()
+    except (ImportError, pydoc.ErrorDuringImport) as value:
         log.debug(str(value))
-
+        
     return name + '.html'
 
 def _writepydoc(doc, *args):
@@ -480,9 +500,10 @@ def _writepydoc(doc, *args):
     doc -- destination directory for documents
     *args -- modules run thru pydoc
     """
+    ok = True
     if not os.path.isdir(doc):
         os.makedirs(doc)
-
+    
     if os.path.curdir not in sys.path:
         sys.path.append(os.path.curdir)
 
@@ -491,22 +512,22 @@ def _writepydoc(doc, *args):
         name = os.path.sep.join(f.strip('.py').split(os.path.sep))
         try:
             e = __import__(name)
-        except Exception,ex:
+        except Exception as ex:
             raise
 #            _writebrokedoc(doc, ex, name)
 #            continue
-
+   
         if name.endswith('_client'):
             _writeclientdoc(doc, e)
             continue
-
+    
         if name.endswith('_types'):
             _writetypesdoc(doc, e)
             continue
-
-        try:
+  
+        try: 
             _writedoc(doc, e)
-        except IndexError,ex:
+        except IndexError as ex:
             _writebrokedoc(doc, ex, name)
             continue
 

@@ -142,7 +142,7 @@ class PerformanceManager:
         if not isinstance(counters, list):
             counters = [counters]
             
-        if any([isinstance(i, basestring) for i in counters]):
+        if any([isinstance(i, str) for i in counters]):
             avail_counters = self.get_entity_counters(entity, interval)
             new_list = []
             for c in counters:
@@ -274,7 +274,7 @@ class PerformanceManager:
                                                              request)._returnval
             return do_perf_metric_id
 
-        except (VI.ZSI.FaultException), e:
+        except (VI.ZSI.FaultException) as e:
             raise VIApiException(e)
 
     def query_perf_provider_summary(self, entity):
@@ -303,7 +303,7 @@ class PerformanceManager:
                                                              request)._returnval
             return qpps
 
-        except (VI.ZSI.FaultException), e:
+        except (VI.ZSI.FaultException) as e:
             raise VIApiException(e)
 
     def query_perf_counter(self, counter_id):
@@ -330,7 +330,7 @@ class PerformanceManager:
             qpc = self._server._proxy.QueryPerfCounter(request)._returnval
             return qpc
 
-        except (VI.ZSI.FaultException), e:
+        except (VI.ZSI.FaultException) as e:
             raise VIApiException(e)
 
     def query_perf(self, entity, format='normal', interval_id=None, 
@@ -419,5 +419,5 @@ class PerformanceManager:
 
             return query_perf
 
-        except (VI.ZSI.FaultException), e:
+        except (VI.ZSI.FaultException) as e:
             raise VIApiException(e)
