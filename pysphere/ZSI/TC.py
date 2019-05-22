@@ -25,6 +25,10 @@ try:
     from io import StringIO
 except ImportError:
     from io import StringIO
+try:
+  from types import InstanceType
+except ImportError:
+  InstanceType = object
 
 
 _is_xsd_or_soap_ns = lambda ns: ns in [
@@ -593,7 +597,7 @@ class Any(TypeCode):
 
     def get_formatted_content(self, pyobj):
         tc = type(pyobj)
-        if tc == types.InstanceType:
+        if tc == InstanceType:
             tc = pyobj.__class__
             if hasattr(pyobj, 'typecode'):
                 #serializer = pyobj.typecode.serialmap.get(tc)
@@ -655,7 +659,7 @@ class Any(TypeCode):
             self.nspname = parentNspname
             return
                 
-        if tc == types.InstanceType:
+        if tc == InstanceType:
             tc = pyobj.__class__
             if hasattr(pyobj, 'typecode'):
                 #serializer = pyobj.typecode.serialmap.get(tc)
@@ -675,7 +679,7 @@ class Any(TypeCode):
             # Last-chance; serialize instances as dictionary
             if pyobj is None:
                 self.serialize_as_nil(elt.createAppendElement(ns, n))
-            elif type(pyobj) != types.InstanceType:
+            elif type(pyobj) != InstanceType:
                 raise EvaluateException('''Any can't serialize ''' + \
                         repr(pyobj))
             else:
@@ -1421,7 +1425,7 @@ class AnyElement(AnyType):
             raise TypeError('pyobj is a typecode instance.')
         
         what = getattr(pyobj, 'typecode', None)
-        if what is not None and type(pyobj) is types.InstanceType:
+        if what is not None and type(pyobj) is InstanceType:
             tc = pyobj.__class__
             what = Any.serialmap.get(tc)
             if not what:
